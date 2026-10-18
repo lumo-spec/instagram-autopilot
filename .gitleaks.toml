@@ -1,0 +1,10 @@
+# gitleaks configuration: the default rules, plus an allowlist for exact PUBLIC values only.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Public, non-secret values"
+regexes = [
+  # Kokoro-82M model revision (a public Hugging Face commit hash) used in actions/cache keys.
+  '''f3ff3571791e39611d31c381e3a41a3af07b4987''',
+]
