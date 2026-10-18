@@ -7,7 +7,7 @@ and :func:`assert_public_safe` rejects anything that looks like a token, an ID o
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 _TOKENISH = re.compile(
     r"(IG[A-Za-z0-9_-]{20,}|EAA[A-Za-z0-9]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|"
@@ -15,6 +15,8 @@ _TOKENISH = re.compile(
 )
 _LONG_NUMBER = re.compile(r"\d{9,}")
 _DUMPISH = re.compile(r"(Traceback|\{\"|error_subcode|fbtrace|access_token|Bearer\s)", re.I)
+# Links to this repository's own workflow runs are allowed (run ids are long numbers).
+_RUN_LINK = re.compile(r"https://github\.com/[\w.-]+/[\w.-]+/actions/runs/\d+(?:/job/\d+)?")
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,7 @@ class Alert:
 
 def assert_public_safe(text: str) -> None:
     """Raise ValueError if ``text`` could leak something sensitive."""
+    text = _RUN_LINK.sub("", text)
     if _TOKENISH.search(text) or _LONG_NUMBER.search(text) or _DUMPISH.search(text):
         raise ValueError("alert text failed the public-safety check")
 
@@ -142,3 +145,107 @@ def approval_changed(page: str, post_id: str) -> Alert:
         f"The text or art of {post_id} changed after it was approved, so it is held back. "
         f"Open Claude Code and type: Build {post_id}",
     )
+
+
+def publish_failed(page: str, slot: str, retried: bool) -> Alert:
+    """Instagram refused or failed the post (details stay in the private run log only)."""
+    then = "it will be retried at the next run" if retried else "run Post now again"
+    return _make(
+        f"publish-failed-{_slug(page)}-{slot}",
+        f"[{page}] a post could not be published — {then}",
+        f"Instagram did not accept the {slot} post. Nothing was posted twice. "
+        "If this repeats, open the latest run and ask Claude Code to look at it.",
+    )
+
+
+def hosting_failed(page: str, slot: str) -> Alert:
+    """The media could not be made reachable for Instagram."""
+    return _make(
+        f"hosting-failed-{_slug(page)}-{slot}",
+        f"[{page}] media hosting failed for the {slot} post — it will be retried",
+        "The post's images or video could not be served to Instagram, so nothing was posted. "
+        "The next run tries again; if this repeats, ask Claude Code to check media hosting.",
+    )
+
+
+def missed_slots(page: str, count: int) -> Alert:
+    """Scheduled slots passed with no run at all (schedule switched off or delayed)."""
+    return _make(
+        f"missed-slots-{_slug(page)}",
+        f"[{page}] {count} scheduled posts were missed — check the Status page",
+        "No run handled these slots. Check that the Autopilot workflow is enabled "
+        "(Actions → Autopilot) and look at the Status page.",
+    )
+
+
+def token_check_failed(page: str) -> Alert:
+    """The weekly health check could not use the page's token."""
+    return _make(
+        f"token-check-{_slug(page)}",
+        f"ACTION NEEDED [{page}]: Instagram token not working — regenerate it (README step 6)",
+        "The health check could not use the Instagram token. Follow README step 6 to create a "
+        "fresh token and set it with scripts/set-token.ps1.",
+    )
+
+
+def setup_test_alert() -> Alert:
+    """Harmless alert used once during setup to prove the e-mail path works."""
+    return _make(
+        "test-alert",
+        "Test alert — no action needed (it closes itself)",
+        "This is the setup test of the alert path. If you received it by e-mail, alerts work.",
+    )
+
+
+@dataclass
+class AlertPlan:
+    """Alerts to open (or keep open) and alert keys whose condition has cleared.
+
+    ``scopes``: key prefixes this run is responsible for; any open alert under one of them
+    that is not raised again is closed (e.g. a post that no longer fails its gates).
+    """
+
+    raise_: list[Alert] = field(default_factory=list)
+    resolved: list[str] = field(default_factory=list)
+    scopes: list[str] = field(default_factory=list)
+
+    def add(self, alert: Alert) -> None:
+        """Raise ``alert`` (once per key)."""
+        if all(a.key != alert.key for a in self.raise_):
+            self.raise_.append(alert)
+
+    def merge(self, other: AlertPlan) -> None:
+        """Combine two plans."""
+        for a in other.raise_:
+            self.add(a)
+        self.resolved += other.resolved
+        self.scopes += other.scopes
+
+    def to_dict(self) -> dict[str, object]:
+        """JSON form (alert texts are public-safe by construction)."""
+        return {
+            "raise": [{"key": a.key, "title": a.title, "body": a.body} for a in self.raise_],
+            "resolved": sorted(set(self.resolved)),
+            "scopes": sorted(set(self.scopes)),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, object]) -> AlertPlan:
+        """Parse and re-check (every text must still pass the public-safety check)."""
+        raw = data.get("raise", [])
+        alerts = [
+            _make(str(a["key"]), str(a["title"]), str(a["body"]))
+            for a in (raw if isinstance(raw, list) else [])
+        ]
+        resolved = data.get("resolved", [])
+        scopes = data.get("scopes", [])
+        return cls(
+            alerts,
+            [str(k) for k in (resolved if isinstance(resolved, list) else [])],
+            [str(k) for k in (scopes if isinstance(scopes, list) else [])],
+        )
+
+
+def page_slug(page: str) -> str:
+    """Public alias of the key slug (used for alert scopes)."""
+    return _slug(page)

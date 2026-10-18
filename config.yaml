@@ -104,6 +104,23 @@ story:                              # Simple Story Mode slides (carousels and si
   art: { max_upscale: 1.6 }         # art smaller than this needs more enlarging -> gate fails
 
 alerts: { low_stock_warning: 80, token_days_warning: 14, pat_days_warning: 30, no_post_hours: 30 }
+
+github:
+  repo: lumo-spec/instagram-autopilot   # used when GITHUB_REPOSITORY is not set (local runs)
+  owner_mention: "@lumo-spec"           # alert issues @mention this account so GitHub e-mails it
+  state_branch: state                   # runtime records + STATUS.md
+  media_branch: media                   # temporary hosting (raw files; GitHub Pages for reels)
+
+autopilot:
+  # Scheduled posting. OFF until setup and the live tests pass; then BOTH this flag and the
+  # cron block in .github/workflows/autopilot.yml (and maintenance.yml) are switched on
+  # together. scripts/audit_workflows.py fails CI if a workflow has a schedule while this is off.
+  schedule_enabled: false
+  schedule_enabled_on: null             # "YYYY-MM-DD" when switched on (missed-slot checks)
+
+hosting:
+  verify_timeout_seconds: 600           # GitHub Pages (reels) can take a few minutes to update
+  media_keep_days: 3                    # weekly cleanup deletes hosted files older than this
 topup_batch: 150
 near_duplicate: { threshold: 85, recent_posts: 200 }
 recycle_min_days: { quotes: 0, facts: 120 }

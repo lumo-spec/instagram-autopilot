@@ -1,0 +1,179 @@
+# One post: build (no secrets) -> host (write token) -> publish (Instagram token) -> record.
+# Called by "Post now" and "Autopilot". Trust zones: see SECURITY.md and docs/EGRESS.md.
+name: Pipeline (called)
+
+on:
+  workflow_call:
+    inputs:
+      page:
+        type: string
+        required: true
+      slot_key:
+        type: string # empty for Post now (the build job makes an on-demand key)
+        default: ""
+      format:
+        type: string
+        default: auto
+      post_id:
+        type: string
+        default: ""
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    outputs:
+      slot_key: ${{ steps.build.outputs.slot_key }}
+      status: ${{ steps.build.outputs.status }}
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.22"
+          enable-cache: true
+      - name: Restore the voice model (reels only; SHA-256 checked on every load)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/huggingface
+          key: kokoro-f3ff3571791e39611d31c381e3a41a3af07b4987
+      - name: Install the render stack (locked, hashes verified)
+        run: uv sync --locked --no-default-groups --group render
+      - name: Pick the next approved post, render it and run every gate
+        id: build
+        env:
+          AP_PAGE: ${{ inputs.page }}
+          AP_SLOT_KEY: ${{ inputs.slot_key }}
+          AP_FORMAT: ${{ inputs.format }}
+          AP_POST_ID: ${{ inputs.post_id }}
+        run: uv run --no-sync python -m autopilot.jobs --work work build
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: work-${{ steps.build.outputs.slot_key }}-build
+          path: |
+            work/build.json
+            work/media/
+          retention-days: 2
+          if-no-files-found: error
+
+  host:
+    needs: build
+    if: needs.build.outputs.status == 'built'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write # push to the media branch (main is protected by a ruleset)
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: work-${{ needs.build.outputs.slot_key }}-build
+          path: work
+      - name: Put the media online and check every URL
+        env:
+          PYTHONPATH: src
+        run: python -m autopilot.jobs --work work host
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: work-${{ needs.build.outputs.slot_key }}-hosted
+          path: work/hosted.json
+          retention-days: 2
+
+  publish:
+    needs: [build, host]
+    # Safety switch: nothing is published until the repository variable PUBLISHING_ENABLED is
+    # "true" (set at the start of the live tests, after the owner's setup).
+    if: needs.build.outputs.status == 'built' && vars.PUBLISHING_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: page-${{ inputs.page }}
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Install the minimal hashed requirements (no render stack)
+        run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: work-${{ needs.build.outputs.slot_key }}-*
+          path: work
+          merge-multiple: true
+      - name: "Phase 1: re-validate, quota, reconcile, create the container"
+        env:
+          PYTHONPATH: src
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: python -m autopilot.jobs --work work publish --phase prepare
+      - name: Record the intent before publishing
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: work-${{ needs.build.outputs.slot_key }}-intent
+          path: work/intent.json
+          retention-days: 2
+          if-no-files-found: ignore
+      - name: "Phase 2: publish once"
+        env:
+          PYTHONPATH: src
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: python -m autopilot.jobs --work work publish --phase finish
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: work-${{ needs.build.outputs.slot_key }}-published
+          path: work/publish.json
+          retention-days: 2
+          if-no-files-found: ignore
+
+  record:
+    needs: [build, host, publish]
+    if: always() && needs.build.outputs.slot_key != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write # state and media branches only (main is protected by a ruleset)
+      issues: write # alerts
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: work-${{ needs.build.outputs.slot_key }}-*
+          path: work
+          merge-multiple: true
+      - name: Write state, remove hosted media, update alerts and the status page
+        env:
+          PYTHONPATH: src
+          GITHUB_TOKEN: ${{ github.token }}
+          AP_PUBLISH_JOB: ${{ needs.publish.result }}
+        run: python -m autopilot.jobs --work work record

@@ -1,0 +1,61 @@
+# Scheduled posting: plan -> (for each due slot) build -> host -> publish -> record.
+#
+# THE SCHEDULE IS OFF. It is switched on only after the owner's setup and the live tests pass,
+# together with `autopilot.schedule_enabled: true` in config.yaml (CI's workflow audit fails if a
+# schedule exists while that flag is false). To switch it on, uncomment the two lines below.
+# A manual run only posts slots that are actually due (and nothing while PUBLISHING_ENABLED is off).
+name: Autopilot
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "17,47 * * * *" # every 30 min; plan converts to UK time and adds the ±10 min offset
+
+permissions: {}
+
+concurrency:
+  group: instagram-publish
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      slots: ${{ steps.plan.outputs.slots }}
+      any: ${{ steps.plan.outputs.any }}
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - name: Which slots are due (UK time, catch-up window)
+        id: plan
+        env:
+          PYTHONPATH: src
+        run: python -m autopilot.jobs plan
+
+  post:
+    needs: plan
+    if: needs.plan.outputs.any == 'true'
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        slot: ${{ fromJSON(needs.plan.outputs.slots) }}
+    uses: ./.github/workflows/_pipeline.yml
+    permissions:
+      contents: write
+      issues: write
+    with:
+      page: ${{ matrix.slot.page }}
+      slot_key: ${{ matrix.slot.slot_key }}
+      format: ${{ matrix.slot.format }}

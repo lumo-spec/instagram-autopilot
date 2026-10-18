@@ -119,6 +119,18 @@ class PageState:
         return cls(page=str(data["page"]), posts=posts, token=dict(data.get("token", {})))
 
 
+def used_post_ids(state: PageState, except_slot: str = "") -> set[str]:
+    """Posts that are published or may be (an attempt whose outcome is uncertain)."""
+    used: set[str] = set()
+    for rec in state.posts:
+        if not rec.content_id or rec.slot_key == except_slot or rec.status == STATUS_SKIPPED:
+            continue
+        if rec.status == STATUS_FAILED and not rec.container_id:
+            continue  # nothing reached Instagram: the post may be used again
+        used.add(rec.content_id)
+    return used
+
+
 def load_state(path: Path, page: str) -> PageState:
     """Read a state file, or start empty when it does not exist yet."""
     if not path.exists():

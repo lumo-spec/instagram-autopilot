@@ -26,9 +26,23 @@ raw API responses or stack traces from secret-holding jobs.
 - Posts only ever come from owner-approved queue items; an approval records the SHA-256 of every
   input file, so text or art changed after approval is never published.
 
+## Additional controls (stage 2)
+- **Jobs and powers**: `build` renders with the big dependency tree but holds no secret and only
+  a read-only token; `host` (write token, minimal hashed deps) puts media on the `media` branch;
+  `publish` (Instagram token, standard library + PyYAML only) has a read-only token; `record`
+  (write token for state/media + issues) holds no secret.
+- **Safety switch**: the publish job runs only when the repository variable
+  `PUBLISHING_ENABLED` is `true`.
+- **Schedules OFF**: `scripts/audit_workflows.py` fails CI if any workflow has a schedule while
+  `autopilot.schedule_enabled` is false.
+- **Privacy**: `scripts/privacy_check.py` (CI and before every push) proves no reference file is
+  tracked, staged or in history — locally also by comparing file contents.
+- **Repository settings** are applied and verified with `scripts/repo_settings.py`.
+- **Licences**: `scripts/check_licenses.py` in CI; GPL/LGPL build-time tools are listed with reasons.
+
 ## Status
-Stages 1 and 1b (local rehearsal, story queue, carousels) are complete. The GitHub Actions security controls above are built and
-verified in stage 2; their verification results will be recorded in `docs/HANDOVER.md`.
+Stage 2 (workflows, hosting, alerts, status page, token renewal) is built and tested locally
+against fakes; results and what is still unverified live are in `docs/HANDOVER.md`.
 
 ## Reporting a problem
 Please open a GitHub security advisory (Security tab → "Report a vulnerability") rather than a

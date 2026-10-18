@@ -46,7 +46,7 @@ the owner's decisions below override it where they differ.
 |---|---|---|
 | 1 | Local rehearsal engine: rendering, voice, music, gates, planning, fake publishing, tests | Done (2026-10-18) |
 | 1b | Pivot to Simple Story Mode: rename, archive, characters, story slide composer, carousel + queue + approval, carousel publishing (fake-tested), weekday cadence, queue alerts, first batch of 24 drafts | **Done (2026-10-18) — waiting for owner review** |
-| 2 | GitHub Actions workflows (ci, rehearsal, post-now, maintenance, autopilot — schedule OFF), media hosting on `media` branch, state/record job, alerts as issues, status page, token renewal (sealed hand-off), `audit_workflows.py`, `check_repo_settings.py`, hashed requirements, harden-runner (audit first), repo settings/rulesets/environments | Not started |
+| 2 | GitHub Actions workflows (ci, _pipeline, post-now, autopilot, maintenance, rehearsal — **no schedules**), media hosting on `media` (raw at commit SHA; GitHub Pages for reels), state/record job, alerts as issues, status page, token renewal (sealed hand-off), `audit_workflows.py`, `repo_settings.py`, `privacy_check.py`, `check_licenses.py`, hashed requirements, harden-runner (audit mode) | **Built + tested locally against fakes (2026-10-18)**; repo settings: see HANDOVER |
 | 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | Not started — needs the owner |
 | 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | Not started |
 
@@ -68,6 +68,29 @@ the owner's decisions below override it where they differ.
   first attempt, so a new post with the same caption as an old one would never be posted. Now
   recent media are searched only for slots with an earlier attempt, and captions must be unique
   in the queue (`caption:unique` gate).
+
+### Stage 2 evidence (2026-10-18, Windows)
+- `pytest` (all, incl. slow) → 248 pass, coverage 90 %; ruff, ruff format, mypy strict clean;
+  `scripts/audit_workflows.py` passed; `scripts/privacy_check.py` passed (7 local reference files
+  compared by content); `scripts/check_licenses.py` 117 packages, 3 reviewed exceptions.
+- Job chain tested end to end against a throwaway git origin + fake Instagram + fake GitHub API:
+  carousel/image publish, crash after publish reconciled, lost record step reconciled by caption,
+  quota stop, unreachable media, Post now with a chosen post, unapproved/empty → skip + alert,
+  changed post held back + alert, safety switch off, concurrent state writers, media cleanup +
+  squash, sealed token renewal (decrypted with the test key), renewal failure keeps old token.
+- raw.githubusercontent.com serves JPEG as `image/jpeg` with ranges (checked with curl) but MP4 as
+  `application/octet-stream` → reels are hosted via GitHub Pages from the `media` branch.
+- **Not verified live yet:** anything that talks to GitHub Actions or Instagram for real.
+
+### Approval policy — owner request pending (2026-10-18)
+The owner asked to drop per-post approval: a post with all its art that passes every gate on the
+real art should become eligible automatically (no Approve command), and authorised the live tests
+and enabling the schedule after they pass. Claude Code's permission system **blocked** that code
+change as a security weakening, so the current behaviour is unchanged: `Build <post-id>` (run by
+Claude after looking at the art) composes, gates and writes `approved.json`; only approved,
+unchanged posts are published. To make the change, the owner must allow it (see the message of
+2026-10-18) — then: queue eligibility = art complete + all gates pass at build time, re-gated on
+every build, failures skipped with an alert.
 
 ### Waiting on the owner
 1. Review the 24 drafts (text, captions, art briefs): `rehearsal-output/queue-preview/index.html`.
@@ -221,11 +244,25 @@ Order agreed with the owner:
    schedule, publish). Safety topics must be accurate and not graphic.
 5. A sixth page is not created yet; help the owner choose a niche later.
 
+## Stage 2 layout (GitHub Actions)
+- `.github/workflows/_pipeline.yml` (called): `build` (no secrets, read token, render stack) →
+  `host` (write token, hashed minimal deps; media branch; URL checks) → `publish` (environment
+  `page-<name>`; two phases with the intent uploaded in between; only if repo variable
+  `PUBLISHING_ENABLED == 'true'`) → `record` (state branch, media removal, alerts, STATUS.md).
+- `post-now.yml` (dispatch: post id or next approved), `autopilot.yml` (dispatch only; schedule
+  commented out), `maintenance.yml` (dispatch only: renew 3 parts, health, keepalive, cleanup,
+  status, token-set, test alert), `rehearsal.yml`, `ci.yml` (required check `ci-ok`).
+- Job code: `src/autopilot/jobs/` (`python -m autopilot.jobs <job>`); inputs only via `AP_*`
+  environment variables. Ops: `ops/github.py`, `ops/gitstore.py`, `ops/issues.py`,
+  `ops/status.py`, `ops/token.py`, `publish/hosting.py`.
+- Going live = set `autopilot.schedule_enabled: true` + `schedule_enabled_on`, uncomment the cron
+  lines in `autopilot.yml` and `maintenance.yml`, switch harden-runner to block (docs/EGRESS.md).
+- Before every commit/push: `python scripts/privacy_check.py`.
+
 ## Remaining work (next session starts here)
-1. Owner reviews the 24 drafts and the cadence; apply their changes.
-2. Stage 2 (see table), including post-now choosing an approved queue item, carousel media
-   hosting (`<slot>-NN.jpg` per slide on the `media` branch) and a live check that each slide URL
-   returns 200 + `image/jpeg` before publishing. Keep `autopilot.yml` without a schedule.
-3. Stage 3 owner guidance: click by click; tokens typed at hidden prompts in the owner's own
-   PowerShell (never via chat).
-4. Stage 4 live tests (image, carousel, reel, token renewal) and the `docs/HANDOVER.md` checklist.
+1. Approval policy: owner decision on the blocked change (see "Approval policy" above).
+2. Push stage 2, apply repo settings (`scripts/repo_settings.py apply`), watch CI go green.
+3. Stage 3 owner setup, click by click; secrets only via `scripts/set-token.ps1` and
+   `scripts/set-renewal-key.ps1` in the owner's own PowerShell. Then the alert test.
+4. Stage 4 live tests: set `PUBLISHING_ENABLED=true`; Post now one image, one carousel, one reel;
+   one token renewal (confirm the next post still works); egress block mode; then the schedule.

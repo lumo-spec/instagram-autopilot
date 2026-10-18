@@ -34,4 +34,11 @@ trans. James Legge (1891); H. D. Thoreau, *Walden* (1854); R. W. Emerson, *Essay
 
 ## Python packages
 Installed from PyPI (and the PyTorch CPU index on Linux) as listed in `uv.lock`; each under its
-own licence. A dependency licence check is added to CI in stage 2.
+own licence. `scripts/check_licenses.py` (run in CI) fails on unknown or copyleft licences
+except these reviewed build-time tools, used unmodified and not redistributed by this repository:
+espeak-ng via `espeakng-loader` (GPL-3.0-or-later), `phonemizer-fork` (GPL-3.0-or-later) and
+`num2words` (LGPL-2.1), all part of the Kokoro text-to-speech front end.
+
+## GitHub Actions
+Third-party actions are pinned to full commit SHAs in `.github/workflows/`. `gitleaks-action`
+(v2+) uses its own licence; it is free for repositories owned by personal accounts.

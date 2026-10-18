@@ -57,7 +57,7 @@ from autopilot.render.story import (
     story_text_box,
 )
 from autopilot.render.theme import Template, load_theme
-from autopilot.state import STATUS_FAILED, STATUS_SKIPPED, PageState
+from autopilot.state import PageState, used_post_ids
 
 
 class Hosting(Protocol):
@@ -116,18 +116,6 @@ class BuildResult:
 def seed_int(key: str) -> int:
     """Stable integer seed from a key."""
     return int.from_bytes(hashlib.sha256(key.encode()).digest()[:4], "big")
-
-
-def used_post_ids(state: PageState, except_slot: str = "") -> set[str]:
-    """Posts that are published or may be (an attempt whose outcome is uncertain)."""
-    used: set[str] = set()
-    for rec in state.posts:
-        if not rec.content_id or rec.slot_key == except_slot or rec.status == STATUS_SKIPPED:
-            continue
-        if rec.status == STATUS_FAILED and not rec.container_id:
-            continue  # nothing reached Instagram: the post may be used again
-        used.add(rec.content_id)
-    return used
 
 
 class StoryBuilder:

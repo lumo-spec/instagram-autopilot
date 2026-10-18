@@ -140,6 +140,10 @@ class FakeInstagram:
     def recent_media(self, limit: int) -> list[dict[str, str]]:
         return self.media[:limit]
 
+    def check_token(self) -> bool:
+        self._log("check-token")
+        return "bad_token" not in self.fail_next
+
     def published_slots(self) -> list[str]:
         """Slot keys in publish order (to prove nothing was posted twice)."""
         return [c["slot"] for c in self.calls if c["op"] == "publish"]

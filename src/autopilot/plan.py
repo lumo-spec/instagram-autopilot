@@ -97,3 +97,27 @@ def next_slots(cfg: Config, page: Page, now_utc: datetime, count: int = 2) -> li
                 found.append(t)
         day += timedelta(days=1)
     return found
+
+
+def missed_slots(
+    cfg: Config, page: Page, now_utc: datetime, state: PageState, since: date, days: int = 7
+) -> list[str]:
+    """Slot keys from the last ``days`` days (not before ``since``) that no run ever handled."""
+    tz = cfg.timezone
+    spread = int(cfg.section("jitter_minutes"))
+    window = timedelta(hours=float(cfg.section("catchup_window_hours")))
+    today = now_utc.astimezone(tz).date()
+    day = max(since, today - timedelta(days=days))
+    out: list[str] = []
+    while day <= today:
+        for s in page.slots:
+            if not s.runs_on(day.weekday()):
+                continue
+            key = slot_key(page.name, day, s.name)
+            if (
+                target_time(page.name, s, day, tz, spread) + window < now_utc
+                and state.get(key) is None
+            ):
+                out.append(key)
+        day += timedelta(days=1)
+    return out

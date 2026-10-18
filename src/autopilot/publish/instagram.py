@@ -39,6 +39,7 @@ class InstagramClient(Protocol):
     def publish(self, container_id: str) -> str: ...
     def permalink(self, media_id: str) -> str: ...
     def recent_media(self, limit: int) -> list[dict[str, str]]: ...
+    def check_token(self) -> bool: ...
 
 
 class GraphClient:
@@ -127,6 +128,10 @@ class GraphClient:
 
     def permalink(self, media_id: str) -> str:
         return str(self._request("GET", media_id, {"fields": "permalink"}).get("permalink", ""))
+
+    def check_token(self) -> bool:
+        """True when the token works (the account id in the answer is discarded)."""
+        return bool(self._request("GET", "me", {"fields": "user_id"}))
 
     def recent_media(self, limit: int) -> list[dict[str, str]]:
         data = self._request(
@@ -217,22 +222,30 @@ def _create_carousel(
     return _with_retries(lambda: client.create_carousel(children, manifest), retries, sleep)
 
 
-def publish_manifest(
+@dataclass
+class Prepared:
+    """Result of the first publishing phase."""
+
+    container_id: str
+    created: bool  # a new container was made: record it durably before publishing
+    outcome: PublishOutcome | None = None  # set when the slot turned out to be published already
+
+
+def prepare_container(
     client: InstagramClient,
     manifest: Manifest,
     previous_container: str | None,
-    on_intent: IntentCallback,
     delays: list[float],
     retries: int,
     sleep: Callable[[float], None] = time.sleep,
-) -> PublishOutcome:
-    """Publish one slot exactly once, reconciling any earlier attempt first.
+) -> Prepared:
+    """Phase 1: reconcile any earlier attempt, else create the container (not yet published).
 
     ``previous_container`` is None when this slot has never been attempted; otherwise the
-    container id from its earlier intent record ("" when that attempt never created one).
-    ``on_intent`` must durably record the new container id before publishing continues.
-    Recent media are searched (by exact caption) only for slots with an earlier attempt, so a
-    new post is never mistaken for an older one; captions are unique within a page's queue.
+    container id from its earlier intent record ("" when that attempt never created one, or
+    when the caller wants recent media checked anyway). Recent media are searched by exact
+    caption only in that case, so a new post is never mistaken for an older one; captions are
+    unique within a page's queue.
     """
     if previous_container:
         status = client.container_status(previous_container)
@@ -240,22 +253,32 @@ def publish_manifest(
             media_id = _find_published(client, manifest.caption)
             if not media_id:
                 raise PublishError("container published but media not found; not re-posting")
-            return PublishOutcome(previous_container, media_id, client.permalink(media_id), True)
-        container = previous_container if status in (FINISHED, IN_PROGRESS) else ""
+            outcome = PublishOutcome(previous_container, media_id, client.permalink(media_id), True)
+            return Prepared(previous_container, False, outcome)
+        if status in (FINISHED, IN_PROGRESS):
+            return Prepared(previous_container, False)
     elif previous_container == "":
-        # Intent without container (crash before it existed): make sure nothing went out.
         media_id = _find_published(client, manifest.caption)
         if media_id:
-            return PublishOutcome("", media_id, client.permalink(media_id), True)
-        container = ""
+            return Prepared(
+                "", False, PublishOutcome("", media_id, client.permalink(media_id), True)
+            )
+    if manifest.format == "carousel":
+        container = _create_carousel(client, manifest, delays, retries, sleep)
     else:
-        container = ""
-    if not container:
-        if manifest.format == "carousel":
-            container = _create_carousel(client, manifest, delays, retries, sleep)
-        else:
-            container = _with_retries(lambda: client.create_container(manifest), retries, sleep)
-        on_intent(container)
+        container = _with_retries(lambda: client.create_container(manifest), retries, sleep)
+    return Prepared(container, True)
+
+
+def finish_publish(
+    client: InstagramClient,
+    manifest: Manifest,
+    container: str,
+    delays: list[float],
+    retries: int,
+    sleep: Callable[[float], None] = time.sleep,
+) -> PublishOutcome:
+    """Phase 2: wait for the container, publish it once, fetch the permalink."""
     wait_for_container(client, container, delays, sleep)
 
     def do_publish() -> str:
@@ -271,3 +294,25 @@ def publish_manifest(
 
     media_id = _with_retries(do_publish, retries, sleep)
     return PublishOutcome(container, media_id, client.permalink(media_id))
+
+
+def publish_manifest(
+    client: InstagramClient,
+    manifest: Manifest,
+    previous_container: str | None,
+    on_intent: IntentCallback,
+    delays: list[float],
+    retries: int,
+    sleep: Callable[[float], None] = time.sleep,
+) -> PublishOutcome:
+    """Publish one slot exactly once, reconciling any earlier attempt first.
+
+    ``on_intent`` must durably record a newly created container id before publishing continues
+    (in GitHub Actions the two phases run as separate steps with an upload in between).
+    """
+    prepared = prepare_container(client, manifest, previous_container, delays, retries, sleep)
+    if prepared.outcome is not None:
+        return prepared.outcome
+    if prepared.created:
+        on_intent(prepared.container_id)
+    return finish_publish(client, manifest, prepared.container_id, delays, retries, sleep)

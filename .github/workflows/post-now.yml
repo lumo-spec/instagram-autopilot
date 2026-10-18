@@ -1,0 +1,38 @@
+# On demand: publish an approved queue post now (phone: GitHub app -> Actions -> Post now).
+# Only people with write access can run it. Inputs reach scripts only via environment variables.
+name: Post now
+
+on:
+  workflow_dispatch:
+    inputs:
+      page:
+        description: Page
+        type: choice
+        options: [simplestorymode]
+        default: simplestorymode
+      post_id:
+        description: "Post id (e.g. c01-you-can-miss). Leave empty for the next approved post."
+        type: string
+        default: ""
+      format:
+        description: "Kind of post when no id is given"
+        type: choice
+        options: [auto, carousel, image, reel]
+        default: auto
+
+permissions: {}
+
+concurrency:
+  group: instagram-publish
+  cancel-in-progress: false
+
+jobs:
+  post:
+    uses: ./.github/workflows/_pipeline.yml
+    permissions:
+      contents: write
+      issues: write
+    with:
+      page: ${{ inputs.page }}
+      format: ${{ inputs.format }}
+      post_id: ${{ inputs.post_id }}

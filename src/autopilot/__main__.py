@@ -1,7 +1,8 @@
 """Command line: ``python -m autopilot <command>``.
 
-Commands available now: validate, queue, preview, build, rehearse, pronunciation-report.
-plan | publish | record | renew run inside GitHub Actions (added in stage 2).
+Local commands: validate, queue, preview, build, rehearse, pronunciation-report.
+The GitHub Actions jobs (plan, build, host, publish, record, renew, ...) live in
+``python -m autopilot.jobs``.
 """
 
 from __future__ import annotations

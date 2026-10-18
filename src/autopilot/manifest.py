@@ -54,13 +54,14 @@ def media_names(slot_key: str, fmt: str, count: int) -> list[str]:
     return [f"{slot_key}{'.jpg' if fmt == 'image' else '.mp4'}"]
 
 
-def allowed_media_prefixes(repo: str, page: str) -> tuple[str, ...]:
-    """URL prefixes a page's hosted media may use (the repository's own hosts only)."""
-    owner, name = repo.split("/", 1)
-    return (
-        f"https://raw.githubusercontent.com/{owner}/{name}/media/{page}/",
-        f"https://{owner}.github.io/{name}/{page}/",
-    )
+def media_url_ok(url: str, repo: str, page: str, name: str) -> bool:
+    """True for the repository's own hosts only: raw files on the media branch (by branch name
+    or by commit SHA) or its GitHub Pages site, inside the page's own folder."""
+    owner, repo_name = (re.escape(p) for p in repo.split("/", 1))
+    raw = rf"https://raw\.githubusercontent\.com/{owner}/{repo_name}/(?:media|[0-9a-f]{{40}})"
+    pages = rf"https://{owner.lower()}\.github\.io/{repo_name}"
+    pattern = rf"^(?:{raw}|{pages})/{re.escape(page)}/{re.escape(name)}$"
+    return bool(re.match(pattern, url))
 
 
 def validate_manifest(
@@ -117,8 +118,7 @@ def validate_manifest(
             continue
         parsed = urlparse(url)
         check(parsed.scheme == "https" and not parsed.query and not parsed.fragment, "media_url")
-        check(any(url.startswith(p) for p in allowed_media_prefixes(repo, page)), "media_url host")
-        check(url.endswith(f"/{name}"), "media_url file name")
+        check(media_url_ok(url, repo, page, name), "media_url host or file name")
     return Manifest(
         page=page,
         slot_key=data["slot_key"],

@@ -1,0 +1,265 @@
+# Token renewal (sealed hand-off), health check, keepalive, media cleanup, status page, alert test.
+#
+# THE WEEKLY SCHEDULE IS OFF until the live tests pass (same rule as autopilot.yml). Run tasks by
+# hand: Actions -> Maintenance -> Run workflow. Adding a page: add it to the `page` matrices.
+name: Maintenance
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: What to do
+        type: choice
+        options: [all, renew, health, status, keepalive, cleanup, token-set, test-alert, close-test-alert]
+        default: status
+      page:
+        description: Page (for token-set)
+        type: choice
+        options: [simplestorymode]
+        default: simplestorymode
+  # schedule:
+  #   - cron: "23 5 * * 1" # Mondays 05:23 UTC
+
+permissions: {}
+
+jobs:
+  # ----- token renewal, part 1: public keys (renewal key only) ------------------------------
+  renew-keys:
+    if: contains(fromJSON('["", "all", "renew"]'), inputs.task)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: renewal
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-renew.txt
+      - env:
+          PYTHONPATH: src
+          GH_SECRETS_PAT: ${{ secrets.GH_SECRETS_PAT }}
+        run: python -m autopilot.jobs --work work renew-keys
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: renew-keys
+          path: work/keys.json
+          retention-days: 1
+
+  # ----- part 2: refresh and seal (page token only) ------------------------------------------
+  renew-refresh:
+    needs: renew-keys
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        page: [simplestorymode]
+    environment: page-${{ matrix.page }}
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-renew.txt
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: renew-keys
+          path: work
+      - env:
+          PYTHONPATH: src
+          AP_PAGE: ${{ matrix.page }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python -m autopilot.jobs --work work renew-refresh
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: renew-sealed-${{ matrix.page }}
+          path: work/sealed-${{ matrix.page }}.json # ciphertext only
+          retention-days: 1
+
+  # ----- part 3: store the ciphertext (renewal key only) -------------------------------------
+  renew-store:
+    needs: renew-refresh
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: renewal
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-renew.txt
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: renew-sealed-*
+          path: work
+          merge-multiple: true
+      - env:
+          PYTHONPATH: src
+          GH_SECRETS_PAT: ${{ secrets.GH_SECRETS_PAT }}
+        run: python -m autopilot.jobs --work work renew-store
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: renew-result
+          path: work/renewal-result.json
+          retention-days: 1
+
+  # ----- health check (page token only) -------------------------------------------------------
+  health:
+    if: contains(fromJSON('["", "all", "health"]'), inputs.task)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        page: [simplestorymode]
+    environment: page-${{ matrix.page }}
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - env:
+          PYTHONPATH: src
+          AP_PAGE: ${{ matrix.page }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: python -m autopilot.jobs --work work health
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: health-${{ matrix.page }}
+          path: work/health-${{ matrix.page }}.json
+          retention-days: 1
+          if-no-files-found: ignore
+
+  # ----- record: token dates, renewal-key expiry, heartbeat, status page, alerts ---------------
+  record-maintenance:
+    needs: [renew-store, health]
+    if: always() && !contains(fromJSON('["keepalive", "cleanup", "test-alert", "close-test-alert"]'), inputs.task)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write # state branch only (main is protected by a ruleset)
+      issues: write
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: work
+          merge-multiple: true
+      - env:
+          PYTHONPATH: src
+          GITHUB_TOKEN: ${{ github.token }}
+          AP_TOKEN_SET: ${{ inputs.task == 'token-set' && inputs.page || '' }}
+        run: python -m autopilot.jobs --work work record-maintenance
+
+  # ----- keepalive: GitHub switches schedules off after 60 idle days ---------------------------
+  keepalive:
+    if: contains(fromJSON('["", "all", "keepalive"]'), inputs.task)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - env:
+          PYTHONPATH: src
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m autopilot.jobs keepalive
+
+  # ----- media cleanup (inside the publishing concurrency group) -----------------------------
+  cleanup:
+    if: contains(fromJSON('["", "all", "cleanup"]'), inputs.task)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: instagram-publish
+      cancel-in-progress: false
+    permissions:
+      contents: write # media branch only
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - env:
+          PYTHONPATH: src
+        run: python -m autopilot.jobs --work work cleanup
+
+  # ----- the one-off alert test during setup ---------------------------------------------------
+  alert-test:
+    if: contains(fromJSON('["test-alert", "close-test-alert"]'), inputs.task)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    steps:
+      - uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install --require-hashes --no-deps -r requirements-publish.txt
+      - name: Open the test alert
+        if: inputs.task == 'test-alert'
+        env:
+          PYTHONPATH: src
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m autopilot.jobs test-alert
+      - name: Close the test alert
+        if: inputs.task == 'close-test-alert'
+        env:
+          PYTHONPATH: src
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m autopilot.jobs test-alert --close
