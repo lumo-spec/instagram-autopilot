@@ -34,18 +34,21 @@ def render_samples(cfg: Config, page: Page, out: Path, reels: bool = True) -> in
     entries = rng.sample(builder.entries, len(builder.theme.templates) * 2)
     voices = [str(v) for v in cfg.section("audio", "voices")]
     rows, failed = [], 0
+    voiced = 0  # rotate voices across narrated samples only
     for i, tpl in enumerate(builder.theme.templates):
         jobs: list[tuple[str, dict[str, Any], str, str | None]] = [
             ("image", entries[2 * i], "", None)
         ]
         if reels:
             mode = MODES[i % len(MODES)]
+            voice = voices[voiced % len(voices)] if "voice" in mode else None
+            voiced += voice is not None
             jobs.append(
                 (
                     "reel",
                     entries[2 * i + 1],
                     mode,
-                    voices[i % len(voices)] if "voice" in mode else None,
+                    voice,
                 )
             )
         for fmt, entry, mode, voice in jobs:
