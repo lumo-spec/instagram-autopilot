@@ -61,3 +61,6 @@ def tmp_out(tmp_path: Path) -> Path:
     out = tmp_path / "out"
     out.mkdir()
     return out
+
+
+from story_helpers import story  # noqa: E402,F401  (fixture: temporary story page)

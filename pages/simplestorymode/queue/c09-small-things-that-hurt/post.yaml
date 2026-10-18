@@ -1,0 +1,83 @@
+id: c09-small-things-that-hurt
+format: carousel
+kind: one-feeling
+topic: "small hurts that feel bigger than they should"
+priority: 90
+slides:
+  - text: |
+      Small things
+      that hurt more
+      than they should.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren sits on a window seat holding a blank, unopened envelope, rain outside."
+      characters: [wren]
+      emotion: "quiet hurt"
+      composition: "Medium shot, Wren in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Always being
+      the one who
+      reaches out first.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren writes a letter at a desk by candlelight; the paper is seen from the side so no writing is visible."
+      characters: [wren]
+      emotion: "hopeful but tired"
+      composition: "Medium shot, desk in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      "We should
+      catch up soon."
+
+      And then never.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Two empty chairs at a café table outside in the autumn rain, two untouched cups."
+      characters: []
+      emotion: "disappointment"
+      composition: "Still life, table in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Telling a story
+      and watching
+      someone stop listening
+      halfway through.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A dinner table. Wren talks while the others look away at something else."
+      characters: [wren, others]
+      emotion: "small embarrassment"
+      composition: "Medium shot, people in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Being remembered
+      only when
+      someone needs
+      something.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren hands a basket of apples to someone at her door; her face is tired."
+      characters: [wren, others]
+      emotion: "used, weary"
+      composition: "Medium shot, figures in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      If these sting,
+      you're not
+      too sensitive.
+
+      You just
+      **care deeply.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren stands on a stone bridge at dusk, taking a deep breath, wind in her hair."
+      characters: [wren]
+      emotion: "self-acceptance"
+      composition: "Wide view, Wren in the lower third, soft sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  Some hurts are small enough to brush off and heavy enough to keep.
+
+  You're not too sensitive for noticing them. Which one did you feel?
+hashtags: ["#simplestorymode", "#feelings", "#emotionalhealth", "#friendship"]

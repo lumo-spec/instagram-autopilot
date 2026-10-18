@@ -16,7 +16,7 @@ limits:
   max_hashtags: 5                   # DOC: Instagram now allows at most 5 hashtags per post (Dec 2025)
   min_hashtags: 3
   quota_stop_at: 40                 # DOC: API limit is now 100 posts / 24 h; we still stop at 40
-  text_max_chars: { quotes: 180, facts: 200 }
+  text_max_chars: { quotes: 180, facts: 200, story: 240 }   # story: per slide / reel text
   image_max_bytes: 8000000          # Instagram JPEG limit 8 MB
   reel_max_bytes: 300000000         # Instagram reel limit 300 MB
 
@@ -47,6 +47,8 @@ gates:
   contrast_percentile: 2            # worst-case background pixels (2nd percentile) must still pass
   watermark_min_px: 28
   watermark_min_contrast: 3.0
+  story_min_font_px: 60             # story slides: "huge" text (60 px = ~22 pt on a phone)
+  story_min_contrast: 7.0           # story slides: strong contrast (WCAG AAA level)
   voice_onset_s: [0.5, 1.0]
   voice_tail_min_s: 1.0
   word_sync_ms: 150
@@ -77,10 +79,29 @@ tts:
     voices/bm_lewis.pt: b5204750dcba01029d2ac9cec17aec3b20a6d64073c579d694a23cb40effbd0e
 
 ai_disclosure:
-  api_flag: true                    # DOC: the API supports is_ai_generated=true; used on narrated reels
+  api_flag: true                    # DOC: the API supports is_ai_generated=true (narrated reels, AI art)
   caption: true                     # also add a caption line (belt and braces)
   caption_text: "Voiceover: AI-generated"
+  art_caption: true                 # caption line for posts whose art is AI-generated
+  art_caption_text: "Illustrations: AI-generated"
 ai_generation: { enabled: false }
+
+story:                              # Simple Story Mode slides (carousels and single images)
+  slide_size: [1080, 1350]          # 4:5; Instagram crops every carousel slide to the first one's ratio
+  slides: { min: 2, max: 10 }       # DOC: the API allows at most 10 carousel items (the app allows 20)
+  font_px: { max: 96, min: 60, step: 2 }    # one size shared by every slide of a post
+  cover_font_px: { max: 124, min: 60 }      # first slide: same size or larger, never smaller
+  cover_max_words: 16
+  line_spacing: 1.24
+  paragraph_gap: 0.55               # extra space between lines separated by a blank line (x font size)
+  text_area: { top: [0.10, 0.52], middle: [0.24, 0.76], bottom: [0.48, 0.90] }  # height fractions
+  font: { family: lora, weight: 600 }
+  cover_font: { family: lora, weight: 700 }
+  text_color: "#2b1d14"             # dark brown
+  accent_color: "#5e2a12"           # deep rust for **emphasis**
+  panel: { color: "#f7f0e1", opacities: [0.0, 0.55, 0.72, 0.86, 0.94], feather_px: 48, pad_px: 52 }
+  contrast_margin: 0.5              # choose the lightest panel that clears the gate by this much
+  art: { max_upscale: 1.6 }         # art smaller than this needs more enlarging -> gate fails
 
 alerts: { low_stock_warning: 80, token_days_warning: 14, pat_days_warning: 30, no_post_hours: 30 }
 topup_batch: 150
@@ -93,19 +114,14 @@ rehearsal:
   failures: [container_error, publish_transient, crash_after_publish, quota_high, missed_runs, voice_gate]
 
 pages:
-  wisdom:
+  simplestorymode:
     enabled: true
-    type: quotes
-    handle: "@CHANGE_ME"            # ask the owner during setup
-    theme: daily_wisdom
-    slots:
-      morning: { time: "08:30", format: image }
-      evening: { time: "19:30", format: reel }
-  science:
-    enabled: false                  # enable after its account, content bank and secrets exist
-    type: facts
-    handle: "@CHANGE_ME"
-    theme: science_facts
-    slots:
-      midday: { time: "12:20", format: reel }
-      night: { time: "21:10", format: image }
+    type: story                     # posts only owner-approved items from pages/<page>/queue/
+    display_name: Simple Story Mode
+    handle: "@simplestorymode"
+    theme: storybook                # placeholder backgrounds (rehearsal) and art-free reels
+    queue_low_warning: 5            # alert when fewer approved posts than this remain
+    ai_generated_art: true          # the owner's art is made with an AI image tool (C2PA says so)
+    slots:                          # starting cadence; change freely (days: mon..sun)
+      carousel: { time: "19:00", format: carousel, days: [mon, wed, fri] }
+      single: { time: "12:30", format: image, days: [tue, sat] }

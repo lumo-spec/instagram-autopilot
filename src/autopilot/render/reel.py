@@ -141,11 +141,22 @@ def plan_reveals(
 class _Motion:
     """Produces the text-free background for each frame."""
 
-    def __init__(self, template: Template, size: tuple[int, int], seed: int, frames: int) -> None:
+    def __init__(
+        self,
+        template: Template,
+        size: tuple[int, int],
+        seed: int,
+        frames: int,
+        background: Image.Image | None = None,
+    ) -> None:
         self.kind, self.size, self.frames = template.motion, size, frames
         w, h = size
         scale = {"zoom": 1.12, "drift": 1.08, "particles": 1.0}[self.kind]
-        self.big = render_background(template, round(w * scale), round(h * scale), seed)
+        big = (round(w * scale), round(h * scale))
+        if background is not None:  # the owner's art (already cropped to the reel's shape)
+            self.big = background.convert("RGB").resize(big, Image.Resampling.LANCZOS)
+        else:
+            self.big = render_background(template, big[0], big[1], seed)
         rng = np.random.default_rng(seed + 7)
         self.particles = rng.uniform(0, 1, (46, 5))  # x, y, radius, alpha, phase
         self.dot = tuple(min(255, c + 70) for c in template.colors[1])
@@ -296,8 +307,14 @@ def render_reel(
     voice: VoiceTrack | None,
     audio_mode: str,
     watermark_opacity: float,
+    background: Image.Image | None = None,
+    overlay: Image.Image | None = None,
 ) -> RenderedReel:
-    """Render frames, mux with ``audio`` (already mixed to the reel length) and save the MP4."""
+    """Render frames, mux with ``audio`` (already mixed to the reel length) and save the MP4.
+
+    ``background`` replaces the procedural background (it still moves); ``overlay`` is a static
+    RGBA layer (e.g. a cream text panel) composited on every frame under the words.
+    """
     size_cfg = cfg.section("render", "reel_size")
     size = (int(size_cfg[0]), int(size_cfg[1]))
     fps = int(cfg.section("render", "fps"))
@@ -305,13 +322,19 @@ def render_reel(
     elements = layout_for(cfg, template, text, author, handle, size, True, watermark_opacity)
     reveals, spoken, duration = plan_timing(cfg, elements, voice, template)
     n_frames = round(duration * fps)
-    motion = _Motion(template, size, seed, n_frames)
+    motion = _Motion(template, size, seed, n_frames, background)
     sprites = _Sprites(elements)
+
+    def base(i: int) -> Image.Image:
+        frame = motion.frame(i)
+        if overlay is None:
+            return frame
+        return Image.alpha_composite(frame.convert("RGBA"), overlay).convert("RGB")
 
     def frames() -> Iterator[Image.Image]:
         for i in range(n_frames):
             t = i / fps
-            frame = motion.frame(i)
+            frame = base(i)
             sprites.draw(frame, [min(max((t - r) / FADE_S, 0.0), 1.0) for r in reveals])
             yield frame
 
@@ -324,7 +347,7 @@ def render_reel(
         )
         sf.write(wav, track, sr, subtype="PCM_24")
         _encode(frames(), size, fps, wav, out)
-    samples = [motion.frame(i) for i in (0, n_frames // 2, n_frames - 1)]
+    samples = [base(i) for i in (0, n_frames // 2, n_frames - 1)]
     return RenderedReel(
         out, elements, samples, reveals, spoken, voice, duration, audio_mode, template.name
     )

@@ -32,6 +32,11 @@ def assert_public_safe(text: str) -> None:
         raise ValueError("alert text failed the public-safety check")
 
 
+def _slug(page: str) -> str:
+    """Alert-key form of a page title, e.g. ``simple-story-mode``."""
+    return re.sub(r"[^a-z0-9]+", "-", page.lower()).strip("-")
+
+
 def _make(key: str, title: str, body: str) -> Alert:
     assert_public_safe(title)
     assert_public_safe(body)
@@ -41,7 +46,7 @@ def _make(key: str, title: str, body: str) -> Alert:
 def low_stock(page: str, left: int, days: float) -> Alert:
     """Content bank running low."""
     return _make(
-        f"low-stock-{page.lower()}",
+        f"low-stock-{_slug(page)}",
         f"ACTION NEEDED [{page}]: content running low — open Claude Code and type: Top up {page}",
         f"{page} has {left} unused entries left (about {days:.0f} days). "
         f"Open Claude Code in this repository and type: Top up {page}",
@@ -51,7 +56,7 @@ def low_stock(page: str, left: int, days: float) -> Alert:
 def slot_skipped(page: str, slot: str, reason: str) -> Alert:
     """Every format failed its gates or no content was eligible."""
     return _make(
-        f"skipped-{page.lower()}-{slot}",
+        f"skipped-{_slug(page)}-{slot}",
         f"[{page}] a post was skipped — check the Status page",
         f"The {slot} post was skipped: {reason}. Nothing flawed was posted. "
         "If this repeats, ask Claude Code to look at the latest run.",
@@ -61,7 +66,7 @@ def slot_skipped(page: str, slot: str, reason: str) -> Alert:
 def no_recent_post(page: str, hours: int) -> Alert:
     """Nothing published for too long."""
     return _make(
-        f"no-post-{page.lower()}",
+        f"no-post-{_slug(page)}",
         f"[{page}] no post for {hours}+ hours — check the Status page",
         f"{page} has not published for over {hours} hours. Open the Status page and the latest "
         "Autopilot run.",
@@ -71,7 +76,7 @@ def no_recent_post(page: str, hours: int) -> Alert:
 def token_renewal_failed(page: str) -> Alert:
     """Weekly token refresh failed."""
     return _make(
-        f"token-renewal-{page.lower()}",
+        f"token-renewal-{_slug(page)}",
         f"[{page}] token renewal failed — will retry; "
         "if repeated, regenerate the token (README step 6)",
         "The old token is kept and still valid. The renewal is retried next week.",
@@ -81,7 +86,7 @@ def token_renewal_failed(page: str) -> Alert:
 def token_expiring(page: str, days_left: int) -> Alert:
     """Page token close to expiry."""
     return _make(
-        f"token-expiry-{page.lower()}",
+        f"token-expiry-{_slug(page)}",
         f"ACTION NEEDED [{page}]: Instagram token expires in {days_left} days — "
         "regenerate it (README step 6)",
         "Automatic renewal has not succeeded. Follow README step 6 to set a fresh token.",
@@ -105,4 +110,35 @@ def api_version_retiring(retires_on: str) -> Alert:
         f"Instagram API version retires on {retires_on} — ask Claude Code to upgrade",
         "Open Claude Code in this repository and ask it to follow the upgrade procedure "
         "in CLAUDE.md.",
+    )
+
+
+def queue_low(page: str, left: int) -> Alert:
+    """Few approved posts left in a story page's queue."""
+    return _make(
+        f"queue-low-{_slug(page)}",
+        f"ACTION NEEDED [{page}]: only {left} approved posts left — "
+        "open Claude Code and type: New post: <topic>",
+        f"{page} has {left} approved posts waiting. Write new ones in Claude Code "
+        "(New post: <topic>), add the art, then type: Build <post-id>.",
+    )
+
+
+def queue_empty(page: str, slot: str) -> Alert:
+    """Nothing approved for a slot: the slot was skipped (never filled with anything else)."""
+    return _make(
+        f"queue-empty-{_slug(page)}",
+        f"ACTION NEEDED [{page}]: no approved post for the {slot} slot — it was skipped",
+        f"The {slot} slot had no approved post of the right kind, so nothing was posted. "
+        "Add posts in Claude Code (New post: <topic>, then Build <post-id>).",
+    )
+
+
+def approval_changed(page: str, post_id: str) -> Alert:
+    """An approved post's files changed after approval, so it will not be posted."""
+    return _make(
+        f"approval-changed-{_slug(page)}-{post_id}",
+        f"[{page}] post {post_id} changed after approval — run Build {post_id} again",
+        f"The text or art of {post_id} changed after it was approved, so it is held back. "
+        f"Open Claude Code and type: Build {post_id}",
     )

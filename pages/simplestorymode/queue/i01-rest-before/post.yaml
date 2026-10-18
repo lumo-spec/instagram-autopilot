@@ -1,0 +1,23 @@
+id: i01-rest-before
+format: image
+kind: single
+topic: "resting before exhaustion"
+priority: 10
+slides:
+  - text: |
+      You're allowed
+      to rest
+      **before**
+      you fall apart.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren dozes in a hammock between apple trees in autumn, a book on her lap."
+      characters: [wren]
+      emotion: "peaceful rest"
+      composition: "Wide view, hammock in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  You don't have to wait until you're exhausted to rest.
+
+  Take the small break today. Save this as permission.
+hashtags: ["#simplestorymode", "#rest", "#selfcare"]

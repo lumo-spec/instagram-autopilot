@@ -1,0 +1,83 @@
+id: c08-same-as-usual
+format: carousel
+kind: story
+topic: "belonging and being remembered"
+priority: 80
+slides:
+  - text: |
+      He was new in town
+      and ate lunch alone
+      for a whole month.
+    position: top
+    focus: bottom
+    brief:
+      scene: "An autumn market square. Rowan sits alone on a bench eating bread; pigeons at his feet."
+      characters: [rowan]
+      emotion: "lonely, trying not to show it"
+      composition: "Wide view, Rowan small in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Nobody was unkind.
+
+      Nobody was
+      anything at all.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A busy cobbled street. People pass Rowan without looking at him."
+      characters: [rowan, others]
+      emotion: "invisible"
+      composition: "Wide view, crowd in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Then one day,
+      the baker said,
+      "Same as usual?"
+    position: top
+    focus: bottom
+    brief:
+      scene: "A small bakery counter (no signs or writing). An older woman baker smiles warmly, handing Rowan a loaf."
+      characters: [rowan, others]
+      emotion: "surprised warmth"
+      composition: "Medium shot, counter and people in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Three small words.
+
+      He walked home
+      feeling like
+      he **belonged.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Rowan walks home in golden light with bread under his arm, a small smile."
+      characters: [rowan]
+      emotion: "quiet joy"
+      composition: "Wide view, Rowan in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Never underestimate
+      what it means
+      to be remembered.
+    position: top
+    focus: bottom
+    brief:
+      scene: "The baker waves from her doorway at dusk; warm light spills on to the street."
+      characters: [others]
+      emotion: "kindness"
+      composition: "Doorway in the lower half, evening sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Learn someone's name.
+      Ask about their day.
+
+      You might be
+      **the first one
+      who did.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Months later in a tavern. Rowan pulls out a chair to welcome a shy newcomer to his table."
+      characters: [rowan, others]
+      emotion: "welcome, paying it forward"
+      composition: "Medium shot, table in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  He ate lunch alone for a month. Then the baker said, "Same as usual?"
+
+  Belonging often starts with something tiny. Who made you feel welcome when you were new?
+hashtags: ["#simplestorymode", "#belonging", "#kindness", "#lonely"]

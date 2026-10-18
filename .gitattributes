@@ -6,3 +6,5 @@
 *.png binary
 *.mp4 binary
 *.wav binary
+*.jpeg binary
+*.webp binary

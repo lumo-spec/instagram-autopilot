@@ -1,0 +1,25 @@
+id: i02-stay-and-listen
+format: image
+kind: single
+topic: "listening instead of fixing"
+priority: 20
+slides:
+  - text: |
+      Some people
+      don't need advice.
+
+      They need you
+      to **stay**
+      and listen.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Dusk on a harbour wall. A friend talks with their head down; Rowan sits beside them, listening closely."
+      characters: [rowan, others]
+      emotion: "being held by attention"
+      composition: "Wide view, figures in the lower third, calm evening sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  Not every hard moment needs fixing. Sometimes the kindest thing is staying.
+
+  Who is the person who listens to you?
+hashtags: ["#simplestorymode", "#feelingunheard", "#friendship", "#kindness"]

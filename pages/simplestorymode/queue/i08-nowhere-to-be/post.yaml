@@ -1,0 +1,23 @@
+id: i08-nowhere-to-be
+format: image
+kind: single
+topic: "slow days"
+priority: 80
+slides:
+  - text: |
+      Some days,
+      happiness is
+      a warm cup
+      and **nowhere to be.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "A cosy cottage room on a rainy afternoon. Wren sits curled in an armchair under a blanket with a mug, eyes half-closed."
+      characters: [wren]
+      emotion: "contentment"
+      composition: "Medium shot, armchair in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  Not every good day needs plans. Some just need a warm cup and nowhere to be.
+
+  What does your perfect slow day look like?
+hashtags: ["#simplestorymode", "#slowliving", "#everydayhappiness", "#cosy"]

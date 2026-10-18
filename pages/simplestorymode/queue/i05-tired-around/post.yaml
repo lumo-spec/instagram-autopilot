@@ -1,0 +1,22 @@
+id: i05-tired-around
+format: image
+kind: single
+topic: "being a safe person"
+priority: 50
+slides:
+  - text: |
+      Be someone
+      people can be
+      **tired** around.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A train compartment (no signs or writing). A sleepy friend leans on Rowan's shoulder; autumn countryside passes the window."
+      characters: [rowan, others]
+      emotion: "safety, trust"
+      composition: "Medium shot, both in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  The safest people are the ones you don't have to perform for.
+
+  Tag someone you can be tired around.
+hashtags: ["#simplestorymode", "#friendship", "#kindness", "#belonging"]

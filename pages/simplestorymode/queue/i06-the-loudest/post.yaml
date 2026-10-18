@@ -1,0 +1,23 @@
+id: i06-the-loudest
+format: image
+kind: single
+topic: "quiet people belong too"
+priority: 60
+slides:
+  - text: |
+      You don't have to be
+      the loudest
+      in the room
+      to **belong** in it.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A lively tavern gathering. Wren sits quietly at the edge of a long table, and someone turns to include her with a smile."
+      characters: [wren, others]
+      emotion: "being included"
+      composition: "Medium shot, table and people in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  Quiet people belong too. You don't have to be loud to be welcome.
+
+  Share this with someone who often feels on the edge of the room.
+hashtags: ["#simplestorymode", "#belonging", "#introvert", "#friendship"]

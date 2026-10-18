@@ -1,0 +1,111 @@
+id: c01-you-can-miss
+format: carousel
+kind: repeated-opening
+topic: missing someone you were right to let go
+priority: 10
+slides:
+  - text: |
+      You can miss someone
+      and still know
+      **letting go was right.**
+    position: top
+    focus: bottom
+    brief:
+      scene: >-
+        A stone footbridge over a slow river in late autumn. Golden leaves drift on the water.
+        Wren stands alone at the middle of the bridge, hands resting on the cold stone, looking
+        down at the water.
+      characters: [wren]
+      emotion: quiet ache, but steady — not crying, just remembering
+      composition: >-
+        Wide view, Wren small in the lower half. Upper half is soft misty sky above the trees,
+        plain and calm.
+  - text: |
+      You can miss
+      how they laughed,
+      and still remember
+      how often
+      you cried alone.
+    position: top
+    focus: bottom
+    brief:
+      scene: >-
+        A cosy kitchen at night, rain on the window. Two mugs on the table, only one used.
+        Wren sits with her knees pulled up on a wooden chair.
+      characters: [wren]
+      emotion: lonely remembering
+      composition: >-
+        Medium shot from the doorway, Wren in the lower third. Upper area is a dim, plain cream
+        wall with soft lamp light.
+  - text: |
+      You can miss the plans
+      you made together,
+      and still choose
+      the life you need.
+    position: bottom
+    focus: top
+    brief:
+      scene: >-
+        An old wooden table by a window covered with an unfolded paper map (blank, no words or
+        markings), a pressed autumn leaf on it. Wren's hand gently folds the map closed.
+      characters: [wren]
+      emotion: tender decision
+      composition: >-
+        Close-up of hands and map in the upper half. Lower half is the plain cream tablecloth in
+        soft light.
+  - text: |
+      You can miss them
+      on Sundays,
+      in old songs,
+      in the smell of rain,
+      and still not go back.
+    position: top
+    focus: bottom
+    brief:
+      scene: >-
+        A rainy autumn lane between stone cottages. Wren walks away from the viewer under a
+        dark umbrella, navy scarf visible, puddles reflecting warm windows.
+      characters: [wren]
+      emotion: missing someone, still walking forward
+      composition: >-
+        View from behind, Wren in the lower centre. Upper half is soft grey rain sky.
+  - text: |
+      Missing them
+      doesn't mean
+      you were wrong.
+
+      It means
+      **you really loved.**
+    position: middle
+    focus: center
+    brief:
+      scene: >-
+        Golden hour on a lake shore in the Highlands. Wren sits on a flat rock, her face turned
+        slightly towards the low sun, eyes closed.
+      characters: [wren]
+      emotion: gentle acceptance, a small breath of relief
+      composition: >-
+        Wide view; the calm middle band of the picture is open water reflecting soft light,
+        with Wren small at the lower left.
+  - text: |
+      Let yourself miss them.
+      Then let yourself
+      **keep going.**
+    position: top
+    focus: bottom
+    brief:
+      scene: >-
+        Morning in a lavender field leading to a stone cottage. Wren walks forward along a path,
+        hair moving in the breeze, a small golden flower in her hair.
+      characters: [wren]
+      emotion: lighter, hopeful, not fully healed
+      composition: >-
+        Wren small in the lower third walking towards the horizon. Upper half is pale open
+        morning sky.
+caption: |
+  You can miss someone and still know you were right to leave.
+
+  Missing them doesn't mean you should go back. It means it mattered.
+
+  Save this for the evening it gets heavy, or send it to someone who is quietly missing someone.
+hashtags: ["#simplestorymode", "#healing", "#lettinggo", "#heartbreak", "#feelings"]

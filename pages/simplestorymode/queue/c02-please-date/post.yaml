@@ -1,0 +1,82 @@
+id: c02-please-date
+format: carousel
+kind: repeated-opening
+topic: "what gentle love looks like"
+priority: 20
+slides:
+  - text: |
+      Please date someone
+      who is **gentle**
+      with your heart.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A golden autumn lane between stone cottages. Rowan and Wren walk side by side, his hand lightly holding hers."
+      characters: [rowan, wren]
+      emotion: "warm, safe, unhurried"
+      composition: "Wide view from behind, the couple small in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Someone who asks
+      how your day was
+      and actually
+      waits for the answer.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A cosy cottage kitchen in the evening. Wren talks with her hands, mid-story; Rowan leans on the counter holding a mug, fully listening."
+      characters: [rowan, wren]
+      emotion: "being listened to, delight"
+      composition: "Medium shot, both in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Someone who notices
+      when you go quiet,
+      and doesn't make you
+      explain why.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A rainy window seat. Wren looks out at the rain; Rowan gently lays a knitted blanket over her shoulders."
+      characters: [rowan, wren]
+      emotion: "quiet sadness met with tenderness"
+      composition: "Side view, figures in the lower half, rain-streaked window glass above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Someone who stays
+      soft with you
+      even when
+      they're tired.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Late night by a small fireplace. Rowan, clearly tired, smiles softly as Wren leans her head on his shoulder."
+      characters: [rowan, wren]
+      emotion: "tired but tender"
+      composition: "Close-medium shot, figures in the lower half, dim plain wall above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Someone whose love
+      feels like **rest,**
+      not like a test.
+    position: bottom
+    focus: top
+    brief:
+      scene: "A picnic blanket on a lake shore in golden autumn. Rowan and Wren lie on their backs, looking up, leaves drifting down."
+      characters: [rowan, wren]
+      emotion: "ease, peace"
+      composition: "Seen from above at an angle, figures in the upper half. Keep the bottom 40% of the picture calm and plain (a tablecloth, still water or soft ground)."
+  - text: |
+      You deserve love
+      that doesn't make you
+      feel like too much.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A windy Highland hilltop. Wren laughs freely, hair blowing loose; Rowan watches her with a soft smile."
+      characters: [rowan, wren]
+      emotion: "freedom, being fully accepted"
+      composition: "Wide view, both small in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  Please date someone who is gentle with your heart.
+
+  Not perfect. Just kind, patient and paying attention.
+
+  Tag someone who loves like this, or save it for the day you need the reminder.
+hashtags: ["#simplestorymode", "#love", "#relationships", "#gentlelove"]

@@ -1,6 +1,6 @@
-"""Build pages/<page>/content.json for a quotes page from its reviewed source files.
+"""Build ``<bank-dir>/content.json`` for a quote bank from its reviewed source files.
 
-Sources (both under ``pages/<page>/sources/``):
+Sources (both under ``<bank-dir>/sources/``):
   originals.txt        "primary-tag, other-tags | text" lines (no attribution)
   public_domain.yaml   verified public-domain quotes (see scripts/verify_pd_quotes.py)
 
@@ -8,11 +8,13 @@ IDs are derived from the normalised text, so rebuilding keeps them stable. Near-
 removed (public-domain quotes win, then earlier lines) and reported. The synonym map in
 ``sources/synonyms.yaml`` is copied into the bank.
 
-Usage:  python scripts/build_bank.py wisdom
+Usage:  python scripts/build_bank.py <bank-dir> [--name NAME] [--status verified|archived]
+e.g.    python scripts/build_bank.py pages/simplestorymode/archive --name wisdom --status archived
 """
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
@@ -82,12 +84,19 @@ def read_public_domain(path: Path, prefix: str) -> list[dict[str, Any]]:
 
 
 def main() -> int:
-    page_name = sys.argv[1] if len(sys.argv) > 1 else "wisdom"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("bank_dir", type=Path)
+    parser.add_argument(
+        "--name", default="wisdom", help="bank name (its first letter prefixes ids)"
+    )
+    parser.add_argument("--status", default="verified", choices=("verified", "archived"))
+    args = parser.parse_args()
     cfg = load_config()
-    page = cfg.page(page_name)
-    max_chars = int(cfg.section("limits", "text_max_chars", page.type))
+    bank_dir = args.bank_dir if args.bank_dir.is_absolute() else ROOT / args.bank_dir
+    page_name, page_type = args.name, "quotes"
+    max_chars = int(cfg.section("limits", "text_max_chars", page_type))
     threshold = float(cfg.section("near_duplicate", "threshold"))
-    src_dir = page.dir / "sources"
+    src_dir = bank_dir / "sources"
     prefix = page_name[0]
     candidates = read_public_domain(src_dir / "public_domain.yaml", prefix) + read_originals(
         src_dir / "originals.txt", prefix
@@ -101,12 +110,17 @@ def main() -> int:
         else:
             kept.append(cand)
     synonyms = yaml.safe_load((src_dir / "synonyms.yaml").read_text(encoding="utf-8"))
-    bank = {"page": page_name, "type": page.type, "synonyms": synonyms, "entries": kept}
-    report = validate_bank(bank, max_chars, threshold)
+    bank: dict[str, Any] = {"page": page_name, "type": page_type, "synonyms": synonyms}
+    report = validate_bank({**bank, "entries": kept}, max_chars, threshold)
+    for entry in kept:
+        entry["status"] = args.status
+    if args.status == "archived":
+        bank["note"] = "ARCHIVED 2026-10-18: not postable on any page."
+    bank["entries"] = kept
     for eid, problems in report.errors.items():
         text = next(e["text"] for e in kept if e["id"] == eid)
         print(f"INVALID {eid}: {', '.join(problems)} :: {text}")
-    out = page.dir / "content.json"
+    out = bank_dir / "content.json"
     out.write_text(json.dumps(bank, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     attributed = sum(1 for e in kept if e["author"])
     print(f"Near-duplicates removed: {len(removed)}")

@@ -6,7 +6,7 @@ from typing import Any
 
 import pytest
 
-from autopilot.config import Config
+from autopilot.config import ROOT
 from autopilot.content.bank import choose_audio_mode, choose_template, select_entry, topic_tags
 from autopilot.content.captions import build_caption, load_caption_kit, pick_hashtags
 from autopilot.content.sanitize import sanitise_text
@@ -16,6 +16,7 @@ from autopilot.errors import ContentError
 from autopilot.state import STATUS_PUBLISHED, PageState, PostRecord
 
 DAY = date(2026, 10, 20)
+ARCHIVE = ROOT / "pages" / "simplestorymode" / "archive"
 
 
 def _posted(
@@ -23,7 +24,7 @@ def _posted(
 ) -> None:
     state.upsert(
         PostRecord(
-            f"wisdom-{day}-{slot}",
+            f"bankpage-{day}-{slot}",
             day.isoformat(),
             slot,
             STATUS_PUBLISHED,
@@ -117,21 +118,25 @@ def test_length_class() -> None:
     assert length_class("a" * 150) == "long"
 
 
-def test_real_bank_is_clean(cfg: Config) -> None:
-    from autopilot.content.validate import load_bank
+def test_archived_bank_is_never_postable() -> None:
+    from autopilot.config import ROOT
+    from autopilot.content.validate import load_bank, postable_entries
 
-    page = cfg.page("wisdom")
-    bank = load_bank(page.dir / "content.json")
-    report = validate_bank(bank, 180, 85)
+    bank = load_bank(ROOT / "pages" / "simplestorymode" / "archive" / "content.json")
+    assert len(bank["entries"]) >= 400
+    assert {e["status"] for e in bank["entries"]} == {"archived"}
+    assert postable_entries(bank, 180) == []
+    # Structurally still a clean bank (used as test data for the quote-bank engine).
+    restored = dict(bank, entries=[dict(e, status="verified") for e in bank["entries"]])
+    report = validate_bank(restored, 180, 85)
     assert report.ok
-    assert report.total >= 400
     attributed = sum(1 for e in bank["entries"] if e["author"])
-    assert 0.1 <= attributed / report.total <= 0.3  # roughly 80/20 originals/public domain
+    assert 0.1 <= attributed / report.total <= 0.3
 
 
 # ----- selection -----------------------------------------------------------------------------
 def test_no_repeat_until_bank_used(entries: list[dict[str, Any]]) -> None:
-    state = PageState("wisdom")
+    state = PageState("bankpage")
     seen = set()
     for i in range(len(entries)):
         day = date(2026, 10, 1 + i)
@@ -145,7 +150,7 @@ def test_no_repeat_until_bank_used(entries: list[dict[str, Any]]) -> None:
 
 
 def test_recycles_oldest_first(entries: list[dict[str, Any]]) -> None:
-    state = PageState("wisdom")
+    state = PageState("bankpage")
     for i, e in enumerate(entries):
         _posted(state, e["id"], date(2026, 10, 1 + i))
     sel = select_entry(entries, state, date(2026, 12, 1), "x", 0, 85, 1)
@@ -153,7 +158,7 @@ def test_recycles_oldest_first(entries: list[dict[str, Any]]) -> None:
 
 
 def test_facts_recycle_only_after_min_days(entries: list[dict[str, Any]]) -> None:
-    state = PageState("science")
+    state = PageState("factpage")
     for e in entries:
         _posted(state, e["id"], date(2026, 10, 1), slot=e["id"])
     with pytest.raises(ContentError):
@@ -166,7 +171,7 @@ def test_same_primary_tag_not_twice_a_day(entries: list[dict[str, Any]]) -> None
         dict(entries[0], id="q-0000000a", text="Rest well tonight and wake gently."),
         entries[1],
     ]
-    state = PageState("wisdom")
+    state = PageState("bankpage")
     _posted(state, "q-00000001", DAY)
     pool = [entries[0], *twins]
     for i in range(10):
@@ -176,14 +181,14 @@ def test_same_primary_tag_not_twice_a_day(entries: list[dict[str, Any]]) -> None
 
 def test_near_duplicate_of_recent_post_skipped(entries: list[dict[str, Any]]) -> None:
     custom = PostRecord(
-        "wisdom-2026-10-19-ondemand",
+        "bankpage-2026-10-19-ondemand",
         "2026-10-19",
         "ondemand",
         STATUS_PUBLISHED,
         content_id="custom-00000000",
         text="Rest is part of the work!",
     )
-    state = PageState("wisdom", [custom])
+    state = PageState("bankpage", [custom])
     for i in range(10):
         assert select_entry(entries, state, DAY, f"s{i}", 0, 85, 200).entry["id"] != "q-00000001"
 
@@ -200,7 +205,7 @@ def test_topic_matching(entries: list[dict[str, Any]]) -> None:
 
 
 def test_template_differs_from_previous() -> None:
-    state = PageState("wisdom")
+    state = PageState("bankpage")
     state.upsert(
         PostRecord("k", "2026-10-19", "m", STATUS_PUBLISHED, content_id="a", template="sage")
     )
@@ -211,7 +216,7 @@ def test_template_differs_from_previous() -> None:
 
 def test_templates_rotate_evenly() -> None:
     names = ["a", "b", "c", "d", "e", "f", "g", "h"]
-    state = PageState("wisdom")
+    state = PageState("bankpage")
     for i in range(80):
         t = choose_template(names, state, f"id{i}", f"s{i}")
         state.upsert(
@@ -231,8 +236,8 @@ def test_audio_mode_weights() -> None:
 
 
 # ----- captions ------------------------------------------------------------------------------
-def test_caption_contents(cfg: Config) -> None:
-    kit = load_caption_kit(cfg.page("wisdom").dir / "captions.json")
+def test_caption_contents() -> None:
+    kit = load_caption_kit(ARCHIVE / "captions-quotes.json")
     entry = {
         "id": "w-1",
         "text": "A quiet mind -- clear.",
@@ -247,8 +252,8 @@ def test_caption_contents(cfg: Config) -> None:
     assert "Voiceover" not in plain.text
 
 
-def test_hashtags_never_repeat_previous_set(cfg: Config) -> None:
-    kit = load_caption_kit(cfg.page("wisdom").dir / "captions.json")
+def test_hashtags_never_repeat_previous_set() -> None:
+    kit = load_caption_kit(ARCHIVE / "captions-quotes.json")
     entry = {"tags": ["peace"], "author": None}
     first = pick_hashtags(kit, entry, random.Random(1), 5, frozenset())
     for i in range(50):

@@ -1,0 +1,80 @@
+id: c03-you-dont-have-to
+format: carousel
+kind: repeated-opening
+topic: "permission to rest"
+priority: 30
+slides:
+  - text: |
+      You don't have to
+      **earn** your rest.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Afternoon autumn light in a cottage sitting room. Rowan has fallen asleep in a worn armchair by the window, an open book on his chest."
+      characters: [rowan]
+      emotion: "deep, deserved rest"
+      composition: "Medium shot, armchair in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      You don't have to
+      reply to everyone
+      today.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A wooden table by a window: a phone lying face down, a cup of tea with steam, a pressed autumn leaf. No screen visible."
+      characters: []
+      emotion: "relief, quiet"
+      composition: "Still life, objects in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      You don't have to
+      turn every feeling
+      into a lesson.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Rowan sits on the stone steps of a cottage, elbows on knees, watching fallen leaves move in the wind."
+      characters: [rowan]
+      emotion: "letting a feeling just be"
+      composition: "Medium-wide shot, Rowan in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      You don't have to
+      be useful
+      to be worth
+      loving.
+    position: bottom
+    focus: top
+    brief:
+      scene: "Rowan lies on the grass under a great oak tree, eyes closed, leaves falling around him."
+      characters: [rowan]
+      emotion: "softness, self-worth"
+      composition: "Seen from above, Rowan in the upper half. Keep the bottom 40% of the picture calm and plain (a tablecloth, still water or soft ground)."
+  - text: |
+      You don't have to
+      have it all
+      figured out
+      by Sunday.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A sunny, slightly messy cottage kitchen on a Sunday morning. Rowan in a knitted jumper makes toast, hair untidy, half-smiling."
+      characters: [rowan]
+      emotion: "gentle humour, ease"
+      composition: "Medium shot, Rowan in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Some days,
+      just getting through
+      is **enough.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Dusk on a lamp-lit village lane. Rowan walks home, tired, with a small relieved smile."
+      characters: [rowan]
+      emotion: "tired relief"
+      composition: "Wide view, Rowan small in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  You don't have to earn your rest.
+
+  If today was heavy, getting through it counts.
+
+  Save this for the evening you feel behind on everything.
+hashtags: ["#simplestorymode", "#rest", "#selfcare", "#slowliving"]

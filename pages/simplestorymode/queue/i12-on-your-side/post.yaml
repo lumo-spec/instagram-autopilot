@@ -1,0 +1,26 @@
+id: i12-on-your-side
+format: image
+kind: single
+topic: "speaking kindly to yourself"
+priority: 120
+slides:
+  - text: |
+      You'd never talk
+      to a friend
+      like that.
+
+      So why talk
+      to **yourself**
+      that way?
+    position: middle
+    focus: center
+    brief:
+      scene: "Wren looks at her reflection in a still lake with golden trees, a gentle half-smile."
+      characters: [wren]
+      emotion: "self-kindness"
+      composition: "Wren small at the lower edge, her reflection below her. Keep a calm, plain band across the middle of the picture (open water, mist or sky)."
+caption: |
+  If a friend talked to you the way you talk to yourself, you'd ask them to be kinder.
+
+  Try being on your own side today.
+hashtags: ["#simplestorymode", "#selfcompassion", "#kindness", "#selflove"]

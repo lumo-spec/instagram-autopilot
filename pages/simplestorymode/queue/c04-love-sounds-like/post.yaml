@@ -1,0 +1,75 @@
+id: c04-love-sounds-like
+format: carousel
+kind: repeated-opening
+topic: "small everyday signs of love"
+priority: 40
+slides:
+  - text: |
+      Sometimes,
+      love sounds like...
+    position: top
+    focus: bottom
+    brief:
+      scene: "A stone cottage at dusk, warm light in the open kitchen window, the silhouettes of Rowan and Wren inside."
+      characters: [rowan, wren]
+      emotion: "warmth, home"
+      composition: "Exterior view, cottage in the lower half, deep blue evening sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      "Text me
+      when you get home."
+    position: top
+    focus: bottom
+    brief:
+      scene: "A cottage doorway at night. Wren winds her navy scarf on to leave; Rowan holds the door, lantern light on his face."
+      characters: [rowan, wren]
+      emotion: "caring, a little worried"
+      composition: "Medium shot, figures in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      "I saved you
+      the last piece."
+    position: top
+    focus: bottom
+    brief:
+      scene: "A kitchen table. Rowan slides a plate with the last slice of apple pie across to Wren, who looks surprised and pleased."
+      characters: [rowan, wren]
+      emotion: "small delight"
+      composition: "Table-level view, people and plate in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      "You seemed quiet.
+      Are you okay?"
+    position: top
+    focus: bottom
+    brief:
+      scene: "A sofa in a lamp-lit room. Wren hugs a cushion; Rowan sits beside her, leaning in gently."
+      characters: [rowan, wren]
+      emotion: "being noticed"
+      composition: "Medium shot, both in the lower half, plain warm wall above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      "Take my scarf.
+      It's cold."
+    position: top
+    focus: bottom
+    brief:
+      scene: "A windy stone bridge in autumn. Rowan wraps his navy scarf around Wren's neck; leaves swirl."
+      characters: [rowan, wren]
+      emotion: "protective tenderness"
+      composition: "Medium shot from the side, figures in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Love isn't always
+      big words.
+
+      Sometimes it's
+      **small attention,
+      every day.**
+    position: middle
+    focus: center
+    brief:
+      scene: "Two cups of tea side by side on a rainy windowsill, two hands almost touching between them."
+      characters: []
+      emotion: "quiet closeness"
+      composition: "Close-up, cups and hands across the lower third. Keep a calm, plain band across the middle of the picture (open water, mist or sky)."
+caption: |
+  Sometimes love sounds like "Text me when you get home."
+
+  What is the small thing someone says that makes you feel loved? Tell us below.
+hashtags: ["#simplestorymode", "#love", "#littlethings", "#relationships"]

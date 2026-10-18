@@ -4,7 +4,8 @@ GitHub cron runs in UTC and can be late, so the workflow runs every 30 minutes a
 works in the owner's timezone itself (clock changes need no workflow edits). Each slot gets a
 deterministic per-day offset of up to +/- ``jitter_minutes`` so posting times look natural.
 A slot is due once its target time has passed, while it is still within the catch-up window and
-not too close to the next slot. Slots from earlier days are never back-filled.
+not too close to the next slot. Slots from earlier days are never back-filled. Slots may be limited
+to certain weekdays (e.g. carousels on Monday, Wednesday and Friday).
 """
 
 from __future__ import annotations
@@ -31,7 +32,7 @@ class DueSlot:
 
 
 def slot_key(page: str, day: date, slot: str) -> str:
-    """Idempotency key such as ``wisdom-2026-09-18-morning``."""
+    """Idempotency key such as ``simplestorymode-2026-09-18-carousel``."""
     return f"{page}-{day.isoformat()}-{slot}"
 
 
@@ -57,7 +58,11 @@ def due_slots(cfg: Config, page: Page, now_utc: datetime, state: PageState) -> l
     window = timedelta(hours=float(cfg.section("catchup_window_hours")))
     gap = timedelta(minutes=float(cfg.section("min_minutes_before_next_slot")))
     today = now_utc.astimezone(tz).date()
-    targets = [(s, target_time(page.name, s, today, tz, spread)) for s in page.slots]
+    targets = [
+        (s, target_time(page.name, s, today, tz, spread))
+        for s in page.slots
+        if s.runs_on(today.weekday())
+    ]
     due: list[DueSlot] = []
     for i, (slot, target) in enumerate(targets):
         key = slot_key(page.name, today, slot.name)
@@ -85,6 +90,8 @@ def next_slots(cfg: Config, page: Page, now_utc: datetime, count: int = 2) -> li
     found: list[datetime] = []
     while len(found) < count:
         for s in page.slots:
+            if not s.runs_on(day.weekday()):
+                continue
             t = target_time(page.name, s, day, tz, spread)
             if t > now_utc and len(found) < count:
                 found.append(t)

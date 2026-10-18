@@ -19,7 +19,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-QUOTES_FILE = ROOT / "pages" / "wisdom" / "sources" / "public_domain.yaml"
+QUOTES_FILE = ROOT / "pages" / "simplestorymode" / "archive" / "sources" / "public_domain.yaml"
 GUTENBERG_URL = "https://www.gutenberg.org/cache/epub/{id}/pg{id}.txt"
 
 

@@ -1,0 +1,55 @@
+# Simple Story Mode — recurring characters. Every art brief that features a character copies
+# the "must" traits word for word, plus "Normal human ears (rounded, not pointed, not elf ears)."
+# Reference sheets are the owner's read-only originals in references/ (git-ignored: that folder
+# also holds personal photos and must never be committed). They were made with ChatGPT image
+# generation (C2PA credentials embedded). Checked 2026-10-18: both sheets show normal, rounded
+# human ears. The armour sheets are NOT used unless the owner asks for them in a specific post.
+references_dir: references   # relative to the repository root; local only
+
+rules:
+  - Both characters ALWAYS have normal, rounded human ears — never pointed or elf ears.
+  - Expressions match the feeling of the slide (tired, hurt, unsure, relieved, tender), not always smiling.
+  - Vary the view (close-up, over-the-shoulder, from behind, wide scene) and use meaningful gestures
+    (a hand on a mug, a turned-away shoulder, a held door, fingers almost touching).
+  - Other people may appear; some posts have no characters at all.
+  - No text, letters, numbers, signs, logos or watermarks anywhere in the art.
+
+characters:
+  rowan:
+    name: Rowan
+    reference: "Rowan character sheet with rounded human ears-1.png"
+    must:
+      - adult man, about 28, warm brown skin
+      - dark brown curly hair, shoulder length
+      - short dark beard and moustache
+      - rust-red long coat
+      - navy blue scarf
+      - normal rounded human ears
+    usually:
+      - cream shirt, brown leather satchel with cross-body strap
+      - grey-brown trousers, tall brown leather boots
+  wren:
+    name: Wren
+    reference: "Wren Character Sheet with Human Ears-2.png"
+    must:
+      - adult woman, about 28, warm brown skin
+      - long wavy brown hair
+      - olive-green long coat with gold leaf embroidery
+      - navy blue scarf
+      - normal rounded human ears
+    usually:
+      - a small golden flower tucked in her hair, small gold flower earrings
+      - the navy scarf has a scattered gold star pattern
+      - cream blouse, brown leather satchel, tall brown leather boots
+
+armour:  # do not use unless the owner explicitly asks
+  rowan_battle_king: "Rowan_ Battle King Character Sheet.png"
+  wren_battle_queen: "Wren_ Fully Armored Battle Queen.png"
+
+style:
+  look: warm, nostalgic, painterly storybook illustration with a slightly magical British-European feel
+  palette: [cream, olive, rust, gold, brown, navy]
+  favourite_season: autumn (golden leaves, stone cottages, lanes, bridges, lakes, Scottish Highlands)
+  other_settings: [rainy windows, cosy homes, castles, lavender fields, spring flowers]
+  canvas: portrait 4:5 (e.g. 1080x1350 or larger, same ratio) for posts; 9:16 for reels
+  quiet_space: leave a calm, plain area (sky, wall, mist, water, soft cream light) where text will go

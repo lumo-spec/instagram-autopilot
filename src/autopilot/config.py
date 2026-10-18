@@ -17,18 +17,24 @@ PAGE_NAME_RE = re.compile(r"^[a-z][a-z0-9_]{1,30}$")
 SLOT_NAME_RE = re.compile(r"^[a-z][a-z0-9_]{1,20}$")
 TIME_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 HANDLE_RE = re.compile(r"^@[A-Za-z0-9._]{1,30}$")
-FORMATS = ("image", "reel")
-PAGE_TYPES = ("quotes", "facts", "news_digest")
+FORMATS = ("image", "reel", "carousel")
+PAGE_TYPES = ("quotes", "facts", "news_digest", "story")
+WEEKDAYS = ("mon", "tue", "wed", "thu", "fri", "sat", "sun")
 AUDIO_MODES = ("voice+music", "music", "voice")
 
 
 @dataclass(frozen=True)
 class Slot:
-    """One daily posting slot of a page."""
+    """One posting slot of a page (daily, or only on the listed weekdays)."""
 
     name: str
     time: str
     format: str
+    days: tuple[int, ...] = tuple(range(7))  # date.weekday() values: 0 = Monday
+
+    def runs_on(self, weekday: int) -> bool:
+        """True when the slot is active on ``weekday`` (0 = Monday)."""
+        return weekday in self.days
 
     @property
     def minutes(self) -> int:
@@ -47,16 +53,25 @@ class Page:
     handle: str
     theme: str
     slots: tuple[Slot, ...]
+    display_name: str = ""
+    queue_low_warning: int = 5
+    ai_generated_art: bool = False
+    base_dir: Path | None = None  # tests point a page at a temporary folder
 
     @property
     def title(self) -> str:
-        """Display name used in alerts, e.g. ``Wisdom``."""
-        return self.name.replace("_", " ").title()
+        """Display name used in alerts, e.g. ``Simple Story Mode``."""
+        return self.display_name or self.name.replace("_", " ").title()
+
+    @property
+    def is_story(self) -> bool:
+        """True for pages that post only owner-approved queue items."""
+        return self.type == "story"
 
     @property
     def dir(self) -> Path:
         """Folder holding this page's content files."""
-        return ROOT / "pages" / self.name
+        return self.base_dir or ROOT / "pages" / self.name
 
     @property
     def handle_is_set(self) -> bool:
@@ -84,6 +99,8 @@ class Gates:
     contrast_percentile: float
     watermark_min_px: int
     watermark_min_contrast: float
+    story_min_font_px: int
+    story_min_contrast: float
     voice_onset_s: tuple[float, float]
     voice_tail_min_s: float
     word_sync_ms: float
@@ -148,8 +165,26 @@ def _parse_page(name: str, data: dict[str, Any]) -> Page:
     for slot_name, slot in (data.get("slots") or {}).items():
         _require(bool(SLOT_NAME_RE.match(slot_name)), f"page {name}: bad slot name {slot_name!r}")
         _require(bool(TIME_RE.match(str(slot.get("time", "")))), f"{name}.{slot_name}: bad time")
-        _require(slot.get("format") in FORMATS, f"{name}.{slot_name}: format must be image|reel")
-        slots.append(Slot(slot_name, str(slot["time"]), str(slot["format"])))
+        _require(
+            slot.get("format") in FORMATS, f"{name}.{slot_name}: format must be one of {FORMATS}"
+        )
+        days = slot.get("days", list(WEEKDAYS))
+        _require(
+            isinstance(days, list) and bool(days) and all(d in WEEKDAYS for d in days),
+            f"{name}.{slot_name}: days must be a list of {WEEKDAYS}",
+        )
+        _require(
+            slot["format"] != "carousel" or data.get("type") == "story",
+            f"{name}.{slot_name}: carousels need a story page",
+        )
+        slots.append(
+            Slot(
+                slot_name,
+                str(slot["time"]),
+                str(slot["format"]),
+                tuple(sorted({WEEKDAYS.index(d) for d in days})),
+            )
+        )
     _require(bool(slots), f"page {name}: needs at least one slot")
     slots.sort(key=lambda s: s.minutes)
     return Page(
@@ -159,6 +194,9 @@ def _parse_page(name: str, data: dict[str, Any]) -> Page:
         handle=handle,
         theme=str(data.get("theme", name)),
         slots=tuple(slots),
+        display_name=str(data.get("display_name", "")),
+        queue_low_warning=int(data.get("queue_low_warning", 5)),
+        ai_generated_art=bool(data.get("ai_generated_art", False)),
     )
 
 
@@ -193,6 +231,8 @@ def parse_config(raw: dict[str, Any]) -> Config:
         contrast_percentile=float(g["contrast_percentile"]),
         watermark_min_px=int(g["watermark_min_px"]),
         watermark_min_contrast=float(g["watermark_min_contrast"]),
+        story_min_font_px=int(g["story_min_font_px"]),
+        story_min_contrast=float(g["story_min_contrast"]),
         voice_onset_s=_pair(g["voice_onset_s"], "gates.voice_onset_s"),
         voice_tail_min_s=float(g["voice_tail_min_s"]),
         word_sync_ms=float(g["word_sync_ms"]),

@@ -1,0 +1,84 @@
+id: c07-a-boundary-is
+format: carousel
+kind: one-feeling
+topic: "boundaries without guilt"
+priority: 70
+slides:
+  - text: |
+      A boundary
+      is not a wall.
+
+      It's a **door
+      with a lock.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "A wooden cottage door with an iron latch and an autumn wreath; Wren's hand rests on the latch from inside."
+      characters: [wren]
+      emotion: "calm, in control"
+      composition: "Close-medium shot, door and hand in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      You can still love
+      people
+      and close the door
+      for a while.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A cosy room in the evening. Wren gently draws the curtains; a lamp glows."
+      characters: [wren]
+      emotion: "peaceful privacy"
+      composition: "Medium shot, Wren in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Saying no
+      doesn't make you
+      unkind.
+
+      It makes you
+      **honest.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren stands at her doorstep, kindly but firmly shaking her head to a neighbour holding out a basket."
+      characters: [wren, others]
+      emotion: "kind firmness"
+      composition: "Medium shot, figures in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      The people who
+      got used to your yes
+      might not like
+      your no.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A village square. A few people frown slightly as Wren walks away, calm."
+      characters: [wren, others]
+      emotion: "steady despite disapproval"
+      composition: "Wide view, people in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      You were never meant
+      to be everyone's
+      convenience.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren walks through a lavender field at golden hour, hair moving in the breeze, face calm."
+      characters: [wren]
+      emotion: "freedom"
+      composition: "Wide view, Wren in the lower third, pale sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Your peace
+      is allowed
+      to come **first.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren reads by the fire, wrapped in a blanket, a cat asleep at her feet."
+      characters: [wren]
+      emotion: "contentment"
+      composition: "Medium shot, Wren in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  A boundary isn't a wall. It's a door you get to open on your own terms.
+
+  Which boundary are you learning to keep? Tell us below, or just save this.
+hashtags: ["#simplestorymode", "#boundaries", "#selfrespect", "#emotionalhealth"]

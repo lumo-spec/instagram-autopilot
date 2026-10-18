@@ -1,0 +1,86 @@
+id: c05-she-stopped-explaining
+format: carousel
+kind: story
+topic: "feeling unheard until you go quiet"
+priority: 50
+slides:
+  - text: |
+      She didn't stop
+      caring.
+
+      She stopped
+      **explaining.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren sits at the far end of a long wooden table; blurred figures laugh together at the other end. She looks down at her hands."
+      characters: [wren, others]
+      emotion: "lonely in company"
+      composition: "Wren in the lower right, plain dim wall above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      At first,
+      she said it softly.
+      "That hurt."
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren speaks to a man (not Rowan) who is busy tying his boots and not looking up."
+      characters: [wren, others]
+      emotion: "hopeful, a little nervous"
+      composition: "Medium shot, both in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Then she said it
+      again, louder,
+      hoping this time
+      it would land.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A narrow cottage hallway. Wren stands with one hand on her chest, mid-sentence; the other person's back is turned, walking away."
+      characters: [wren, others]
+      emotion: "frustration, pleading"
+      composition: "Wren in the lower half, plain hallway wall above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Then she said it
+      with tears.
+
+      And they called it
+      **too emotional.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren's tearful reflection in a rainy window at night."
+      characters: [wren]
+      emotion: "hurt, dismissed"
+      composition: "Close-up, face in the lower half, dark rainy glass above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      So now
+      she just says,
+      "It's fine."
+    position: top
+    focus: bottom
+    brief:
+      scene: "A dinner gathering. Wren smiles politely, but the smile doesn't reach her eyes."
+      characters: [wren, others]
+      emotion: "masking, tired"
+      composition: "Medium close-up, Wren in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      If someone you love
+      has gone quiet,
+      ask again.
+
+      Then **really listen.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "An autumn park bench. Rowan sits beside Wren and turns fully towards her, listening; she is starting to speak."
+      characters: [rowan, wren]
+      emotion: "hope, being heard at last"
+      composition: "Wide view, bench in the lower third, golden trees and sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  She didn't stop caring. She stopped explaining.
+
+  Sometimes quiet isn't peace. It's someone who got tired of not being heard.
+
+  Send this to the person who always listens to you.
+hashtags: ["#simplestorymode", "#feelingunheard", "#emotionalhealth", "#relationships"]

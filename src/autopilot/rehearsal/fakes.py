@@ -61,18 +61,51 @@ class FakeInstagram:
             return 45
         return self.usage
 
-    def create_container(self, manifest: Manifest) -> str:
+    def _new(self, manifest: Manifest | None, kind: str) -> tuple[str, str]:
         cid = f"c{len(self.containers) + 1:04d}"
         status = "FINISHED"
-        if "container_error" in self.fail_next:
+        if kind != "child" and "container_error" in self.fail_next:
             self.fail_next.discard("container_error")
             status = "ERROR"
-        self.containers[cid] = {"status": status, "manifest": manifest}
+        self.containers[cid] = {"status": status, "manifest": manifest, "kind": kind}
+        return cid, status
+
+    def create_container(self, manifest: Manifest) -> str:
+        if manifest.format == "carousel":
+            raise AssertionError("carousels must use create_carousel")
+        cid, _ = self._new(manifest, manifest.format)
         self._log(
             "create",
             container=cid,
             format=manifest.format,
-            url=manifest.media_url,
+            url=manifest.media_urls[0],
+            ai_generated=manifest.ai_generated,
+            caption_chars=len(manifest.caption),
+        )
+        return cid
+
+    def create_carousel_item(self, image_url: str) -> str:
+        if not image_url.endswith(".jpg"):
+            raise AssertionError("carousel items must be JPEG")
+        cid, _ = self._new(None, "child")
+        self._log("create-item", container=cid, url=image_url)
+        return cid
+
+    def create_carousel(self, children: list[str], manifest: Manifest) -> str:
+        if not 2 <= len(children) <= 10:
+            raise AssertionError("carousel needs 2-10 children")
+        for c in children:
+            box = self.containers[c]
+            if box["kind"] != "child" or box["status"] != "FINISHED" or box.get("used"):
+                raise AssertionError("carousel child is not a fresh finished item")
+            box["used"] = True
+        cid, _ = self._new(manifest, "carousel")
+        self.containers[cid]["children"] = list(children)
+        self._log(
+            "create",
+            container=cid,
+            format="carousel",
+            children=len(children),
             ai_generated=manifest.ai_generated,
             caption_chars=len(manifest.caption),
         )
@@ -87,6 +120,8 @@ class FakeInstagram:
             self._log("publish-failed-transient", container=container_id)
             raise TransientPublishError("simulated 503")
         box = self.containers[container_id]
+        if box["kind"] == "child":
+            raise AssertionError("a carousel item cannot be published on its own")
         if box["status"] == "PUBLISHED":
             raise AssertionError("double publish attempted")
         box["status"] = "PUBLISHED"
@@ -116,11 +151,11 @@ class LocalHosting:
     def __init__(self, root: Path) -> None:
         self.root = root
 
-    def host(self, page: str, slot_key: str, path: Path) -> str:
-        dest = self.root / page / f"{slot_key}{path.suffix}"
+    def host(self, page: str, name: str, path: Path) -> str:
+        dest = self.root / page / name
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, dest)
-        return f"rehearsal://{page}/{slot_key}{path.suffix}"
+        return f"rehearsal://{page}/{name}"
 
-    def remove(self, page: str, slot_key: str, ext: str) -> None:
-        (self.root / page / f"{slot_key}{ext}").unlink(missing_ok=True)
+    def remove(self, page: str, name: str) -> None:
+        (self.root / page / name).unlink(missing_ok=True)

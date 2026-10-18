@@ -1,0 +1,76 @@
+id: c11-quietly-enough
+format: carousel
+kind: one-feeling
+topic: "everyday happiness in small things"
+priority: 110
+slides:
+  - text: |
+      Small things
+      that are
+      quietly **enough.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "A windowsill with a steaming mug and a lit candle; rain outside."
+      characters: []
+      emotion: "cosy calm"
+      composition: "Still life, objects in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      The first sip of tea
+      while it's
+      still hot.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Close-up of Wren's hands (olive sleeve with gold leaf embroidery) holding a steaming mug."
+      characters: [wren]
+      emotion: "small pleasure"
+      composition: "Close-up, hands and mug in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Clean sheets
+      and an early night.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A cosy cottage bedroom with a lamp on and the quilt turned down."
+      characters: []
+      emotion: "comfort"
+      composition: "Interior, bed in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Someone
+      saving you
+      a seat.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A tavern bench. Rowan pats the seat beside him, smiling towards the viewer."
+      characters: [rowan]
+      emotion: "being expected, welcome"
+      composition: "Medium shot, Rowan in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Rain on the window
+      when you don't
+      have to go out.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A rainy window; a cat curled up on a cushion on the sill."
+      characters: []
+      emotion: "snug"
+      composition: "Cushion and cat in the lower half, rainy glass above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      A day doesn't
+      have to be big
+      to be **good.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "A golden afternoon autumn lane, leaves falling; Rowan and Wren walk far away."
+      characters: [rowan, wren]
+      emotion: "contentment"
+      composition: "Wide view, tiny figures in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  A day doesn't have to be big to be good.
+
+  What small thing made today a little better? We'd love to hear it.
+hashtags: ["#simplestorymode", "#littlethings", "#everydayhappiness", "#slowliving"]

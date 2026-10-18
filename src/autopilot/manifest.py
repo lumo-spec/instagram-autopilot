@@ -12,9 +12,12 @@ from autopilot.errors import ValidationError
 
 PAGE_RE = re.compile(r"^[a-z][a-z0-9_]{1,30}$")
 SLOT_KEY_RE = re.compile(r"^[a-z][a-z0-9_]{1,30}-\d{4}-\d{2}-\d{2}-[a-z0-9_]{1,40}$")
-CONTENT_ID_RE = re.compile(r"^([a-z]{1,3}-[0-9a-f]{8}|custom-[0-9a-f]{8})$")
+# bank entries (q-1a2b3c4d), exact-text posts (custom-...), or queue post ids (c01-you-can-miss)
+CONTENT_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+){0,9}$")
+MAX_CONTENT_ID = 48
 TEMPLATE_RE = re.compile(r"^[a-z][a-z0-9_-]{1,30}$")
-FORMATS = ("image", "reel")
+FORMATS = ("image", "reel", "carousel")
+CAROUSEL_MAX = 10  # Instagram API limit for carousel children
 AUDIO_MODES = ("", "voice+music", "music", "voice")
 FALLBACKS = ("", "second-voice", "music-only", "image", "skipped")
 HASHTAG_RE = re.compile(r"^#[a-z0-9_]{2,40}$")
@@ -33,14 +36,22 @@ class Manifest:
     template: str
     caption: str
     hashtags: tuple[str, ...]
-    media_url: str
+    media_urls: tuple[str, ...]  # one for image/reel; 2-10 slides (in order) for a carousel
     ai_generated: bool
 
     def to_json(self) -> str:
         """Serialise for hand-over between jobs."""
         data = asdict(self)
         data["hashtags"] = list(self.hashtags)
+        data["media_urls"] = list(self.media_urls)
         return json.dumps(data, sort_keys=True)
+
+
+def media_names(slot_key: str, fmt: str, count: int) -> list[str]:
+    """Hosted file names for a post, e.g. ``<slot>.jpg`` or ``<slot>-01.jpg`` ... for slides."""
+    if fmt == "carousel":
+        return [f"{slot_key}-{i:02d}.jpg" for i in range(1, count + 1)]
+    return [f"{slot_key}{'.jpg' if fmt == 'image' else '.mp4'}"]
 
 
 def allowed_media_prefixes(repo: str, page: str) -> tuple[str, ...]:
@@ -75,7 +86,9 @@ def validate_manifest(
     )
     check(data["slot_key"].startswith(page + "-"), "slot_key/page pairing")
     check(
-        isinstance(data["content_id"], str) and bool(CONTENT_ID_RE.match(data["content_id"])),
+        isinstance(data["content_id"], str)
+        and len(data["content_id"]) <= MAX_CONTENT_ID
+        and bool(CONTENT_ID_RE.match(data["content_id"])),
         "content_id",
     )
     check(data["format"] in FORMATS, "format")
@@ -91,16 +104,21 @@ def validate_manifest(
     check(all(isinstance(t, str) and HASHTAG_RE.match(t) for t in tags), "hashtags")
     check(sum(1 for w in caption.split() if w.startswith("#")) <= max_hashtags, "caption hashtags")
     check(isinstance(data["ai_generated"], bool), "ai_generated")
-    url = data["media_url"]
-    check(isinstance(url, str), "media_url")
-    ext = ".jpg" if data["format"] == "image" else ".mp4"
-    if allow_rehearsal and url.startswith("rehearsal://"):
-        check(url == f"rehearsal://{page}/{data['slot_key']}{ext}", "rehearsal media_url")
+    urls = data["media_urls"]
+    check(isinstance(urls, list) and all(isinstance(u, str) for u in urls), "media_urls")
+    if data["format"] == "carousel":
+        check(2 <= len(urls) <= CAROUSEL_MAX, "carousel slide count")
     else:
+        check(len(urls) == 1, "media_urls count")
+    names = media_names(data["slot_key"], data["format"], len(urls))
+    for url, name in zip(urls, names, strict=True):
+        if allow_rehearsal and url.startswith("rehearsal://"):
+            check(url == f"rehearsal://{page}/{name}", "rehearsal media_url")
+            continue
         parsed = urlparse(url)
         check(parsed.scheme == "https" and not parsed.query and not parsed.fragment, "media_url")
         check(any(url.startswith(p) for p in allowed_media_prefixes(repo, page)), "media_url host")
-        check(url.endswith(f"/{data['slot_key']}{ext}"), "media_url file name")
+        check(url.endswith(f"/{name}"), "media_url file name")
     return Manifest(
         page=page,
         slot_key=data["slot_key"],
@@ -111,6 +129,6 @@ def validate_manifest(
         template=data["template"],
         caption=caption,
         hashtags=tuple(tags),
-        media_url=url,
+        media_urls=tuple(urls),
         ai_generated=data["ai_generated"],
     )

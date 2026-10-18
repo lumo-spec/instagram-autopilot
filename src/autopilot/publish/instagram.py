@@ -1,4 +1,4 @@
-"""Instagram API with Instagram Login: quota, container, status polling, publish, reconcile.
+"""Instagram API with Instagram Login: quota, containers, carousels, polling, publish, reconcile.
 
 This module runs in the secret-holding ``publish`` job, so it uses only the standard library
 (urllib) plus the package's own small modules. It never logs request headers, tokens, user IDs
@@ -33,6 +33,8 @@ class InstagramClient(Protocol):
 
     def publishing_usage(self) -> int: ...
     def create_container(self, manifest: Manifest) -> str: ...
+    def create_carousel_item(self, image_url: str) -> str: ...
+    def create_carousel(self, children: list[str], manifest: Manifest) -> str: ...
     def container_status(self, container_id: str) -> str: ...
     def publish(self, container_id: str) -> str: ...
     def permalink(self, media_id: str) -> str: ...
@@ -85,11 +87,28 @@ class GraphClient:
         return int(items[0].get("quota_usage", 0))
 
     def create_container(self, manifest: Manifest) -> str:
+        if manifest.format == "carousel":
+            raise PublishError("carousels are created with create_carousel")
         params: dict[str, Any] = {"caption": manifest.caption}
         if manifest.format == "image":
-            params["image_url"] = manifest.media_url
+            params["image_url"] = manifest.media_urls[0]
         else:
-            params.update(media_type="REELS", video_url=manifest.media_url, share_to_feed=True)
+            params.update(media_type="REELS", video_url=manifest.media_urls[0], share_to_feed=True)
+        if manifest.ai_generated:
+            params["is_ai_generated"] = True
+        return str(self._request("POST", f"{self._user}/media", params)["id"])
+
+    def create_carousel_item(self, image_url: str) -> str:
+        # Children carry no caption and no AI flag (Meta: setting it on children is an error).
+        params = {"image_url": image_url, "is_carousel_item": True}
+        return str(self._request("POST", f"{self._user}/media", params)["id"])
+
+    def create_carousel(self, children: list[str], manifest: Manifest) -> str:
+        params: dict[str, Any] = {
+            "media_type": "CAROUSEL",
+            "children": ",".join(children),
+            "caption": manifest.caption,
+        }
         if manifest.ai_generated:
             params["is_ai_generated"] = True
         return str(self._request("POST", f"{self._user}/media", params)["id"])
@@ -174,10 +193,34 @@ def _with_retries(fn: Callable[[], str], retries: int, sleep: Callable[[float], 
     raise PublishError("unreachable")
 
 
+def _bind(fn: Callable[[str], str], arg: str) -> Callable[[], str]:
+    return lambda: fn(arg)
+
+
+def _create_carousel(
+    client: InstagramClient,
+    manifest: Manifest,
+    delays: list[float],
+    retries: int,
+    sleep: Callable[[float], None],
+) -> str:
+    """Create one child container per slide (in order), wait for each, then the carousel.
+
+    Children on their own can never be published, so a crash here leaves only harmless,
+    self-expiring containers; the next run simply creates new ones.
+    """
+    children: list[str] = []
+    for url in manifest.media_urls:
+        child = _with_retries(_bind(client.create_carousel_item, url), retries, sleep)
+        wait_for_container(client, child, delays, sleep)
+        children.append(child)
+    return _with_retries(lambda: client.create_carousel(children, manifest), retries, sleep)
+
+
 def publish_manifest(
     client: InstagramClient,
     manifest: Manifest,
-    previous_container: str,
+    previous_container: str | None,
     on_intent: IntentCallback,
     delays: list[float],
     retries: int,
@@ -185,8 +228,11 @@ def publish_manifest(
 ) -> PublishOutcome:
     """Publish one slot exactly once, reconciling any earlier attempt first.
 
-    ``previous_container`` is the container id from an earlier intent record ("" if none).
+    ``previous_container`` is None when this slot has never been attempted; otherwise the
+    container id from its earlier intent record ("" when that attempt never created one).
     ``on_intent`` must durably record the new container id before publishing continues.
+    Recent media are searched (by exact caption) only for slots with an earlier attempt, so a
+    new post is never mistaken for an older one; captions are unique within a page's queue.
     """
     if previous_container:
         status = client.container_status(previous_container)
@@ -196,14 +242,19 @@ def publish_manifest(
                 raise PublishError("container published but media not found; not re-posting")
             return PublishOutcome(previous_container, media_id, client.permalink(media_id), True)
         container = previous_container if status in (FINISHED, IN_PROGRESS) else ""
-    else:
+    elif previous_container == "":
         # Intent without container (crash before it existed): make sure nothing went out.
         media_id = _find_published(client, manifest.caption)
         if media_id:
             return PublishOutcome("", media_id, client.permalink(media_id), True)
         container = ""
+    else:
+        container = ""
     if not container:
-        container = _with_retries(lambda: client.create_container(manifest), retries, sleep)
+        if manifest.format == "carousel":
+            container = _create_carousel(client, manifest, delays, retries, sleep)
+        else:
+            container = _with_retries(lambda: client.create_container(manifest), retries, sleep)
         on_intent(container)
     wait_for_container(client, container, delays, sleep)
 

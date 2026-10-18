@@ -1,0 +1,81 @@
+id: c06-the-tired-sleep-cant-fix
+format: carousel
+kind: one-feeling
+topic: "being the strong one and emotionally exhausted"
+priority: 60
+slides:
+  - text: |
+      There is a tired
+      that sleep
+      **doesn't fix.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Grey dawn. Rowan lies awake in bed, staring at the ceiling."
+      characters: [rowan]
+      emotion: "exhausted, restless"
+      composition: "Seen from above, Rowan in the lower half, plain ceiling-coloured space above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      It's the tired of
+      always being
+      the strong one.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Rowan carries a heavy load of firewood for an elderly neighbour; his back is slightly bent."
+      characters: [rowan, others]
+      emotion: "dutiful, worn"
+      composition: "Wide view, figures in the lower half, misty sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Of holding
+      everyone's day
+      together
+      while yours
+      falls apart.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A busy village market. Rowan helps several people at once; his own face is weary."
+      characters: [rowan, others]
+      emotion: "stretched thin"
+      composition: "Wide view, crowd in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Of smiling
+      so no one asks.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A warm tavern. Rowan smiles at friends, but in the old mirror behind him his reflection looks sad."
+      characters: [rowan, others]
+      emotion: "hidden sadness"
+      composition: "Medium shot, figures in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      That kind of tired
+      needs **gentleness,**
+      not another
+      early night.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A garden bench in autumn. Wren hands Rowan a cup of tea, looking at him with soft concern."
+      characters: [rowan, wren]
+      emotion: "being cared for"
+      composition: "Medium-wide shot, bench in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Let someone
+      carry something
+      for you today.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A Highland path. Wren carries Rowan's satchel and he laughs a little, lighter."
+      characters: [rowan, wren]
+      emotion: "relief, lightness"
+      composition: "Wide view, both small in the lower third, open sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  There is a tired that sleep doesn't fix.
+
+  If you're always the strong one, this is your reminder that you're allowed to be looked after too.
+
+  Share this with your strong friend.
+hashtags: ["#simplestorymode", "#emotionalhealth", "#selfcare", "#strongfriend"]

@@ -9,10 +9,13 @@ from autopilot.errors import ConfigError
 
 
 def test_real_config_loads(cfg: Config) -> None:
-    assert [p.name for p in cfg.enabled_pages] == ["wisdom"]
-    assert not cfg.page("science").enabled
-    assert cfg.page("wisdom").slots[0].name == "morning"
+    assert [p.name for p in cfg.pages] == ["simplestorymode"]  # Science removed
+    page = cfg.page("simplestorymode")
+    assert page.enabled and page.is_story and page.handle == "@simplestorymode"
+    assert page.title == "Simple Story Mode"
+    assert {s.format for s in page.slots} == {"carousel", "image"}
     assert cfg.section("limits", "max_hashtags") <= 5
+    assert cfg.section("story", "slides", "max") <= 10  # Instagram API carousel limit
 
 
 def test_unknown_page(cfg: Config) -> None:
@@ -24,10 +27,12 @@ def test_unknown_page(cfg: Config) -> None:
     ("path", "value"),
     [
         (("timezone",), "Mars/Base"),
-        (("pages", "wisdom", "type"), "memes"),
-        (("pages", "wisdom", "handle"), "no-at-sign"),
-        (("pages", "wisdom", "slots", "morning", "time"), "25:00"),
-        (("pages", "wisdom", "slots", "morning", "format"), "story"),
+        (("pages", "simplestorymode", "type"), "memes"),
+        (("pages", "simplestorymode", "handle"), "no-at-sign"),
+        (("pages", "simplestorymode", "slots", "carousel", "time"), "25:00"),
+        (("pages", "simplestorymode", "slots", "carousel", "format"), "story"),
+        (("pages", "simplestorymode", "slots", "carousel", "days"), []),
+        (("pages", "simplestorymode", "type"), "quotes"),  # carousels need a story page
         (("audio", "weights", "music"), 0.9),
         (("safe_zones", "reel", "bottom"), 0.7),
     ],

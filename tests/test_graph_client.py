@@ -16,7 +16,7 @@ from autopilot.publish.instagram import GraphClient
 
 TOKEN = "IGAAtesttoken" + "x" * 30
 USER = "17841400000000000"
-BASE = "https://raw.githubusercontent.com/lumo-spec/instagram-autopilot/media/wisdom/"
+BASE = "https://raw.githubusercontent.com/lumo-spec/instagram-autopilot/media/simplestorymode/"
 
 
 class Recorder:
@@ -59,16 +59,16 @@ def manifest(fmt: str, ai: bool) -> Any:
     ext = "jpg" if fmt == "image" else "mp4"
     return validate_manifest(
         {
-            "page": "wisdom",
-            "slot_key": "wisdom-2026-10-20-evening",
-            "content_id": "w-0a1b2c3d",
+            "page": "simplestorymode",
+            "slot_key": "simplestorymode-2026-10-20-evening",
+            "content_id": "r01-rest-is-allowed",
             "format": fmt,
             "audio_mode": "voice" if fmt == "reel" else "",
             "fallback": "",
-            "template": "plum",
+            "template": "art",
             "caption": "Hello.\n\n#calm",
             "hashtags": ["#calm"],
-            "media_url": f"{BASE}wisdom-2026-10-20-evening.{ext}",
+            "media_urls": [f"{BASE}simplestorymode-2026-10-20-evening.{ext}"],
             "ai_generated": ai,
         },
         "lumo-spec/instagram-autopilot",
@@ -99,7 +99,7 @@ def test_reel_container_parameters(monkeypatch: pytest.MonkeyPatch, client: Grap
     assert body == {
         "caption": "Hello.\n\n#calm",
         "media_type": "REELS",
-        "video_url": f"{BASE}wisdom-2026-10-20-evening.mp4",
+        "video_url": f"{BASE}simplestorymode-2026-10-20-evening.mp4",
         "share_to_feed": True,
         "is_ai_generated": True,
     }
@@ -111,8 +111,45 @@ def test_image_container_parameters(monkeypatch: pytest.MonkeyPatch, client: Gra
     body = json.loads(rec.requests[0].data or b"{}")  # type: ignore[arg-type]
     assert body == {
         "caption": "Hello.\n\n#calm",
-        "image_url": f"{BASE}wisdom-2026-10-20-evening.jpg",
+        "image_url": f"{BASE}simplestorymode-2026-10-20-evening.jpg",
     }
+
+
+def test_carousel_parameters(monkeypatch: pytest.MonkeyPatch, client: GraphClient) -> None:
+    key = "simplestorymode-2026-10-20-carousel"
+    m = validate_manifest(
+        {
+            "page": "simplestorymode",
+            "slot_key": key,
+            "content_id": "c01-you-can-miss",
+            "format": "carousel",
+            "audio_mode": "",
+            "fallback": "",
+            "template": "art",
+            "caption": "Hello.\n\n#calm",
+            "hashtags": ["#calm"],
+            "media_urls": [f"{BASE}{key}-01.jpg", f"{BASE}{key}-02.jpg"],
+            "ai_generated": True,
+        },
+        "lumo-spec/instagram-autopilot",
+        2000,
+        5,
+    )
+    rec = install(monkeypatch, [{"id": "k1"}, {"id": "p1"}])
+    assert client.create_carousel_item(m.media_urls[0]) == "k1"
+    assert client.create_carousel(["k1", "k2"], m) == "p1"
+    child = json.loads(rec.requests[0].data or b"{}")  # type: ignore[arg-type]
+    parent = json.loads(rec.requests[1].data or b"{}")  # type: ignore[arg-type]
+    # Meta: only the carousel container may carry is_ai_generated; children must not.
+    assert child == {"image_url": f"{BASE}{key}-01.jpg", "is_carousel_item": True}
+    assert parent == {
+        "media_type": "CAROUSEL",
+        "children": "k1,k2",
+        "caption": "Hello.\n\n#calm",
+        "is_ai_generated": True,
+    }
+    with pytest.raises(PublishError):
+        client.create_container(m)
 
 
 def test_status_publish_permalink_recent(

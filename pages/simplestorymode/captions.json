@@ -1,0 +1,14 @@
+{
+ "note": "Captions and hashtags are written per post in queue/<post-id>/post.yaml. This file lists hashtags that must never be used, plus suggested pools for writing new posts.",
+ "banned_hashtags": ["#followforfollow", "#like4like", "#instagood", "#follow4follow", "#likeforlike", "#f4f", "#l4l"],
+ "suggested_hashtags": {
+  "core": ["#simplestorymode", "#storybook", "#illustratedstories", "#gentlewords", "#feelings"],
+  "relationships": ["#relationships", "#love", "#heartbreak", "#healing"],
+  "unheard": ["#feelingunheard", "#emotionalhealth", "#beingseen"],
+  "kindness": ["#kindness", "#bekind", "#compassion"],
+  "rest": ["#rest", "#slowliving", "#selfcare"],
+  "boundaries": ["#boundaries", "#selfrespect", "#emotionalhealth"],
+  "belonging": ["#belonging", "#friendship", "#lonely"],
+  "happiness": ["#littlethings", "#everydayhappiness", "#gratitude"]
+ }
+}

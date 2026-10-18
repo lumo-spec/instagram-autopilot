@@ -1,0 +1,24 @@
+id: i09-that-counts
+format: image
+kind: single
+topic: "surviving a hard day"
+priority: 90
+slides:
+  - text: |
+      If today
+      you only managed
+      to get through it,
+
+      **that counts.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Night. Rowan sits on a cottage doorstep with his boots off, looking up at the stars, exhausted but relieved."
+      characters: [rowan]
+      emotion: "tired relief"
+      composition: "Wide view, Rowan in the lower third, starry sky above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  Some days the win is simply getting to the end of them. That counts.
+
+  Rest now. Tomorrow can wait.
+hashtags: ["#simplestorymode", "#rest", "#mentalhealth", "#selfcare"]

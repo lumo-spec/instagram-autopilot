@@ -37,6 +37,7 @@ class PostRecord:
     permalink: str = ""
     recorded_at: str = ""
     text: str = ""  # only for exact-text on-demand posts (not in the bank)
+    slides: int = 0  # carousel slide count
 
 
 @dataclass

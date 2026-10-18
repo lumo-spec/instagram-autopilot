@@ -1,0 +1,23 @@
+id: i10-not-your-volume
+format: image
+kind: single
+topic: "being heard the first time"
+priority: 100
+slides:
+  - text: |
+      If you have to shout
+      to be heard,
+      the problem isn't
+      your **volume.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren stands at the edge of a wide, misty lake, arms wrapped around herself."
+      characters: [wren]
+      emotion: "lonely, then steady"
+      composition: "Wide view, Wren small in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  You shouldn't have to raise your voice to be taken seriously.
+
+  You deserve people who hear you the first time.
+hashtags: ["#simplestorymode", "#feelingunheard", "#selfrespect", "#relationships"]

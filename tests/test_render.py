@@ -11,7 +11,7 @@ from autopilot.audio import dsp
 from autopilot.audio.mix import mix
 from autopilot.audio.music import load_licences, procedural
 from autopilot.audio.voice import SpokenWord, narration_text
-from autopilot.config import Config
+from autopilot.config import ROOT, Config
 from autopilot.errors import FitError, RenderError
 from autopilot.gates.visual import check_visual
 from autopilot.render.fonts import verify_fonts
@@ -19,6 +19,8 @@ from autopilot.render.image import render_image, text_box
 from autopilot.render.layout import display_text, fit_quote, wrap_balanced
 from autopilot.render.reel import align_words
 from autopilot.render.theme import FontSpec, load_theme
+
+ARCHIVE_THEME = ROOT / "pages" / "simplestorymode" / "archive" / "theme-quotes.yaml"
 
 SR = 48000
 LORA = FontSpec("lora", 500, False)
@@ -69,14 +71,15 @@ def test_attribution_placed_below_body() -> None:
     assert els[1].words[0].text == "—"
 
 
-def test_theme_has_eight_templates(cfg: Config) -> None:
-    theme = load_theme(cfg.page("wisdom").dir / "theme.yaml")
-    assert len(theme.templates) >= 8
-    assert len({t.name for t in theme.templates}) == len(theme.templates)
+def test_themes_have_eight_templates(cfg: Config) -> None:
+    for path in (cfg.page("simplestorymode").dir / "theme.yaml", ARCHIVE_THEME):
+        theme = load_theme(path)
+        assert len(theme.templates) >= 8
+        assert len({t.name for t in theme.templates}) == len(theme.templates)
 
 
-def test_every_template_renders_and_passes(cfg: Config, tmp_out: Path) -> None:
-    theme = load_theme(cfg.page("wisdom").dir / "theme.yaml")
+def test_every_quote_template_renders_and_passes(cfg: Config, tmp_out: Path) -> None:
+    theme = load_theme(ARCHIVE_THEME)
     long_text = (
         "Keep thyself then simple, good, pure, serious, free from affectation, a friend of "
         "justice, a worshipper of the gods, kind, affectionate, strenuous in all proper acts."
@@ -91,6 +94,25 @@ def test_every_template_renders_and_passes(cfg: Config, tmp_out: Path) -> None:
             i,
             tmp_out / f"{tpl.name}.jpg",
             0.85,
+        )
+        safe, _ = text_box(cfg, r.background.size, False)
+        report = check_visual(r.elements, [r.background], safe, cfg.gates)
+        assert report.passed, f"{tpl.name}: {report.summary()}"
+
+
+def test_storybook_templates_readable_without_art(cfg: Config, tmp_out: Path) -> None:
+    """Art-free reels put text straight on these backgrounds, so each must pass on its own."""
+    theme = load_theme(cfg.page("simplestorymode").dir / "theme.yaml")
+    for i, tpl in enumerate(theme.templates):
+        r = render_image(
+            cfg,
+            tpl,
+            "You don't have to explain your tiredness to deserve rest.",
+            None,
+            "@simplestorymode",
+            i,
+            tmp_out / f"story-{tpl.name}.jpg",
+            theme.watermark_opacity,
         )
         safe, _ = text_box(cfg, r.background.size, False)
         report = check_visual(r.elements, [r.background], safe, cfg.gates)

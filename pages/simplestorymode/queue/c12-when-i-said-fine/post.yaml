@@ -1,0 +1,82 @@
+id: c12-when-i-said-fine
+format: carousel
+kind: repeated-opening
+topic: "what \"I'm fine\" really means"
+priority: 120
+slides:
+  - text: |
+      When I said
+      "I'm fine"...
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren stands turned away at a window; Rowan is in the doorway behind her, slightly out of focus."
+      characters: [rowan, wren]
+      emotion: "guarded"
+      composition: "Medium shot, figures in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      I meant,
+      "I'm tired of being
+      the only one
+      who notices things."
+    position: top
+    focus: bottom
+    brief:
+      scene: "Late at night Wren tidies a messy table alone."
+      characters: [wren]
+      emotion: "weary"
+      composition: "Medium shot, table in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      I meant,
+      "Please ask again,
+      slower this time."
+    position: top
+    focus: bottom
+    brief:
+      scene: "Two mugs on a kitchen table; Wren looks across at Rowan, waiting."
+      characters: [rowan, wren]
+      emotion: "hopeful"
+      composition: "Table-level view, people in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      I meant,
+      "I don't want to
+      explain it all.
+      I want you
+      to sit with me."
+    position: top
+    focus: bottom
+    brief:
+      scene: "Wren sits on the wooden stairs hugging her knees."
+      characters: [wren]
+      emotion: "vulnerable"
+      composition: "Medium shot, Wren in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      And when you
+      sat down beside me
+      without a word...
+    position: top
+    focus: bottom
+    brief:
+      scene: "Rowan sits down beside Wren on the stairs, shoulder to shoulder, saying nothing."
+      characters: [rowan, wren]
+      emotion: "comfort without words"
+      composition: "Medium shot, both in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      ...that was
+      the **first time
+      in weeks**
+      I really was.
+    position: top
+    focus: bottom
+    brief:
+      scene: "By the fireplace. Wren rests her head on Rowan's shoulder, eyes closed, relieved."
+      characters: [rowan, wren]
+      emotion: "relief, safety"
+      composition: "Medium shot, both in the lower half, warm plain wall above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  "I'm fine" often means "please ask again."
+
+  Sometimes the kindest answer isn't advice. It's sitting down beside someone and staying.
+
+  Send this to someone who sits with you.
+hashtags: ["#simplestorymode", "#feelingunheard", "#love", "#relationships"]

@@ -138,16 +138,21 @@ def render_image(
     bg = render_background(template, w, h, seed)
     elements = layout_for(cfg, template, text, author, handle, (w, h), False, watermark_opacity)
     img = draw_elements(bg, elements)
+    save_jpeg(img, out, int(cfg.section("render", "jpeg_quality")))
+    return RenderedImage(out, bg, elements, template.name)
+
+
+def save_jpeg(img: Image.Image, out: Path, quality: int) -> None:
+    """Save a baseline sRGB JPEG (the only image format Instagram's API accepts)."""
     out.parent.mkdir(parents=True, exist_ok=True)
     buf = io.BytesIO()
-    img.save(
+    img.convert("RGB").save(
         buf,
         "JPEG",
-        quality=int(cfg.section("render", "jpeg_quality")),
+        quality=quality,
         optimize=True,
         progressive=False,
         subsampling="4:2:0",
         icc_profile=_srgb_profile(),
     )
     out.write_bytes(buf.getvalue())
-    return RenderedImage(out, bg, elements, template.name)

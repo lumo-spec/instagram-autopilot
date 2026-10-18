@@ -1,7 +1,8 @@
-"""Full practice run: fake clock, real selection/rendering/gates/voice/state, fake Instagram.
+"""Full practice run: fake clock, real queue/rendering/gates/state, fake Instagram.
 
 Simulates the 30-minute schedule over N days (spanning a clock change by default), injects one
-failure of each kind, and writes a report plus every sample for the owner to review.
+failure of each kind, and writes a report plus every post for the owner to review. Queue drafts
+count as approved and missing art is replaced by placeholders — in rehearsals only.
 """
 
 from __future__ import annotations
@@ -18,8 +19,9 @@ from zoneinfo import ZoneInfo
 
 from autopilot.config import ROOT, Config, Page
 from autopilot.errors import PublishError
+from autopilot.manifest import media_names
 from autopilot.ops import alerts
-from autopilot.pipeline import Builder, BuildResult, Request
+from autopilot.pipeline import BuildResult, Request, StoryBuilder
 from autopilot.plan import plan
 from autopilot.publish.instagram import publish_manifest
 from autopilot.rehearsal.fakes import (
@@ -28,7 +30,7 @@ from autopilot.rehearsal.fakes import (
     SimulatedCrashError,
     no_instagram_network,
 )
-from autopilot.rehearsal.samples import media_tag
+from autopilot.rehearsal.preview import media_tag
 from autopilot.state import (
     STATUS_FAILED,
     STATUS_INTENT,
@@ -39,17 +41,17 @@ from autopilot.state import (
     save_state,
 )
 
-# Day index (0-based) -> injected failures for that day's reel slot (or the whole day).
+# N-th posting day of the rehearsal (0-based; days without any slot are not counted) -> failures.
 FAILURE_PLAN: dict[int, tuple[str, ...]] = {
     1: ("missed_runs",),
-    2: ("voice_gate",),
-    3: ("container_error",),
-    4: ("voice_gate_all",),
-    5: ("publish_transient",),
-    6: ("crash_after_publish",),
-    8: ("quota_high",),
+    2: ("container_error",),
+    3: ("publish_transient",),
+    4: ("crash_after_publish",),
+    5: ("queue_empty",),
+    6: ("quota_high",),
 }
-MISSED_LOCAL_HOURS = (6, 10)  # cron runs "lost" between these local hours on the missed day
+MISSED_WINDOW_H = 2.5  # cron runs "lost" for this long after the slot's time on the missed day
+API_FAILURES = ("container_error", "publish_transient", "crash_after_publish")
 
 
 @dataclass
@@ -62,11 +64,10 @@ class SimPost:
     format: str
     audio_mode: str
     fallback: str
-    template: str
-    content_id: str
-    text: str
+    post_id: str
+    texts: list[str]
     caption: str
-    sample: str
+    samples: list[str]
     gates: list[dict[str, Any]]
     events: list[str] = field(default_factory=list)
 
@@ -108,19 +109,39 @@ class Rehearsal:
         self.hosting = LocalHosting(out / "hosted")
         self.states: dict[str, PageState] = {p.name: PageState(p.name) for p in cfg.enabled_pages}
         self.builders = {
-            p.name: Builder(cfg, p, out / "build", self.hosting) for p in cfg.enabled_pages
+            p.name: StoryBuilder(cfg, p, out / "build", self.hosting, rehearsal=True)
+            for p in cfg.enabled_pages
         }
         self.posts: list[SimPost] = []
         self.events: list[str] = []
         self.alerts: dict[str, alerts.Alert] = {}
         self.built: dict[str, BuildResult] = {}
         self.injected: set[str] = set()
+        self.queue_left: dict[str, int] = {}
+        posting_days = [
+            d
+            for d in (start + timedelta(days=i) for i in range(days))
+            if any(s.runs_on(d.weekday()) for p in cfg.enabled_pages for s in p.slots)
+        ]
+        self.failure_days = {
+            posting_days[i]: f for i, f in FAILURE_PLAN.items() if i < len(posting_days)
+        }
+
+    def _in_missed_window(self, local: datetime) -> bool:
+        """True during the hours just after a slot's time on the 'missed runs' day."""
+        hours = local.hour + local.minute / 60
+        for page in self.cfg.enabled_pages:
+            for slot in page.slots:
+                begin = slot.minutes / 60
+                if slot.runs_on(local.weekday()) and begin <= hours < begin + MISSED_WINDOW_H:
+                    return True
+        return False
 
     def _day_index(self, local: date) -> int:
         return (local - self.start).days
 
     def _injected(self, local: date) -> tuple[str, ...]:
-        return FAILURE_PLAN.get(self._day_index(local), ()) if self.failures else ()
+        return self.failure_days.get(local, ()) if self.failures else ()
 
     def log(self, msg: str) -> None:
         """Record and print an event."""
@@ -131,13 +152,14 @@ class Rehearsal:
         self.states[page].upsert(rec)
         save_state(self.out / "state" / page / "state.json", self.states[page])
 
+    def _alert(self, alert: alerts.Alert) -> None:
+        self.alerts[alert.key] = alert
+
     def _build(
         self, page: Page, slot_key: str, local: date, fmt: str, inject: tuple[str, ...]
     ) -> BuildResult:
         if slot_key not in self.built:
             req = Request(slot_key, local, fmt, inject=frozenset(inject))
-            if fmt == "reel" and {"voice_gate", "voice_gate_all"} & set(inject):
-                req.audio = "voice+music"
             self.log(f"[build] {slot_key} ({fmt})")
             self.built[slot_key] = self.builders[page.name].build(
                 req, self.states[page.name], self.log
@@ -150,23 +172,26 @@ class Rehearsal:
             page.name,
             PostRecord(slot_key, day.isoformat(), slot, STATUS_SKIPPED, fallback="skipped"),
         )
-        alert = alerts.slot_skipped(page.title, slot, reason)
-        self.alerts[alert.key] = alert
+        if reason.startswith("queue empty"):
+            self._alert(alerts.queue_empty(page.title, slot))
+        else:
+            self._alert(alerts.slot_skipped(page.title, slot, reason))
         self.log(f"[skip] {slot_key}: {reason}")
 
     def _publish(self, page: Page, slot_key: str, local_dt: datetime, fmt: str) -> None:
         state = self.states[page.name]
         inject = self._injected(local_dt.date())
         result = self._build(page, slot_key, local_dt.date(), fmt, inject)
+        for post_id in result.changed:
+            self._alert(alerts.approval_changed(page.title, post_id))
         if result.manifest is None:
             self._skip(page, slot_key, local_dt.date(), result.skipped_reason)
             return
         manifest = result.manifest
+        slot = slot_key.rsplit("-", 1)[1]
         if slot_key not in self.injected:  # each simulated failure fires once per slot
             self.injected.add(slot_key)
-            api_failures = ("container_error", "publish_transient", "crash_after_publish")
-            if fmt == "reel":
-                self.fake.fail_next.update(i for i in inject if i in api_failures)
+            self.fake.fail_next.update(i for i in inject if i in API_FAILURES)
             if "quota_high" in inject:
                 self.fake.fail_next.add("quota_high")
         stop_at = int(self.cfg.section("limits", "quota_stop_at"))
@@ -177,20 +202,21 @@ class Rehearsal:
                 PostRecord(
                     slot_key,
                     local_dt.date().isoformat(),
-                    slot_key.rsplit("-", 1)[1],
+                    slot,
                     STATUS_FAILED,
                     format=manifest.format,
+                    content_id=manifest.content_id,
                 ),
             )
             return
         prev = state.get(slot_key)
-        previous_container = (
-            prev.container_id if prev and prev.status in (STATUS_INTENT, STATUS_FAILED) else ""
+        previous_container: str | None = (
+            prev.container_id if prev and prev.status in (STATUS_INTENT, STATUS_FAILED) else None
         )
         base = PostRecord(
             slot_key,
             local_dt.date().isoformat(),
-            slot_key.rsplit("-", 1)[1],
+            slot,
             STATUS_INTENT,
             format=manifest.format,
             audio_mode=manifest.audio_mode,
@@ -198,11 +224,9 @@ class Rehearsal:
             content_id=manifest.content_id,
             template=manifest.template,
             hashtags=list(manifest.hashtags),
-            container_id=previous_container,
+            container_id=previous_container or "",
             recorded_at=local_dt.isoformat(timespec="minutes"),
-            text=result.entry["text"]
-            if result.entry and result.entry["id"].startswith("custom-")
-            else "",
+            slides=len(manifest.media_urls) if manifest.format == "carousel" else 0,
         )
 
         def on_intent(cid: str) -> None:
@@ -240,19 +264,22 @@ class Rehearsal:
     def _finish(
         self, page: Page, local_dt: datetime, result: BuildResult, reconciled: bool
     ) -> None:
-        """Keep the sample, remove the hosted copy, report the post and check stock."""
+        """Keep the samples, remove the hosted copies, report the post and check the queue."""
         manifest = result.manifest
-        if manifest is None or result.media_path is None:
+        if manifest is None or not result.media_paths:
             return
         slot_key = manifest.slot_key
-        ext = ".jpg" if manifest.format == "image" else ".mp4"
-        sample = self.out / "samples" / f"{slot_key}{ext}"
-        sample.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(result.media_path, sample)
-        self.hosting.remove(page.name, slot_key, ext)
+        samples = []
+        names = media_names(slot_key, manifest.format, len(result.media_paths))
+        for path, name in zip(result.media_paths, names, strict=True):
+            sample = self.out / "samples" / name
+            sample.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path, sample)
+            self.hosting.remove(page.name, name)
+            samples.append(f"samples/{name}")
         note = " (reconciled, not re-posted)" if reconciled else ""
         self.log(
-            f"[post] {slot_key} {manifest.format}/{manifest.audio_mode or '-'} "
+            f"[post] {slot_key} {manifest.format} {manifest.content_id} "
             f"fallback={manifest.fallback or 'none'}{note}"
         )
         self.posts.append(
@@ -263,11 +290,10 @@ class Rehearsal:
                 manifest.format,
                 manifest.audio_mode,
                 manifest.fallback,
-                manifest.template,
                 manifest.content_id,
-                result.entry["text"] if result.entry else "",
+                result.post.plain_texts if result.post else [],
                 manifest.caption,
-                f"samples/{sample.name}",
+                samples,
                 [
                     {"attempt": a, "passed": r.passed, "summary": r.summary()}
                     for a, r in result.gates
@@ -275,11 +301,9 @@ class Rehearsal:
                 [e for e in self.events if slot_key in e],
             )
         )
-        warn = int(self.cfg.section("alerts", "low_stock_warning"))
-        if result.unused_left < warn:
-            per_day = max(len(page.slots), 1)
-            alert = alerts.low_stock(page.title, result.unused_left, result.unused_left / per_day)
-            self.alerts[alert.key] = alert
+        self.queue_left[page.name] = result.queue_left
+        if result.queue_left < page.queue_low_warning:
+            self._alert(alerts.queue_low(page.title, result.queue_left))
 
     def run(self) -> dict[str, Any]:
         """Execute the simulation and write the report."""
@@ -290,10 +314,7 @@ class Rehearsal:
                 local = tick.astimezone(tz)
                 if self._day_index(local.date()) >= self.days:
                     break
-                if (
-                    "missed_runs" in self._injected(local.date())
-                    and MISSED_LOCAL_HOURS[0] <= local.hour < MISSED_LOCAL_HOURS[1]
-                ):
+                if "missed_runs" in self._injected(local.date()) and self._in_missed_window(local):
                     continue
                 for due in plan(self.cfg, tick, self.states):
                     self._publish(self.cfg.page(due.page), due.slot_key, local, due.format)
@@ -301,7 +322,16 @@ class Rehearsal:
 
     def _report(self, seconds: float) -> dict[str, Any]:
         published = self.fake.published_slots()
-        expected = sum(len(p.slots) for p in self.cfg.enabled_pages) * self.days
+        expected = sum(
+            1
+            for p in self.cfg.enabled_pages
+            for s in p.slots
+            for i in range(self.days)
+            if s.runs_on((self.start + timedelta(days=i)).weekday())
+        )
+        skipped = sum(
+            1 for st in self.states.values() for r in st.posts if r.status == STATUS_SKIPPED
+        )
         fallbacks: dict[str, int] = {}
         for p in self.posts:
             fallbacks[p.fallback or "none"] = fallbacks.get(p.fallback or "none", 0) + 1
@@ -311,13 +341,12 @@ class Rehearsal:
             "seconds": round(seconds),
             "expected_slots": expected,
             "published": len(published),
+            "skipped": skipped,
             "double_posts": len(published) - len(set(published)),
+            "posts_reused": len(self.posts) - len({(p.page, p.post_id) for p in self.posts}),
             "fallbacks": fallbacks,
             "alerts": [a.title for a in self.alerts.values()],
-            "stock_left": {
-                n: len(b.entries) - len(self.states[n].last_used())
-                for n, b in self.builders.items()
-            },
+            "queue_left": self.queue_left,
             "instagram_calls": len(self.fake.calls),
             "posts": [p.__dict__ for p in self.posts],
             "events": self.events,
@@ -335,28 +364,32 @@ def _html(data: dict[str, Any]) -> str:
     esc = html.escape
     cards = []
     for p in data["posts"]:
-        media = media_tag(p["sample"], p["format"])
+        media = "".join(media_tag(s, p["format"]) for s in p["samples"])
         gates = "<br>".join(esc(f"{g['attempt']}: {g['summary']}") for g in p["gates"])
         cards.append(
-            f'<div class="card">{media}<h3>{esc(p["local_time"])} &middot; {esc(p["format"])}'
-            f' {esc(p["audio_mode"])}</h3><p class="meta">template {esc(p["template"])}'
-            f" &middot; fallback {esc(p['fallback'] or 'none')}</p>"
+            f'<div class="card"><div class="strip">{media}</div><h3>{esc(p["local_time"])}'
+            f" &middot; {esc(p['format'])} &middot; {esc(p['post_id'])}</h3>"
+            f'<p class="meta">fallback {esc(p["fallback"] or "none")}</p>'
             f'<pre>{esc(p["caption"])}</pre><p class="gates">{gates}</p></div>'
         )
     summary = (
         f"{data['published']} of {data['expected_slots']} slots posted &middot; "
-        f"double posts: {data['double_posts']} &middot; fallbacks: {esc(str(data['fallbacks']))}"
+        f"skipped: {data['skipped']} &middot; double posts: {data['double_posts']} &middot; "
+        f"posts reused: {data['posts_reused']}"
     )
     alerts_html = "".join(f"<li>{esc(a)}</li>" for a in data["alerts"]) or "<li>none</li>"
-    return f"""<!doctype html><meta charset="utf-8"><title>Rehearsal samples</title>
-<style>body{{font:15px system-ui;margin:24px;background:#f6f4ef;color:#222}}
-.grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}}
-.card{{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 3px #0002}}
-img,video{{width:100%;border-radius:6px;background:#000}}h3{{margin:8px 0 2px;font-size:15px}}
-.meta,.gates{{color:#666;font-size:12px}}pre{{white-space:pre-wrap;font:13px system-ui}}</style>
+    return f"""<!doctype html><meta charset="utf-8"><title>Rehearsal</title>
+<style>body{{font:15px system-ui;margin:24px;background:#f6f1e7;color:#2b1d14}}
+.card{{background:#fff;border-radius:10px;padding:12px;margin-bottom:18px;
+box-shadow:0 1px 3px #0002}}
+.strip{{display:flex;gap:8px;overflow-x:auto}}
+.strip img,.strip video{{height:360px;border-radius:6px}}
+h3{{margin:8px 0 2px;font-size:15px}}.meta,.gates{{color:#666;font-size:12px}}
+pre{{white-space:pre-wrap;font:13px system-ui}}</style>
 <h1>Rehearsal: {esc(data["start"])}, {data["days"]} days</h1><p>{summary}</p>
-<h2>Alerts that would have been raised</h2><ul>{alerts_html}</ul>
-<div class="grid">{"".join(cards)}</div>"""
+<p>Placeholder art stands in for art not supplied yet;
+drafts count as approved in rehearsals only.</p>
+<h2>Alerts that would have been raised</h2><ul>{alerts_html}</ul>{"".join(cards)}"""
 
 
 def run_rehearsal(

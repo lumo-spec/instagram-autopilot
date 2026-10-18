@@ -1,0 +1,63 @@
+# Storybook backgrounds for Simple Story Mode, in the brand palette (cream, olive, rust, gold,
+# brown, navy). Used for PLACEHOLDER art in rehearsals and previews (until the owner's art
+# exists) and for reels that have no art. Real posts use the owner's art (see characters/).
+# background.kind: gradient | solid | paper | grain | shapes | vignette
+# reel.motion: zoom | particles | drift ; reel.text: word | line
+templates:
+  - name: hearth
+    background: { kind: shapes, colors: ["#e9d9b8", "#c98f4a"] }
+    text_color: "#2b1d14"
+    accent_color: "#5e2a12"
+    font: { family: lora, weight: 600 }
+    attribution_font: { family: lora, weight: 500, italic: true }
+    reel: { motion: zoom, text: word }
+  - name: navy-night
+    background: { kind: gradient, colors: ["#14213d", "#2b3f6b"], angle: 170 }
+    text_color: "#f7f0e1"
+    accent_color: "#e0b65a"
+    font: { family: lora, weight: 600 }
+    attribution_font: { family: lora, weight: 500, italic: true }
+    reel: { motion: particles, text: word }
+  - name: olive-grove
+    background: { kind: shapes, colors: ["#3d4a2a", "#6b7a3c"] }
+    text_color: "#f7f0e1"
+    accent_color: "#e8cf8a"
+    font: { family: playfair-display, weight: 600 }
+    attribution_font: { family: playfair-display, weight: 400, italic: true }
+    reel: { motion: drift, text: word }
+  - name: rust-leaf
+    background: { kind: vignette, colors: ["#8a3d1b", "#4d200d"] }
+    text_color: "#fbf3e4"
+    accent_color: "#f0c873"
+    font: { family: lora, weight: 600 }
+    attribution_font: { family: lora, weight: 500, italic: true }
+    reel: { motion: particles, text: line }
+  - name: parchment
+    background: { kind: paper, colors: ["#f4ead4", "#e3d0aa"] }
+    text_color: "#2b1d14"
+    accent_color: "#5e2a12"
+    font: { family: lora, weight: 600 }
+    attribution_font: { family: lora, weight: 500, italic: true }
+    reel: { motion: zoom, text: line }
+  - name: lakeside
+    background: { kind: gradient, colors: ["#1d3346", "#3d566a"], angle: 180 }
+    text_color: "#f7f0e1"
+    accent_color: "#e6c27a"
+    font: { family: playfair-display, weight: 600 }
+    attribution_font: { family: playfair-display, weight: 400, italic: true }
+    reel: { motion: drift, text: word }
+  - name: lavender-dusk
+    background: { kind: shapes, colors: ["#3a3150", "#7a6a96"] }
+    text_color: "#f7f0e1"
+    accent_color: "#e9cf8f"
+    font: { family: lora, weight: 600 }
+    attribution_font: { family: lora, weight: 500, italic: true }
+    reel: { motion: zoom, text: word }
+  - name: chestnut
+    background: { kind: grain, colors: ["#3b2618", "#5a3a24"] }
+    text_color: "#f6eddc"
+    accent_color: "#e2b866"
+    font: { family: lora, weight: 600 }
+    attribution_font: { family: lora, weight: 500, italic: true }
+    reel: { motion: particles, text: line }
+watermark: { opacity: 0.9 }

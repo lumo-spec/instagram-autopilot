@@ -1,0 +1,81 @@
+id: c10-be-kind-to-the-you
+format: carousel
+kind: repeated-opening
+topic: "kindness to your past self"
+priority: 100
+slides:
+  - text: |
+      Be kind to
+      the version of you
+      who didn't know
+      better yet.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Dusk by a Highland lake. Rowan sits on the shore skimming stones."
+      characters: [rowan]
+      emotion: "reflective"
+      composition: "Wide view, Rowan small in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      The one who
+      stayed too long
+      because they hoped.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Rowan stands at an old wooden gate of an overgrown garden, hand on the gate."
+      characters: [rowan]
+      emotion: "wistful"
+      composition: "Medium shot, gate and Rowan in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      The one who
+      said yes
+      when they meant no.
+    position: top
+    focus: bottom
+    brief:
+      scene: "A rainy evening street. Rowan carries a tall stack of parcels for other people."
+      characters: [rowan]
+      emotion: "overloaded"
+      composition: "Medium-wide shot, Rowan in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      The one who
+      kept trying
+      to be enough
+      for people who
+      weren't trying back.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Rowan stands before a castle in the Highland mist, looking up at it."
+      characters: [rowan]
+      emotion: "small against something big"
+      composition: "Wide view, Rowan small at the bottom, castle and mist above. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      They were doing
+      their best
+      with what they knew.
+    position: top
+    focus: bottom
+    brief:
+      scene: "Rowan holds a small faded painted portrait of a younger version of himself, looking at it kindly."
+      characters: [rowan]
+      emotion: "compassion"
+      composition: "Close-medium shot, hands and portrait in the lower half. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+  - text: |
+      Thank them.
+
+      Then **choose
+      differently now.**
+    position: top
+    focus: bottom
+    brief:
+      scene: "Spring. Rowan walks across a sunlit bridge lined with wildflowers, steady and upright."
+      characters: [rowan]
+      emotion: "hopeful, resolved"
+      composition: "Wide view, Rowan in the lower third. Keep the top 40% of the picture calm and plain (soft sky, mist or a bare wall)."
+caption: |
+  Be kind to the version of you who didn't know better yet.
+
+  They got you here. Save this for the day you're hard on yourself.
+hashtags: ["#simplestorymode", "#selfcompassion", "#healing", "#growth"]

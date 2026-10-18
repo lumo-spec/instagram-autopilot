@@ -1,0 +1,21 @@
+# Words allowed in Simple Story Mode posts that the (US-English) dictionary does not know.
+# British spellings
+apologise
+apologised
+behaviour
+colour
+colours
+favourite
+honour
+neighbour
+neighbours
+realise
+realised
+recognise
+recognised
+# Names
+rowan
+wren
+# Brand
+simplestorymode
+cosy
