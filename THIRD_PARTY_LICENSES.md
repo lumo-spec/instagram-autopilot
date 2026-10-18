@@ -1,0 +1,32 @@
+# Third-party licences
+
+## Fonts (bundled in `assets/fonts/`, SIL Open Font License 1.1)
+Downloaded from github.com/google/fonts at commit `47d54ca1ebb14fd864695f1d39dc734f39017c33`;
+SHA-256 checksums in `assets/fonts/SHA256SUMS`, verified before every render.
+
+| Font | Copyright | Licence file |
+|---|---|---|
+| Cormorant Garamond | The Cormorant Project Authors | `assets/fonts/cormorant-garamond/OFL.txt` |
+| Lora | The Lora Project Authors | `assets/fonts/lora/OFL.txt` |
+| Playfair Display | The Playfair Display Project Authors | `assets/fonts/playfair-display/OFL.txt` |
+| Inter | The Inter Project Authors | `assets/fonts/inter/OFL.txt` |
+
+## Voice model (downloaded at run time, not bundled)
+- Kokoro-82M by hexgrad — Apache License 2.0 — https://huggingface.co/hexgrad/Kokoro-82M
+  (revision `f3ff3571791e39611d31c381e3a41a3af07b4987`, files checked by SHA-256).
+- misaki G2P, spaCy `en_core_web_sm`, espeak-ng (via `espeakng-loader`) — installed as Python
+  dependencies; see each package's licence.
+
+## Music
+Procedurally generated for each reel by this project's own code; no third-party recordings.
+Optional CC0 tracks would be listed in `assets/music/licences.json` (none are included).
+
+## Quotes
+Public-domain texts from Project Gutenberg: Marcus Aurelius, *Meditations*, trans. George Long
+(1862); Epictetus, *The Enchiridion*, trans. T. W. Higginson (1865); Lao Tzu, *Tao Te Ching*,
+trans. James Legge (1891); H. D. Thoreau, *Walden* (1854); R. W. Emerson, *Essays* (1841) and
+*The American Scholar* (1837). Each quote is verified verbatim by `scripts/verify_pd_quotes.py`.
+
+## Python packages
+Installed from PyPI (and the PyTorch CPU index on Linux) as listed in `uv.lock`; each under its
+own licence. A dependency licence check is added to CI in stage 2.

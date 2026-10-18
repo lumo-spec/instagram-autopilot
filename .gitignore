@@ -1,0 +1,50 @@
+# --- Secrets: never commit ---
+.env
+.env.*
+*.env
+*.pem
+*.key
+secrets/
+*.token
+token.txt
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# --- Caches and model downloads ---
+.cache/
+models/
+*.pth
+*.onnx
+
+# --- Generated media and rehearsal output ---
+out/
+output/
+rehearsal-output/
+*.mp4
+*.mov
+*.wav
+*.mp3
+# Fonts and fixtures are committed explicitly; generated images are not
+/media/
+/samples/
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

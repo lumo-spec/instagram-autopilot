@@ -1,0 +1,62 @@
+# Visual templates for the Wisdom page (rotated so consecutive posts differ).
+# background.kind: gradient | solid | paper | grain | shapes | vignette
+# reel.motion: zoom | particles | drift ; reel.text: word | line
+# Fonts: assets/fonts (SIL OFL). Colours must keep >= 4.5:1 contrast (checked by the gates).
+templates:
+  - name: midnight
+    background: { kind: gradient, colors: ["#0f1a2e", "#23305a"], angle: 160 }
+    text_color: "#f4ecdc"
+    accent_color: "#e2c48f"
+    font: { family: cormorant-garamond, weight: 600 }
+    attribution_font: { family: cormorant-garamond, weight: 500, italic: true }
+    reel: { motion: particles, text: word }
+  - name: paper
+    background: { kind: paper, colors: ["#f2e9d6", "#e6d9bd"] }
+    text_color: "#2a2018"
+    accent_color: "#6a4a2c"
+    font: { family: lora, weight: 500 }
+    attribution_font: { family: lora, weight: 400, italic: true }
+    reel: { motion: zoom, text: line }
+  - name: sage
+    background: { kind: solid, colors: ["#3f5143", "#3f5143"] }
+    text_color: "#f5f1e6"
+    accent_color: "#dfe6cf"
+    font: { family: playfair-display, weight: 500 }
+    attribution_font: { family: playfair-display, weight: 400, italic: true }
+    reel: { motion: drift, text: word }
+  - name: charcoal
+    background: { kind: grain, colors: ["#1c1c1e", "#26262a"] }
+    text_color: "#efeae2"
+    accent_color: "#c9b79c"
+    font: { family: playfair-display, weight: 600 }
+    attribution_font: { family: cormorant-garamond, weight: 500, italic: true }
+    reel: { motion: zoom, text: word }
+  - name: dusk
+    background: { kind: gradient, colors: ["#5e2a20", "#2a1512"], angle: 200 }
+    text_color: "#fbeee0"
+    accent_color: "#f0c9a6"
+    font: { family: cormorant-garamond, weight: 600, italic: true }
+    attribution_font: { family: cormorant-garamond, weight: 500 }
+    reel: { motion: particles, text: line }
+  - name: deepwater
+    background: { kind: shapes, colors: ["#0e2629", "#1b3c40"] }
+    text_color: "#eef4f0"
+    accent_color: "#b9d6cf"
+    font: { family: lora, weight: 500 }
+    attribution_font: { family: lora, weight: 400, italic: true }
+    reel: { motion: drift, text: line }
+  - name: sand
+    background: { kind: solid, colors: ["#e9dec8", "#e9dec8"] }
+    text_color: "#1b2838"
+    accent_color: "#5a4632"
+    font: { family: playfair-display, weight: 500 }
+    attribution_font: { family: playfair-display, weight: 400, italic: true }
+    reel: { motion: zoom, text: word }
+  - name: plum
+    background: { kind: vignette, colors: ["#4a2b4f", "#1f1222"] }
+    text_color: "#f8ecf1"
+    accent_color: "#e3c2d3"
+    font: { family: cormorant-garamond, weight: 600 }
+    attribution_font: { family: cormorant-garamond, weight: 500, italic: true }
+    reel: { motion: particles, text: word }
+watermark: { opacity: 0.85 }

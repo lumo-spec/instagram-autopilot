@@ -1,0 +1,370 @@
+# Original short reflections for the Wisdom page (no attribution).
+# Format:  primary-tag, other-tags | text
+# The first tag is the primary tag (used for the "one primary tag per day" rule).
+peace, mindfulness | Peace is not the absence of noise. It is the presence of a quiet place inside you that noise cannot reach.
+peace, letting-go | You do not have to settle every question today. Some answers arrive only when you stop chasing them.
+peace, simplicity | A calm mind is not empty. It is simply uncluttered.
+peace, rest | Rest your thoughts the way you rest your hands: open, still, and in no hurry.
+peace, kindness | Make peace with yourself first. Every other peace begins there.
+peace, nature | Be like still water. Let the world reflect in you without disturbing you.
+peace, mindfulness | Breathe in slowly. Notice that, right now, in this breath, you are safe.
+peace, letting-go | Not every thought deserves a reply. Let some of them pass like clouds.
+peace, time | Calm is a skill. The more often you return to it, the shorter the road becomes.
+peace, simplicity | Quiet mornings are small gifts. Unwrap them slowly.
+peace, solitude | Find the silence between your thoughts and stay there a little longer each day.
+peace, patience | You are allowed to move gently through a loud world.
+peace, self-worth | You do not need to win every argument to keep your peace.
+peace, anxiety | Worry borrows tomorrow's trouble and spends today's calm. Keep your calm.
+peace, mindfulness | The present moment is the only place where peace can be found.
+peace, letting-go | Let go of the need to know how everything ends. Walk the next step with an open heart.
+peace, rest | A quiet hour can mend what a busy week has frayed.
+peace, gratitude | Contentment is the art of noticing that you already have enough.
+peace, simplicity | Lower your voice, slow your pace, and soften your shoulders. Peace often begins in the body.
+peace, nature | The river does not argue with the stones. It simply finds its way around them.
+patience, growth | Seeds do not apologise for the time they spend underground.
+patience, nature | The tallest trees were once small enough to be stepped on. Give yourself time.
+patience, hope | What is meant to grow in you will not be rushed and will not be stopped.
+patience, time | Slow progress is still progress. Small steps still cover great distances.
+patience, kindness | Be patient with people who are learning. You were once learning too.
+patience, peace | Some things become clear only when you stop stirring them.
+patience, resilience | The night is long only for those who forget that morning always comes.
+patience, self-worth | Do not measure your growth against someone else's calendar.
+patience, hope | Good things often arrive quietly, after we have stopped watching the door.
+patience, discipline | Do the small thing well, again and again, until it becomes a great thing.
+patience, time | Give your life the patience you would give a garden.
+patience, mindfulness | When you feel rushed, slow down on purpose. Haste rarely arrives anywhere better.
+patience, kindness | Patience with others begins with patience with yourself.
+patience, love | Love is patient because it believes the best is still unfolding.
+patience, resilience | Hold on a little longer. The hardest part of the climb is often just before the view.
+patience, growth | The roots you grow in silence will hold you when the storms come.
+resilience, courage | You have survived every difficult day so far. That is not a small thing.
+resilience, nature | The bamboo bends in the storm and stands tall again when it passes.
+resilience, change | Hard seasons are not the end of the story. They are the middle.
+resilience, patience | When the road is hard, shorten your gaze. Just take the next step.
+resilience, growth | Difficult days are teachers that do not announce their lessons.
+resilience, courage | Some days, being brave means simply getting up and trying again.
+resilience, nature | Look at the tree that grows through rock. Life finds a way.
+resilience, hope | Pain is real, but so is healing. Both can live in the same heart.
+resilience, discipline | Keep going gently. Not every step needs to be a leap.
+resilience, peace | Calm in the storm is not luck. It is practice.
+resilience, self-worth | You are not defined by the moment you fell, but by how you rose.
+resilience, time | This difficult chapter is real, but it is not the whole book.
+gratitude, simplicity | A warm cup, a kind word, a quiet hour. Riches hide in small things.
+gratitude, peace | When you count your blessings, worries have less room to grow.
+gratitude, love | Thank the people who stayed. They chose you when it was not easy.
+gratitude, nature | The sun rose again today, without being asked. That alone is worth a smile.
+gratitude, time | Someday you will look back on these ordinary days and call them precious.
+gratitude, kindness | Say thank you often. It costs nothing and gives so much.
+gratitude, hope | Gratitude for today is the best preparation for tomorrow.
+gratitude, mindfulness | Notice one beautiful thing each day. Soon you will notice many.
+gratitude, rest | Before you sleep, name three good things. Let them be the last thoughts of your day.
+gratitude, self-worth | Be grateful for the person you are becoming, not only for the things you have.
+gratitude, friendship | A true friend is a quiet blessing that shows up again and again.
+gratitude, resilience | Even hard days carry small gifts if we are willing to look for them.
+gratitude, peace | A grateful heart is a calm heart.
+gratitude, nature | Rain on the window, wind in the trees. The world sings to those who listen.
+gratitude, time | Do not wait for a special day to be thankful. Today is the special day.
+gratitude, humility | Much of what you have was given to you. Hold it with an open hand.
+gratitude, mindfulness | Breathe in thanks. Breathe out complaint.
+gratitude, love | The people who love you are not owed to you. They are gifts. Treat them as such.
+kindness, simplicity | A small kindness can travel further than you will ever know.
+kindness, courage | It takes strength to be gentle in a harsh world.
+kindness, friendship | Be the kind of person that makes others feel safe.
+kindness, peace | Kind words cost little and heal much.
+kindness, gratitude | The best way to thank life for its gifts is to be generous with yours.
+kindness, self-worth | Be kind to the version of yourself that is still learning.
+kindness, love | Leave people a little lighter than you found them.
+kindness, patience | When you cannot understand someone, choose kindness anyway.
+kindness, resilience | Softness is not weakness. Water is soft, yet it shapes stone.
+kindness, mindfulness | Listen more than you speak. Listening is a quiet form of kindness.
+kindness, hope | A kind word at the right moment can change the shape of a whole day.
+kindness, discipline | Make kindness a habit, not a mood.
+kindness, love | Love is not only a feeling. It is a thousand small acts of care.
+kindness, courage | Stand up for the person who cannot stand up for themselves.
+growth, patience | Growth is quiet. You rarely notice it until you look back.
+growth, humility | The day you stop learning is the day you stop growing.
+growth, resilience | Every mistake is a lesson wearing a disguise.
+growth, self-worth | You are a work in progress, and that is a beautiful thing to be.
+growth, change | Outgrowing old habits is not a loss. It is the price of becoming new.
+growth, hope | Every morning is a chance to begin again with a little more wisdom.
+growth, mindfulness | Notice what drains you and what fills you. Then choose wisely.
+growth, courage | Doubt is natural. Let it walk beside you, but do not let it lead.
+growth, resilience | Struggle is the soil in which strength takes root.
+growth, discipline | What you repeat, you become. Choose your habits with care.
+growth, change | The caterpillar does not become a butterfly by staying the same.
+growth, nature | Branches grow toward the light. So can you.
+solitude, peace | Being alone is not the same as being lonely. Solitude can be a quiet friend.
+solitude, rest | Time alone is not wasted. It is how the soul catches its breath.
+solitude, mindfulness | In solitude, we hear the voice that crowds drown out.
+solitude, self-worth | Learn to enjoy your own company. You are with yourself for life.
+solitude, nature | Walk alone in nature sometimes. The trees ask nothing of you.
+solitude, growth | Some of your best thinking happens when no one is watching.
+solitude, peace | A quiet room can be a sanctuary for a noisy mind.
+solitude, simplicity | Switch off the noise for an hour. Notice how much clearer everything becomes.
+solitude, rest | Retreat is not defeat. Even the tide pulls back before it returns.
+solitude, mindfulness | Sit with your thoughts without judging them. They are only visitors.
+solitude, courage | It takes courage to be alone with yourself and like who you find there.
+solitude, growth | The deepest roots grow in the dark, out of sight.
+solitude, nature | The moon is alone in the sky, and still it lights the whole night.
+solitude, rest | Give yourself permission to disappear for a while and come back renewed.
+change, letting-go | Some doors close so that you will finally turn around and see the open sky.
+change, courage | Change is frightening, but staying where you no longer belong is worse.
+change, hope | Every ending carries a beginning folded inside it.
+change, growth | You are not the same person you were a year ago. Honour that.
+change, peace | Accept what is changing. Resisting the tide only tires the swimmer.
+change, patience | Transformation takes time. The butterfly does not hurry the cocoon.
+change, resilience | Life will rearrange you. Let it, and find your new shape.
+change, time | Nothing stays the same, and that is why hope is always possible.
+change, letting-go | Hold your plans loosely. Life has its own ideas.
+change, courage | You can be afraid and still move forward. That is what courage looks like.
+change, hope | Winter never fails to turn into spring.
+change, self-worth | Growing apart from people is part of growing up. It is not a failure.
+change, mindfulness | Notice the small changes. They are the large changes in disguise.
+time, mindfulness | The present moment is the only time you can actually live in.
+time, purpose | Spend your time on what you will be glad you spent it on.
+time, gratitude | Ordinary days are the ones we miss the most later.
+time, simplicity | You do not need more time. You need fewer things filling it.
+time, patience | Time heals slowly, but it heals.
+time, love | The best gift you can give anyone is your undivided attention.
+time, hope | It is never too late to begin again.
+time, mindfulness | Life is happening now, not after the next thing is finished.
+time, change | The years pass quickly. The moments pass even faster. Hold them gently.
+time, discipline | An hour a day becomes a skill in a year.
+time, peace | Rushing does not make the clock go faster. It only makes you more tired.
+time, gratitude | Look up from the screen. The sky is putting on a show.
+time, love | Call the people you love while you can still hear their voices.
+courage, change | Step into the unknown. That is where every new beginning lives.
+courage, kindness | Being honest with kindness is one of the bravest things you can do.
+courage, resilience | Your heart is stronger than your fear.
+courage, purpose | Say yes to the things that make your heart beat faster in a good way.
+courage, humility | It is brave to say: I was wrong, and I am learning.
+courage, love | To love is to be brave enough to be seen.
+courage, growth | The only way out of a dark tunnel is forward.
+love, kindness | Love is shown more in what we do than in what we say.
+love, self-worth | You are worthy of the love you so freely give to others.
+love, friendship | Find the people who make you feel at home anywhere.
+love, patience | Real love grows slowly, like an old tree, and gives shade for years.
+love, gratitude | Hold close the people who know your silences.
+love, letting-go | Love does not cling. It holds with an open hand.
+love, time | The years go by, but love remembers everything.
+love, peace | Where there is love, there is rest.
+love, courage | Love bravely, even though hearts can break. Unbroken hearts may never have truly loved.
+love, kindness | Loving others begins with seeing them as they are, not as you wish them to be.
+love, gratitude | The small, steady loves of life are the ones that hold us up.
+love, family | Home is not a place. It is the people who welcome you back.
+love, simplicity | Love is often found in small, quiet moments, not grand gestures.
+love, hope | Love is the light that shows us the way home.
+simplicity, peace | Own less. Breathe more. Notice everything.
+simplicity, mindfulness | Simplicity is not having less. It is making room for what matters.
+simplicity, gratitude | A simple life is a full life when the heart is content.
+simplicity, rest | Clear the table, clear the mind.
+simplicity, purpose | Do fewer things, and do them with your whole heart.
+simplicity, time | The less you carry, the further you can walk.
+simplicity, letting-go | Let the unnecessary fall away until only what matters remains.
+simplicity, peace | Happiness is often hiding in the simplest moments.
+simplicity, mindfulness | Eat slowly. Walk slowly. Speak slowly. Live fully.
+simplicity, humility | True elegance is simple, quiet and kind.
+simplicity, gratitude | Bread, warmth, and good company. What more could a person need?
+simplicity, nature | A walk, a breeze, a patch of sun. Medicine for the soul.
+simplicity, peace | When life feels heavy, ask what you can set down.
+discipline, patience | Show up, especially on the days you do not feel like it.
+discipline, self-worth | Keep the promises you make to yourself. They matter most.
+discipline, simplicity | Begin with one small habit. Let it grow roots before you add another.
+discipline, courage | Do the hard thing first. The rest of the day will thank you.
+discipline, mindfulness | Do one thing at a time, and give it all of your attention.
+discipline, resilience | Consistency beats intensity. Gentle and steady wins the race.
+discipline, purpose | A clear goal turns ordinary effort into extraordinary progress.
+discipline, rest | Rest is part of the work. Even the strongest need to recover.
+discipline, time | Small acts of discipline today save you from regret tomorrow.
+discipline, peace | Order in your space brings calm to your mind.
+letting-go, peace | Letting go is not giving up. It is making room for something better.
+letting-go, growth | You cannot heal by holding onto the thing that hurt you.
+letting-go, simplicity | Release what you cannot change. Hold what you can.
+letting-go, resilience | Unclench your hands. You were never meant to carry it all.
+letting-go, peace | You can let go of the story and keep the lesson.
+letting-go, nature | Leaves fall so that new ones can grow.
+letting-go, self-worth | You do not need everyone to understand you. You only need to understand yourself.
+letting-go, anxiety | Let the worry go. It has never once carried tomorrow's weight for you.
+letting-go, hope | When one hand lets go, it is free to receive something new.
+letting-go, love | Loving someone sometimes means letting them walk their own path.
+letting-go, peace | Not everything needs your reaction. Some things need only your silence.
+letting-go, mindfulness | Breathe out the day. Breathe in the night. Tomorrow is a fresh page.
+mindfulness, gratitude | The present moment is full of small miracles if you slow down enough to see them.
+mindfulness, anxiety | When your mind races, return to your breath. It is always here.
+mindfulness, nature | Listen to the rain. It is teaching you how to slow down.
+mindfulness, rest | Pause. Notice your feet on the ground. You are here, and that is enough.
+mindfulness, kindness | Pay attention to people. Attention is a form of love.
+mindfulness, time | Do not let the rush of life steal the beauty of the moment.
+mindfulness, peace | Your thoughts are not facts. Watch them pass like birds across the sky.
+mindfulness, growth | Awareness is the first step of every change.
+mindfulness, simplicity | One breath, one step, one moment. That is all life ever asks.
+mindfulness, nature | Watch the sunset without taking a picture. Some things belong only to the heart.
+mindfulness, gratitude | Taste your food, feel the sun, hear the birds. Life is here.
+mindfulness, discipline | Begin each morning with a few minutes of quiet. Let the day arrive gently.
+mindfulness, anxiety | Name five things you can see. The present moment will meet you there.
+purpose, courage | Your purpose is not something you find. It is something you build every day.
+purpose, kindness | A meaningful life is often made of small acts of service.
+purpose, growth | Follow what makes you curious. Curiosity often knows the way.
+purpose, discipline | Know your why, and the how becomes easier.
+purpose, time | Do not spend your life waiting to live it.
+purpose, simplicity | Find what matters to you, and let the rest become quiet.
+purpose, hope | Every life is a story still being written. Make yours worth reading.
+purpose, love | Do what you love with the people you love, as often as you can.
+purpose, humility | Greatness is not in being above others, but in lifting them up.
+purpose, courage | Light your own path, and others will find their way by it.
+purpose, mindfulness | The meaning of life is found in how you live each ordinary day.
+purpose, gratitude | Use your gifts. That is how you thank the world for giving them to you.
+purpose, kindness | Plant something good wherever you pass, even if you never see it bloom.
+humility, kindness | The wisest people are often the most gentle.
+humility, self-worth | You do not need to be the loudest in the room to be the strongest.
+humility, gratitude | No one reaches the top alone. Remember the hands that helped you climb.
+humility, peace | There is great freedom in not needing to be right.
+humility, discipline | Let your work speak, and keep your voice gentle.
+humility, nature | The mountain does not boast of its height.
+humility, growth | Ask questions. The humble mind learns what the proud mind misses.
+humility, kindness | Treat everyone with respect, whatever their title or their past.
+humility, simplicity | Simple words, honest deeds, a quiet heart.
+humility, love | Apologise sincerely. It mends more than pride ever could.
+hope, resilience | Hope is a small light that refuses to go out.
+hope, nature | After every storm, the sky remembers how to be blue.
+hope, courage | Keep a little hope in your pocket, for the days that need it.
+hope, patience | Good days are coming. Keep your heart open for them.
+hope, time | The sun has never once failed to rise. Neither will your better days.
+hope, growth | Where there is a seed, there is the promise of a garden.
+hope, self-worth | You are not behind. You are on your own path, at your own pace.
+hope, resilience | Even a small candle can push back a very large darkness.
+hope, love | Hope and love are the two lights that never truly go out.
+hope, change | Things can change for the better faster than you think.
+hope, anxiety | The thing you are worried about may never come. The good you hope for might.
+rest, peace | Rest is not a reward for finishing. It is part of living well.
+rest, self-worth | You are allowed to rest before you are exhausted.
+rest, nature | Even the fields lie fallow so they can grow again.
+rest, simplicity | Sleep early, wake gently, and let the morning be slow.
+rest, kindness | Be gentle with yourself on the days you have little to give.
+rest, mindfulness | Close your eyes for a moment. Let your shoulders fall. Breathe.
+rest, discipline | Rest is not laziness. It is how strength is rebuilt.
+rest, peace | A tired mind sees mountains where there are only hills. Rest first.
+rest, time | Pause before you burn out. The world will wait for you.
+rest, solitude | Turn off the lights, turn off the noise, and simply be.
+rest, gratitude | A good night's sleep is a gift. Receive it gratefully.
+rest, anxiety | Things often look clearer after rest. Leave the big decisions for the morning.
+friendship, gratitude | Old friends are like old trees. Their shade is the coolest.
+friendship, time | Friendship is measured in moments shared, not in years counted.
+friendship, peace | The best friends are those with whom silence is comfortable.
+friendship, growth | Surround yourself with people who make you want to be better.
+friendship, hope | A friend can hold your hope for you when you cannot hold it yourself.
+friendship, kindness | Good friends do not keep score. They simply keep showing up.
+friendship, simplicity | A walk with a good friend is worth more than a room full of acquaintances.
+friendship, courage | A real friend tells you the truth, kindly.
+friendship, resilience | Lean on others. That is what friendship is for.
+nature, peace | Go outside. The sky has a way of making problems feel smaller.
+nature, gratitude | The earth gives us flowers without asking for anything in return.
+nature, mindfulness | Watch a leaf fall. Notice how it dances, without fear, all the way down.
+nature, simplicity | A walk in the woods can untangle a knotted mind.
+nature, change | Every season is beautiful in its own way. So is every stage of life.
+nature, growth | Like the oak tree, grow slowly, and grow strong.
+nature, rest | The ocean breathes in and out. So should you.
+nature, hope | The first bird of the morning sings before the sun is fully up. Be that bird.
+nature, peace | Mountains teach us to stand still and be steady.
+nature, solitude | The stars do not compete with one another. Each simply shines.
+nature, resilience | Flowers grow back even after the hardest winter.
+self-worth, kindness | You are enough, exactly as you are, right now.
+self-worth, courage | Do not shrink yourself to fit into places you have outgrown.
+self-worth, peace | Your worth does not depend on anyone else's opinion.
+self-worth, growth | Celebrate how far you have come, not only how far you have to go.
+self-worth, resilience | You have been through so much, and you are still here. Be proud.
+self-worth, discipline | Protect your energy. Not everyone deserves a front seat in your life.
+self-worth, hope | You are not too much, and you are not too little. You are you.
+self-worth, simplicity | You do not have to prove anything to anyone. Simply be true.
+anxiety, peace | Anxiety is a visitor, not a resident. It will leave again.
+anxiety, mindfulness | When the mind runs ahead, gently bring it home to this moment.
+anxiety, rest | You do not have to solve everything tonight. Rest, and try again tomorrow.
+anxiety, courage | You have felt this way before, and you made it through. You will again.
+anxiety, letting-go | Most of what we fear never happens. Let today be lighter.
+anxiety, kindness | Be gentle with your anxious heart. It is only trying to protect you.
+anxiety, nature | Put your hand on a tree, your feet on the grass. The earth is steady even when you are not.
+anxiety, hope | Breathe. This feeling is temporary. Calm will return.
+anxiety, simplicity | Break the big worry into small tasks. Then do just one.
+anxiety, time | One hour at a time. One breath at a time. That is enough.
+family, gratitude | Thank those who raised you, in whatever way they could.
+family, kindness | Be patient with the people you live with. They see you at your most tired.
+family, time | Eat together, laugh together, and let the dishes wait.
+family, peace | A peaceful home is built from small moments of patience.
+family, friendship | Sometimes the family we choose holds us as closely as the family we were born into.
+joy, mindfulness | Notice the small joys: warm light, a favourite song, a familiar voice.
+joy, hope | Let yourself be happy without waiting for everything to be perfect.
+joy, nature | The world is full of colour. Take a moment to see it.
+joy, kindness | Share your joy. It grows when it is given away.
+joy, love | The best kind of happiness is the kind you share.
+joy, peace | Joy and calm are cousins. Invite them both in.
+honesty, kindness | Tell the truth gently, and it will be easier to hear.
+honesty, self-worth | Be true to yourself. It is the only way to be at peace with yourself.
+honesty, simplicity | The truth is simple. It is only lies that need many words.
+honesty, humility | Admit what you do not know. It is the beginning of wisdom.
+wisdom, mindfulness | Wisdom begins with listening.
+wisdom, patience | Think before you speak. Pause before you act. Breathe before you decide.
+wisdom, peace | The wise do not need to be heard. They need only to understand.
+wisdom, discipline | A wise person adapts, like water, to the shape of what is.
+wisdom, letting-go | Some battles are won by walking away.
+peace, nature | A lake at dawn does not try to be calm. It simply stops being stirred.
+peace, mindfulness | Set the kettle on and wait for it without reaching for your phone. That is a small meditation.
+peace, simplicity | Tidy one drawer, answer one letter, take one walk. A calm day is built from small finished things.
+patience, nature | The moss on the old wall took fifty winters to grow. Be gentle with your slow work.
+patience, growth | Bread rises in its own time. Opening the oven to check only makes it fall.
+patience, hope | The answer you are waiting for may already be on its way, walking slowly.
+resilience, nature | A cracked pot still holds water if you turn the crack toward the sky.
+resilience, hope | The candle flickers in the draught, steadies, and keeps on burning. So can you.
+resilience, courage | You are allowed to be tired and still be unbreakable.
+resilience, patience | Mend what you can today. Leave the rest for tomorrow's hands.
+gratitude, simplicity | Fresh sheets, an open window and nowhere to be. Some evenings are quietly perfect.
+gratitude, nature | Somewhere a bird is building a nest from scraps. Nothing is too small to be useful.
+gratitude, friendship | Write to the friend who once helped you through. They may need your words today.
+kindness, simplicity | Hold the door, learn the name, remember the birthday. Kindness lives in details.
+kindness, courage | Gentleness takes more strength than anger ever has.
+kindness, nature | Be like the old oak that gives shade to anyone who sits beneath it.
+growth, nature | A pruned rose grows back fuller. Losing a little can make room for much more.
+growth, courage | The first page of anything new always feels clumsy. Write it anyway.
+growth, patience | Trust the slow years. They are building something you cannot yet see.
+solitude, nature | An early walk with no one else around turns the whole world into a quiet library.
+solitude, peace | Keep one corner of each day just for yourself, untouched by the noise.
+change, nature | The tide goes out, and the beach is renewed. Losses can clear the way.
+change, courage | Pack light for the next chapter. You will not need everything you carried here.
+change, patience | New paths feel strange underfoot until, one day, they feel like home.
+time, simplicity | Wind down the day the way you would close a good book: slowly, and with thanks.
+time, mindfulness | The clock counts hours. Your heart counts moments. Listen to the heart.
+time, gratitude | Keep the letters, the photographs, the small notes. One day they will be treasure.
+courage, change | The harbour is safe, but the boat was built for open water.
+courage, hope | Light the lamp before you are sure the path is clear. Walking is how it clears.
+love, simplicity | A shared meal, a long walk, a quiet evening together. Love is often this simple.
+love, patience | Keep choosing each other on the ordinary Tuesdays. That is where love lives.
+love, kindness | Learn how the people you love like to be cared for, and care for them that way.
+simplicity, peace | An empty shelf can be more restful than a full one.
+simplicity, nature | Take your shoes off in the grass. Some answers come up through the feet.
+discipline, nature | The river shapes the valley not in a day, but by never stopping.
+discipline, patience | Lay one brick well each day, and one day you will be standing in a house.
+discipline, mindfulness | Make your bed, open the curtains, drink a glass of water. Small order invites calm.
+letting-go, nature | The tree does not mourn its autumn leaves. It trusts the spring.
+letting-go, peace | Put the heavy thought down for an hour. It will still be there if you truly need it.
+mindfulness, nature | Count the colours in the evening sky before they fade. Each one is here only once.
+mindfulness, simplicity | Drink your tea while it is warm. Do not save the good moments for later.
+purpose, nature | A lighthouse never chases ships. It simply keeps its light burning.
+purpose, kindness | Ask each morning: who can I make things a little easier for today?
+humility, nature | The tallest wave returns to the same sea as the smallest ripple.
+humility, growth | Be curious about the people who disagree with you. They can see what you cannot.
+hope, nature | Snowdrops push through frozen ground. Spring begins long before it looks like spring.
+hope, patience | Plant the tree even if you will never sit in its shade. Hope works across years.
+rest, nature | Even the sea grows still on windless nights. Allow yourself the same.
+rest, kindness | Let today be a soft day. Not every day needs to be a strong one.
+friendship, nature | Good friends are like old paths through the woods: always there when you return.
+friendship, kindness | Remember the small things your friends tell you. That is how they know you listen.
+nature, peace | Lie on your back and watch the clouds drift. Nothing up there is in a hurry.
+nature, gratitude | Thank the rain. The garden is drinking.
+self-worth, nature | The violet does not wish to be a rose. It knows its own colour is enough.
+self-worth, courage | Take up the space you need. You belong in the room.
+anxiety, nature | Watch the waves come in and go out. Your feelings move the same way.
+anxiety, simplicity | Write the worry on paper. It is often smaller once it is outside your head.
+joy, simplicity | Dance in the kitchen when no one is watching. Joy needs no audience.
+joy, nature | Stop for the rainbow. The errands can wait two minutes.
+honesty, courage | Say what you mean, gently, and mean what you say.
+wisdom, nature | The old tree has seen many storms. It bends a little and stays rooted.
+wisdom, patience | Give an angry thought a night to cool before you let it speak.

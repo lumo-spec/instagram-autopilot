@@ -1,0 +1,39 @@
+{
+ "openers": [
+  "A thought for today.",
+  "Something to carry with you today.",
+  "Pause here for a moment.",
+  "A quiet reminder.",
+  "Read it slowly.",
+  "For the day ahead.",
+  "One small thought, worth keeping.",
+  "Let this one settle.",
+  "Today's reflection.",
+  "Take a breath before you read this."
+ ],
+ "calls_to_action": [
+  "Save this for a day you need it.",
+  "Share it with someone who needs a calm moment.",
+  "Which line stays with you?",
+  "Follow for a daily moment of calm.",
+  "Send this to a friend who would understand.",
+  "Come back to this tonight.",
+  "Read it once more, slower this time."
+ ],
+ "hashtag_pools": {
+  "core": ["#dailywisdom", "#wisdom", "#quotes", "#reflection", "#mindfulness", "#innerpeace", "#selfgrowth", "#calm"],
+  "stoic": ["#stoicism", "#stoic", "#philosophy", "#marcusaurelius", "#seneca"],
+  "growth": ["#personalgrowth", "#growthmindset", "#selfimprovement"],
+  "peace": ["#peaceofmind", "#slowliving", "#mentalwellbeing"],
+  "kindness": ["#kindness", "#compassion", "#gratitude"]
+ },
+ "tag_pools": {
+  "peace": "peace", "rest": "peace", "anxiety": "peace", "simplicity": "peace", "solitude": "peace",
+  "growth": "growth", "discipline": "growth", "purpose": "growth", "courage": "growth", "resilience": "growth",
+  "kindness": "kindness", "gratitude": "kindness", "love": "kindness", "friendship": "kindness", "family": "kindness"
+ },
+ "author_pools": {
+  "Marcus Aurelius": "stoic", "Epictetus": "stoic"
+ },
+ "banned_hashtags": ["#followforfollow", "#like4like", "#instagood", "#follow4follow", "#likeforlike"]
+}

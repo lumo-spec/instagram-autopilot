@@ -1,0 +1,5880 @@
+{
+ "page": "wisdom",
+ "type": "quotes",
+ "synonyms": {
+  "anxiety": [
+   "anxiety",
+   "peace",
+   "letting-go",
+   "mindfulness"
+  ],
+  "anxious": [
+   "anxiety",
+   "peace",
+   "mindfulness"
+  ],
+  "worry": [
+   "anxiety",
+   "letting-go",
+   "peace"
+  ],
+  "fear": [
+   "courage",
+   "anxiety",
+   "peace"
+  ],
+  "stress": [
+   "peace",
+   "rest",
+   "anxiety",
+   "simplicity"
+  ],
+  "calm": [
+   "peace",
+   "mindfulness",
+   "rest"
+  ],
+  "hard times": [
+   "resilience",
+   "hope",
+   "courage"
+  ],
+  "struggle": [
+   "resilience",
+   "courage",
+   "hope"
+  ],
+  "grief": [
+   "letting-go",
+   "hope",
+   "love"
+  ],
+  "loss": [
+   "letting-go",
+   "hope",
+   "change"
+  ],
+  "heartbreak": [
+   "letting-go",
+   "love",
+   "resilience"
+  ],
+  "tired": [
+   "rest",
+   "peace"
+  ],
+  "burnout": [
+   "rest",
+   "simplicity",
+   "self-worth"
+  ],
+  "sleep": [
+   "rest"
+  ],
+  "motivation": [
+   "discipline",
+   "purpose",
+   "courage"
+  ],
+  "habits": [
+   "discipline",
+   "growth"
+  ],
+  "focus": [
+   "mindfulness",
+   "discipline",
+   "simplicity"
+  ],
+  "confidence": [
+   "self-worth",
+   "courage"
+  ],
+  "self love": [
+   "self-worth",
+   "kindness"
+  ],
+  "lonely": [
+   "solitude",
+   "friendship",
+   "self-worth"
+  ],
+  "alone": [
+   "solitude"
+  ],
+  "thanks": [
+   "gratitude"
+  ],
+  "thankful": [
+   "gratitude"
+  ],
+  "happiness": [
+   "joy",
+   "gratitude",
+   "peace"
+  ],
+  "happy": [
+   "joy",
+   "gratitude"
+  ],
+  "new start": [
+   "change",
+   "hope",
+   "growth"
+  ],
+  "new year": [
+   "change",
+   "hope",
+   "growth"
+  ],
+  "monday": [
+   "purpose",
+   "discipline",
+   "hope"
+  ],
+  "morning": [
+   "hope",
+   "mindfulness",
+   "purpose"
+  ],
+  "friends": [
+   "friendship"
+  ],
+  "family": [
+   "family",
+   "love"
+  ],
+  "nature": [
+   "nature"
+  ],
+  "patience": [
+   "patience"
+  ],
+  "kindness": [
+   "kindness"
+  ],
+  "truth": [
+   "honesty"
+  ],
+  "wisdom": [
+   "wisdom",
+   "humility"
+  ],
+  "change": [
+   "change"
+  ],
+  "time": [
+   "time"
+  ],
+  "love": [
+   "love"
+  ],
+  "hope": [
+   "hope"
+  ],
+  "courage": [
+   "courage"
+  ]
+ },
+ "entries": [
+  {
+   "id": "w-0cc8951c",
+   "text": "Give thyself time to learn something new and good, and cease to be whirled around.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "growth",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-d61e9baf",
+   "text": "A man then must stand erect, not be kept erect by others.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "self-worth",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-79ce4d14",
+   "text": "The universe is transformation: life is opinion.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "change",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-539d383a",
+   "text": "Take away thy opinion, and then there is taken away the complaint, \"I have been harmed.\" Take away the complaint, \"I have been harmed,\" and the harm is taken away.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "letting-go",
+    "peace"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-f63a0eee",
+   "text": "Do not act as if thou wert going to live ten thousand years.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "time",
+    "purpose"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-6cc336af",
+   "text": "While thou livest, while it is in thy power, be good.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "kindness",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-9c0ee245",
+   "text": "For the greatest part of what we say and do being unnecessary, if a man takes this away, he will have more leisure and less uneasiness.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "simplicity",
+    "peace"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-4c0bdfba",
+   "text": "Accordingly, on every occasion a man should ask himself, Is this one of the unnecessary things?",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "simplicity",
+    "discipline"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-fd18663b",
+   "text": "Thou must turn to profit the present by the aid of reason and justice.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "mindfulness",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-45f1dc76",
+   "text": "Everything is only for a day, both that which remembers and that which is remembered.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "time",
+    "humility"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-9264d8cb",
+   "text": "Be like the promontory against which the waves continually break, but it stands firm and tames the fury of the water around it.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "resilience",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-bdd00412",
+   "text": "Remember too on every occasion which leads thee to vexation to apply this principle; not that this is a misfortune, but that to bear it nobly is good fortune.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "resilience",
+    "courage"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-0d1471b0",
+   "text": "In the morning when thou risest unwillingly, let this thought be present,--I am rising to the work of a human being.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "purpose",
+    "discipline"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-e4dda061",
+   "text": "How easy it is to repel and to wipe away every impression which is troublesome or unsuitable, and immediately to be in all tranquillity.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "peace",
+    "letting-go"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-c72a23c3",
+   "text": "Such as are thy habitual thoughts, such also will be the character of thy mind; for the soul is dyed by the thoughts.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "mindfulness",
+    "growth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-cbd2698a",
+   "text": "Nothing happens to any man which he is not formed by nature to bear.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "resilience",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-9b1076e2",
+   "text": "Often think of the rapidity with which things pass by and disappear, both the things which are and the things which are produced.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "change",
+    "time"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-9dbcc971",
+   "text": "Thou canst pass thy life in an equable flow of happiness, if thou canst go by the right way, and think and act in the right way.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "peace",
+    "purpose"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-c3008609",
+   "text": "Motions and changes are continually renewing the world, just as the uninterrupted course of time is always renewing the infinite duration of ages.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "change",
+    "nature"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-bb0a2ba5",
+   "text": "If any man is able to convince me and show me that I do not think or act right, I will gladly change; for I seek the truth, by which no man was ever injured.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "humility",
+    "growth"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-6c0c6c2d",
+   "text": "Teach them then, and show them without being angry.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "kindness",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-a4085b99",
+   "text": "Keep thyself then simple, good, pure, serious, free from affectation, a friend of justice, a worshipper of the gods, kind, affectionate, strenuous in all proper acts.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "kindness",
+    "simplicity"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-7c03f70d",
+   "text": "Neither worse then nor better is a thing made by being praised.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "self-worth",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-84994928",
+   "text": "Be cheerful also, and seek not external help nor the tranquillity which others give.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "peace",
+    "self-worth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-468ac940",
+   "text": "Do not have such an opinion of things as he has who does thee wrong, or such as he wishes thee to have, but look at them as they are in truth.",
+   "author": "Marcus Aurelius",
+   "tags": [
+    "mindfulness",
+    "kindness"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Meditations (Thoughts), trans. George Long, 1862",
+    "gutenberg_id": 15877,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-82ae1a43",
+   "text": "There are things which are within our power, and there are things which are beyond our power.",
+   "author": "Epictetus",
+   "tags": [
+    "letting-go",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-59eefca5",
+   "text": "Men are disturbed not by things, but by the views which they take of things.",
+   "author": "Epictetus",
+   "tags": [
+    "mindfulness",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-455da232",
+   "text": "Demand not that events should happen as you wish; but wish them to happen as they do happen, and you will go on well.",
+   "author": "Epictetus",
+   "tags": [
+    "letting-go",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-d53087bd",
+   "text": "You can be unconquerable if you enter into no combat in which it is not in your own power to conquer.",
+   "author": "Epictetus",
+   "tags": [
+    "courage",
+    "discipline"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-5ae9b7c0",
+   "text": "When, therefore, anyone provokes you, be assured that it is your own opinion which provokes you.",
+   "author": "Epictetus",
+   "tags": [
+    "patience",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-a1caaa85",
+   "text": "Try, therefore, in the first place, not to be bewildered by appearances.",
+   "author": "Epictetus",
+   "tags": [
+    "mindfulness",
+    "patience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-67563941",
+   "text": "In every affair consider what precedes and what follows, and then undertake it.",
+   "author": "Epictetus",
+   "tags": [
+    "discipline",
+    "purpose"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-384ae467",
+   "text": "You will then be hurt when you consent to be hurt.",
+   "author": "Epictetus",
+   "tags": [
+    "resilience",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-3c1a9c9a",
+   "text": "Be mostly silent, or speak merely what is needful, and in few words.",
+   "author": "Epictetus",
+   "tags": [
+    "simplicity",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-749bb49c",
+   "text": "Everything has two handles: one by which it may be borne, another by which it cannot.",
+   "author": "Epictetus",
+   "tags": [
+    "resilience",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-5b2927f8",
+   "text": "Never proclaim yourself a philosopher, nor make much talk among the ignorant about your principles, but show them by actions.",
+   "author": "Epictetus",
+   "tags": [
+    "humility",
+    "discipline"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-7ef538a2",
+   "text": "The condition and characteristic of a philosopher is that he looks to himself for all help or harm.",
+   "author": "Epictetus",
+   "tags": [
+    "self-worth",
+    "resilience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-17d80e55",
+   "text": "This instant, then, think yourself worthy of living as a man grown up and a proficient.",
+   "author": "Epictetus",
+   "tags": [
+    "growth",
+    "purpose"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-cf43837f",
+   "text": "Let whatever appears to be the best be to you an inviolable law.",
+   "author": "Epictetus",
+   "tags": [
+    "discipline",
+    "purpose"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-137765f0",
+   "text": "Where it is practically necessary for you to pursue or avoid anything, do even this with discretion and gentleness and moderation.",
+   "author": "Epictetus",
+   "tags": [
+    "kindness",
+    "patience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-a5e56fd5",
+   "text": "If you would improve, be content to be thought foolish and dull with regard to externals.",
+   "author": "Epictetus",
+   "tags": [
+    "growth",
+    "humility"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-d8746220",
+   "text": "And if anyone tells you that you know nothing, and you are not nettled at it, then you may be sure that you have really entered on your work.",
+   "author": "Epictetus",
+   "tags": [
+    "humility",
+    "growth"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "The Enchiridion, trans. Thomas Wentworth Higginson, 1865",
+    "gutenberg_id": 45109,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-621aa521",
+   "text": "It is better to leave a vessel unfilled, than to attempt to carry it when it is full.",
+   "author": "Lao Tzu",
+   "tags": [
+    "simplicity",
+    "letting-go"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-f87ad248",
+   "text": "Clay is fashioned into vessels; but it is on their empty hollowness, that their use depends.",
+   "author": "Lao Tzu",
+   "tags": [
+    "simplicity",
+    "solitude"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-497aff08",
+   "text": "Let it be still, and it will gradually become clear.",
+   "author": "Lao Tzu",
+   "tags": [
+    "patience",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-e513f059",
+   "text": "Let movement go on, and the condition of rest will gradually arise.",
+   "author": "Lao Tzu",
+   "tags": [
+    "rest",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-65fb76c5",
+   "text": "A violent wind does not last for a whole morning; a sudden rain does not last for the whole day.",
+   "author": "Lao Tzu",
+   "tags": [
+    "change",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-ca623c63",
+   "text": "Gravity is the root of lightness; stillness, the ruler of movement.",
+   "author": "Lao Tzu",
+   "tags": [
+    "peace",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-ba2059b4",
+   "text": "He who knows other men is discerning; he who knows himself is intelligent.",
+   "author": "Lao Tzu",
+   "tags": [
+    "self-worth",
+    "growth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-326164f9",
+   "text": "He who overcomes others is strong; he who overcomes himself is mighty.",
+   "author": "Lao Tzu",
+   "tags": [
+    "discipline",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-c073f953",
+   "text": "The soft overcomes the hard; and the weak the strong.",
+   "author": "Lao Tzu",
+   "tags": [
+    "kindness",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-6615d7a1",
+   "text": "Therefore the sufficiency of contentment is an enduring and unchanging sufficiency.",
+   "author": "Lao Tzu",
+   "tags": [
+    "gratitude",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-9e8ee5d1",
+   "text": "All difficult things in the world are sure to arise from a previous state in which they were easy, and all great things from one in which they were small.",
+   "author": "Lao Tzu",
+   "tags": [
+    "patience",
+    "growth"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-001f3d5e",
+   "text": "He who lightly promises is sure to keep but little faith; he who is continually thinking things easy is sure to find them difficult.",
+   "author": "Lao Tzu",
+   "tags": [
+    "humility",
+    "discipline"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-7608b6c5",
+   "text": "Action should be taken before a thing has made its appearance; order should be secured before disorder has begun.",
+   "author": "Lao Tzu",
+   "tags": [
+    "discipline",
+    "purpose"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-65128760",
+   "text": "Because he does not strive, no one finds it possible to strive with him.",
+   "author": "Lao Tzu",
+   "tags": [
+    "peace",
+    "humility"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-d58fb234",
+   "text": "Gentleness is sure to be victorious even in battle, and firmly to maintain its ground.",
+   "author": "Lao Tzu",
+   "tags": [
+    "kindness",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-868a5eee",
+   "text": "Sincere words are not fine; fine words are not sincere.",
+   "author": "Lao Tzu",
+   "tags": [
+    "simplicity",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-413d4191",
+   "text": "The more that he expends for others, the more does he possess of his own; the more that he gives to others, the more does he have himself.",
+   "author": "Lao Tzu",
+   "tags": [
+    "kindness",
+    "gratitude"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-17df2230",
+   "text": "Purity and stillness give the correct law to all under heaven.",
+   "author": "Lao Tzu",
+   "tags": [
+    "peace",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-848c0a4e",
+   "text": "So it is that some things are increased by being diminished, and others are diminished by being increased.",
+   "author": "Lao Tzu",
+   "tags": [
+    "change",
+    "humility"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-83771647",
+   "text": "Constant action overcomes cold; being still overcomes heat.",
+   "author": "Lao Tzu",
+   "tags": [
+    "resilience",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Tao Te Ching, trans. James Legge, 1891",
+    "gutenberg_id": 216,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-d4ebac2d",
+   "text": "The mass of men lead lives of quiet desperation.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "purpose",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-a3332ef2",
+   "text": "Morning is when I am awake and there is a dawn in me.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "hope",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-da9eac3a",
+   "text": "I find it wholesome to be alone the greater part of the time.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "solitude",
+    "rest"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-51099b42",
+   "text": "I never found the companion that was so companionable as solitude.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "solitude",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-f087bc08",
+   "text": "To him whose elastic and vigorous thought keeps pace with the sun, the day is a perpetual morning.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "hope",
+    "growth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-bb4b755c",
+   "text": "Let us spend one day as deliberately as Nature, and not be thrown off the track by every nutshell and mosquito’s wing that falls on the rails.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "mindfulness",
+    "nature"
+   ],
+   "length_class": "long",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-38e80188",
+   "text": "Books must be read as deliberately and reservedly as they were written.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "mindfulness",
+    "growth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-6e750ea6",
+   "text": "The morning wind forever blows, the poem of creation is uninterrupted; but few are the ears that hear it.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "nature",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-05e3d892",
+   "text": "Every morning was a cheerful invitation to make my life of equal simplicity, and I may say innocence, with Nature herself.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "simplicity",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-d1f85d73",
+   "text": "Solitude is not measured by the miles of space that intervene between a man and his fellows.",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "simplicity",
+    "solitude"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-c97d4f94",
+   "text": "Simplicity, simplicity, simplicity!",
+   "author": "Henry David Thoreau",
+   "tags": [
+    "simplicity",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Walden, 1854",
+    "gutenberg_id": 205,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-b4478eff",
+   "text": "Trust thyself: every heart vibrates to that iron string.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "self-worth",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-4b047e7b",
+   "text": "Nothing can bring you peace but yourself.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "peace",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-604fcebb",
+   "text": "The day is always his who works in it with serenity and great aims.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "purpose",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-c358d1ea",
+   "text": "In self-trust all the virtues are comprehended.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "self-worth",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-a4bb1a79",
+   "text": "Give me insight into to-day, and you may have the antique and future worlds.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "mindfulness",
+    "time"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-ef928f04",
+   "text": "The law of nature is, Do the thing, and you shall have the power: but they who do not the thing have not the power.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "courage",
+    "discipline"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-3140072b",
+   "text": "The changes which break up at short intervals the prosperity of men are advertisements of a nature whose law is growth.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "change",
+    "growth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-9e3e697c",
+   "text": "Then there can be enlargement, and the man of to-day scarcely recognizes the man of yesterday.",
+   "author": "Ralph Waldo Emerson",
+   "tags": [
+    "growth",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": {
+    "work": "Essays, First Series, 1841, and The American Scholar, 1837",
+    "gutenberg_id": 16643,
+    "note": "Verified verbatim against the Project Gutenberg text"
+   }
+  },
+  {
+   "id": "w-7e028c57",
+   "text": "Peace is not the absence of noise. It is the presence of a quiet place inside you that noise cannot reach.",
+   "author": null,
+   "tags": [
+    "peace",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-25f9b82b",
+   "text": "You do not have to settle every question today. Some answers arrive only when you stop chasing them.",
+   "author": null,
+   "tags": [
+    "peace",
+    "letting-go"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7a438b45",
+   "text": "A calm mind is not empty. It is simply uncluttered.",
+   "author": null,
+   "tags": [
+    "peace",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b8099001",
+   "text": "Rest your thoughts the way you rest your hands: open, still, and in no hurry.",
+   "author": null,
+   "tags": [
+    "peace",
+    "rest"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1d4a6dad",
+   "text": "Make peace with yourself first. Every other peace begins there.",
+   "author": null,
+   "tags": [
+    "peace",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b04b0110",
+   "text": "Be like still water. Let the world reflect in you without disturbing you.",
+   "author": null,
+   "tags": [
+    "peace",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-36f11767",
+   "text": "Breathe in slowly. Notice that, right now, in this breath, you are safe.",
+   "author": null,
+   "tags": [
+    "peace",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b949b5eb",
+   "text": "Not every thought deserves a reply. Let some of them pass like clouds.",
+   "author": null,
+   "tags": [
+    "peace",
+    "letting-go"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-89ae7f65",
+   "text": "Calm is a skill. The more often you return to it, the shorter the road becomes.",
+   "author": null,
+   "tags": [
+    "peace",
+    "time"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-28e6bdd7",
+   "text": "Quiet mornings are small gifts. Unwrap them slowly.",
+   "author": null,
+   "tags": [
+    "peace",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d07dcbb8",
+   "text": "Find the silence between your thoughts and stay there a little longer each day.",
+   "author": null,
+   "tags": [
+    "peace",
+    "solitude"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-93fecaa1",
+   "text": "You are allowed to move gently through a loud world.",
+   "author": null,
+   "tags": [
+    "peace",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d709fae8",
+   "text": "You do not need to win every argument to keep your peace.",
+   "author": null,
+   "tags": [
+    "peace",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-deb2379d",
+   "text": "Worry borrows tomorrow's trouble and spends today's calm. Keep your calm.",
+   "author": null,
+   "tags": [
+    "peace",
+    "anxiety"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1c5f9249",
+   "text": "The present moment is the only place where peace can be found.",
+   "author": null,
+   "tags": [
+    "peace",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-45effe19",
+   "text": "Let go of the need to know how everything ends. Walk the next step with an open heart.",
+   "author": null,
+   "tags": [
+    "peace",
+    "letting-go"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9fdd4007",
+   "text": "A quiet hour can mend what a busy week has frayed.",
+   "author": null,
+   "tags": [
+    "peace",
+    "rest"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5569ae97",
+   "text": "Contentment is the art of noticing that you already have enough.",
+   "author": null,
+   "tags": [
+    "peace",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-14e48a9a",
+   "text": "Lower your voice, slow your pace, and soften your shoulders. Peace often begins in the body.",
+   "author": null,
+   "tags": [
+    "peace",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f3a2c080",
+   "text": "The river does not argue with the stones. It simply finds its way around them.",
+   "author": null,
+   "tags": [
+    "peace",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4894adb3",
+   "text": "Seeds do not apologise for the time they spend underground.",
+   "author": null,
+   "tags": [
+    "patience",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-86cc35fd",
+   "text": "The tallest trees were once small enough to be stepped on. Give yourself time.",
+   "author": null,
+   "tags": [
+    "patience",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d09f00d0",
+   "text": "What is meant to grow in you will not be rushed and will not be stopped.",
+   "author": null,
+   "tags": [
+    "patience",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-cc29abf6",
+   "text": "Slow progress is still progress. Small steps still cover great distances.",
+   "author": null,
+   "tags": [
+    "patience",
+    "time"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0e74c8db",
+   "text": "Be patient with people who are learning. You were once learning too.",
+   "author": null,
+   "tags": [
+    "patience",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-52f824aa",
+   "text": "Some things become clear only when you stop stirring them.",
+   "author": null,
+   "tags": [
+    "patience",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-64acd960",
+   "text": "The night is long only for those who forget that morning always comes.",
+   "author": null,
+   "tags": [
+    "patience",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-22d588c8",
+   "text": "Do not measure your growth against someone else's calendar.",
+   "author": null,
+   "tags": [
+    "patience",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1565c9f1",
+   "text": "Good things often arrive quietly, after we have stopped watching the door.",
+   "author": null,
+   "tags": [
+    "patience",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1321c8cc",
+   "text": "Do the small thing well, again and again, until it becomes a great thing.",
+   "author": null,
+   "tags": [
+    "patience",
+    "discipline"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5e521013",
+   "text": "Give your life the patience you would give a garden.",
+   "author": null,
+   "tags": [
+    "patience",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-3ef309fd",
+   "text": "When you feel rushed, slow down on purpose. Haste rarely arrives anywhere better.",
+   "author": null,
+   "tags": [
+    "patience",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4b502226",
+   "text": "Patience with others begins with patience with yourself.",
+   "author": null,
+   "tags": [
+    "patience",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-51ae1950",
+   "text": "Love is patient because it believes the best is still unfolding.",
+   "author": null,
+   "tags": [
+    "patience",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b02b8138",
+   "text": "Hold on a little longer. The hardest part of the climb is often just before the view.",
+   "author": null,
+   "tags": [
+    "patience",
+    "resilience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-36482c4b",
+   "text": "The roots you grow in silence will hold you when the storms come.",
+   "author": null,
+   "tags": [
+    "patience",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b52a29dd",
+   "text": "You have survived every difficult day so far. That is not a small thing.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1318583c",
+   "text": "The bamboo bends in the storm and stands tall again when it passes.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2d931d9b",
+   "text": "Hard seasons are not the end of the story. They are the middle.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4d3b9b6b",
+   "text": "When the road is hard, shorten your gaze. Just take the next step.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5f4303ba",
+   "text": "Difficult days are teachers that do not announce their lessons.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-875959b6",
+   "text": "Some days, being brave means simply getting up and trying again.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-76407266",
+   "text": "Look at the tree that grows through rock. Life finds a way.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ede48a17",
+   "text": "Pain is real, but so is healing. Both can live in the same heart.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-fcc9a851",
+   "text": "Keep going gently. Not every step needs to be a leap.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-944406c2",
+   "text": "Calm in the storm is not luck. It is practice.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e08ef28e",
+   "text": "You are not defined by the moment you fell, but by how you rose.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-37ec7597",
+   "text": "This difficult chapter is real, but it is not the whole book.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-6b34a402",
+   "text": "A warm cup, a kind word, a quiet hour. Riches hide in small things.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-92183214",
+   "text": "When you count your blessings, worries have less room to grow.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e4a9e2ff",
+   "text": "Thank the people who stayed. They chose you when it was not easy.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f38f4437",
+   "text": "The sun rose again today, without being asked. That alone is worth a smile.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-90bdc43b",
+   "text": "Someday you will look back on these ordinary days and call them precious.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "time"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2fba4d24",
+   "text": "Say thank you often. It costs nothing and gives so much.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8f149bf6",
+   "text": "Gratitude for today is the best preparation for tomorrow.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-189a0d8e",
+   "text": "Notice one beautiful thing each day. Soon you will notice many.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c424cfc5",
+   "text": "Before you sleep, name three good things. Let them be the last thoughts of your day.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "rest"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e703dd73",
+   "text": "Be grateful for the person you are becoming, not only for the things you have.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "self-worth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1dfda3f1",
+   "text": "A true friend is a quiet blessing that shows up again and again.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "friendship"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-24c66bb8",
+   "text": "Even hard days carry small gifts if we are willing to look for them.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-53bdc653",
+   "text": "A grateful heart is a calm heart.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f2a53bbe",
+   "text": "Rain on the window, wind in the trees. The world sings to those who listen.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-05b22eb2",
+   "text": "Do not wait for a special day to be thankful. Today is the special day.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "time"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-fc391fe3",
+   "text": "Much of what you have was given to you. Hold it with an open hand.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f16c8443",
+   "text": "Breathe in thanks. Breathe out complaint.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-73529e03",
+   "text": "The people who love you are not owed to you. They are gifts. Treat them as such.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "love"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e29748db",
+   "text": "A small kindness can travel further than you will ever know.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1807caf9",
+   "text": "It takes strength to be gentle in a harsh world.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-039a0acd",
+   "text": "Be the kind of person that makes others feel safe.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "friendship"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7ad0890f",
+   "text": "Kind words cost little and heal much.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-db37de62",
+   "text": "The best way to thank life for its gifts is to be generous with yours.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0eb9010d",
+   "text": "Be kind to the version of yourself that is still learning.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ab4e7f11",
+   "text": "Leave people a little lighter than you found them.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e37808a8",
+   "text": "When you cannot understand someone, choose kindness anyway.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e0fb11e2",
+   "text": "Softness is not weakness. Water is soft, yet it shapes stone.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9d3ed377",
+   "text": "Listen more than you speak. Listening is a quiet form of kindness.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9f54b97d",
+   "text": "A kind word at the right moment can change the shape of a whole day.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5ecc4a8d",
+   "text": "Make kindness a habit, not a mood.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-71878011",
+   "text": "Love is not only a feeling. It is a thousand small acts of care.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b1d52725",
+   "text": "Stand up for the person who cannot stand up for themselves.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-955bd0c2",
+   "text": "Growth is quiet. You rarely notice it until you look back.",
+   "author": null,
+   "tags": [
+    "growth",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ac5d5ac0",
+   "text": "The day you stop learning is the day you stop growing.",
+   "author": null,
+   "tags": [
+    "growth",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a8e5d8a6",
+   "text": "Every mistake is a lesson wearing a disguise.",
+   "author": null,
+   "tags": [
+    "growth",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f825a9d0",
+   "text": "You are a work in progress, and that is a beautiful thing to be.",
+   "author": null,
+   "tags": [
+    "growth",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-207b322d",
+   "text": "Outgrowing old habits is not a loss. It is the price of becoming new.",
+   "author": null,
+   "tags": [
+    "growth",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-50c5bcbe",
+   "text": "Every morning is a chance to begin again with a little more wisdom.",
+   "author": null,
+   "tags": [
+    "growth",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-650032c2",
+   "text": "Notice what drains you and what fills you. Then choose wisely.",
+   "author": null,
+   "tags": [
+    "growth",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-334f96d0",
+   "text": "Doubt is natural. Let it walk beside you, but do not let it lead.",
+   "author": null,
+   "tags": [
+    "growth",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b4b39bb3",
+   "text": "Struggle is the soil in which strength takes root.",
+   "author": null,
+   "tags": [
+    "growth",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-97993af7",
+   "text": "What you repeat, you become. Choose your habits with care.",
+   "author": null,
+   "tags": [
+    "growth",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-29931026",
+   "text": "The caterpillar does not become a butterfly by staying the same.",
+   "author": null,
+   "tags": [
+    "growth",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f5557217",
+   "text": "Branches grow toward the light. So can you.",
+   "author": null,
+   "tags": [
+    "growth",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a6f8612e",
+   "text": "Being alone is not the same as being lonely. Solitude can be a quiet friend.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7e2db575",
+   "text": "Time alone is not wasted. It is how the soul catches its breath.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "rest"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-65d95641",
+   "text": "In solitude, we hear the voice that crowds drown out.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-3ada5e47",
+   "text": "Learn to enjoy your own company. You are with yourself for life.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b320189d",
+   "text": "Walk alone in nature sometimes. The trees ask nothing of you.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c806a0dd",
+   "text": "Some of your best thinking happens when no one is watching.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-6ec9f9e4",
+   "text": "A quiet room can be a sanctuary for a noisy mind.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ae83570b",
+   "text": "Switch off the noise for an hour. Notice how much clearer everything becomes.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e6fb9046",
+   "text": "Retreat is not defeat. Even the tide pulls back before it returns.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "rest"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d906bbfc",
+   "text": "Sit with your thoughts without judging them. They are only visitors.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-dd5ba0bc",
+   "text": "It takes courage to be alone with yourself and like who you find there.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5f498484",
+   "text": "The deepest roots grow in the dark, out of sight.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-28c15070",
+   "text": "The moon is alone in the sky, and still it lights the whole night.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ebbe619b",
+   "text": "Give yourself permission to disappear for a while and come back renewed.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "rest"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-94ffecf2",
+   "text": "Some doors close so that you will finally turn around and see the open sky.",
+   "author": null,
+   "tags": [
+    "change",
+    "letting-go"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8bd147f9",
+   "text": "Change is frightening, but staying where you no longer belong is worse.",
+   "author": null,
+   "tags": [
+    "change",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5d788bee",
+   "text": "Every ending carries a beginning folded inside it.",
+   "author": null,
+   "tags": [
+    "change",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d167866d",
+   "text": "You are not the same person you were a year ago. Honour that.",
+   "author": null,
+   "tags": [
+    "change",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f7b9438a",
+   "text": "Accept what is changing. Resisting the tide only tires the swimmer.",
+   "author": null,
+   "tags": [
+    "change",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2748849e",
+   "text": "Transformation takes time. The butterfly does not hurry the cocoon.",
+   "author": null,
+   "tags": [
+    "change",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e37ff62e",
+   "text": "Life will rearrange you. Let it, and find your new shape.",
+   "author": null,
+   "tags": [
+    "change",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-593f39ff",
+   "text": "Nothing stays the same, and that is why hope is always possible.",
+   "author": null,
+   "tags": [
+    "change",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4337c7da",
+   "text": "Hold your plans loosely. Life has its own ideas.",
+   "author": null,
+   "tags": [
+    "change",
+    "letting-go"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2bdb80f8",
+   "text": "You can be afraid and still move forward. That is what courage looks like.",
+   "author": null,
+   "tags": [
+    "change",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-18c16232",
+   "text": "Winter never fails to turn into spring.",
+   "author": null,
+   "tags": [
+    "change",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1efb79c7",
+   "text": "Growing apart from people is part of growing up. It is not a failure.",
+   "author": null,
+   "tags": [
+    "change",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5c69c064",
+   "text": "Notice the small changes. They are the large changes in disguise.",
+   "author": null,
+   "tags": [
+    "change",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-baded758",
+   "text": "The present moment is the only time you can actually live in.",
+   "author": null,
+   "tags": [
+    "time",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-eb4bf68d",
+   "text": "Spend your time on what you will be glad you spent it on.",
+   "author": null,
+   "tags": [
+    "time",
+    "purpose"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1fee1cdb",
+   "text": "Ordinary days are the ones we miss the most later.",
+   "author": null,
+   "tags": [
+    "time",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-900a0205",
+   "text": "You do not need more time. You need fewer things filling it.",
+   "author": null,
+   "tags": [
+    "time",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b74ce9e6",
+   "text": "Time heals slowly, but it heals.",
+   "author": null,
+   "tags": [
+    "time",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7208305f",
+   "text": "The best gift you can give anyone is your undivided attention.",
+   "author": null,
+   "tags": [
+    "time",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-82962e12",
+   "text": "It is never too late to begin again.",
+   "author": null,
+   "tags": [
+    "time",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b45f517c",
+   "text": "Life is happening now, not after the next thing is finished.",
+   "author": null,
+   "tags": [
+    "time",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0dc3f96e",
+   "text": "The years pass quickly. The moments pass even faster. Hold them gently.",
+   "author": null,
+   "tags": [
+    "time",
+    "change"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-142b2b62",
+   "text": "An hour a day becomes a skill in a year.",
+   "author": null,
+   "tags": [
+    "time",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1c10752f",
+   "text": "Rushing does not make the clock go faster. It only makes you more tired.",
+   "author": null,
+   "tags": [
+    "time",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c0a7cf58",
+   "text": "Look up from the screen. The sky is putting on a show.",
+   "author": null,
+   "tags": [
+    "time",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7a841c31",
+   "text": "Call the people you love while you can still hear their voices.",
+   "author": null,
+   "tags": [
+    "time",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1db2a11e",
+   "text": "Step into the unknown. That is where every new beginning lives.",
+   "author": null,
+   "tags": [
+    "courage",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-45aee34f",
+   "text": "Being honest with kindness is one of the bravest things you can do.",
+   "author": null,
+   "tags": [
+    "courage",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f533dbe0",
+   "text": "Your heart is stronger than your fear.",
+   "author": null,
+   "tags": [
+    "courage",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-909a995c",
+   "text": "Say yes to the things that make your heart beat faster in a good way.",
+   "author": null,
+   "tags": [
+    "courage",
+    "purpose"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-346399b3",
+   "text": "It is brave to say: I was wrong, and I am learning.",
+   "author": null,
+   "tags": [
+    "courage",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f91e0fdd",
+   "text": "To love is to be brave enough to be seen.",
+   "author": null,
+   "tags": [
+    "courage",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f0bff711",
+   "text": "The only way out of a dark tunnel is forward.",
+   "author": null,
+   "tags": [
+    "courage",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a36847ac",
+   "text": "Love is shown more in what we do than in what we say.",
+   "author": null,
+   "tags": [
+    "love",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b31694db",
+   "text": "You are worthy of the love you so freely give to others.",
+   "author": null,
+   "tags": [
+    "love",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-974aaa92",
+   "text": "Find the people who make you feel at home anywhere.",
+   "author": null,
+   "tags": [
+    "love",
+    "friendship"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ae62dbe0",
+   "text": "Real love grows slowly, like an old tree, and gives shade for years.",
+   "author": null,
+   "tags": [
+    "love",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9e61e954",
+   "text": "Hold close the people who know your silences.",
+   "author": null,
+   "tags": [
+    "love",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b87ddee8",
+   "text": "Love does not cling. It holds with an open hand.",
+   "author": null,
+   "tags": [
+    "love",
+    "letting-go"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-811f92e6",
+   "text": "The years go by, but love remembers everything.",
+   "author": null,
+   "tags": [
+    "love",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-28ac0af5",
+   "text": "Where there is love, there is rest.",
+   "author": null,
+   "tags": [
+    "love",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d1abe6e2",
+   "text": "Love bravely, even though hearts can break. Unbroken hearts may never have truly loved.",
+   "author": null,
+   "tags": [
+    "love",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5f880248",
+   "text": "Loving others begins with seeing them as they are, not as you wish them to be.",
+   "author": null,
+   "tags": [
+    "love",
+    "kindness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-315d0ada",
+   "text": "The small, steady loves of life are the ones that hold us up.",
+   "author": null,
+   "tags": [
+    "love",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8d0dfed4",
+   "text": "Home is not a place. It is the people who welcome you back.",
+   "author": null,
+   "tags": [
+    "love",
+    "family"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a9e93731",
+   "text": "Love is often found in small, quiet moments, not grand gestures.",
+   "author": null,
+   "tags": [
+    "love",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-08d81eeb",
+   "text": "Love is the light that shows us the way home.",
+   "author": null,
+   "tags": [
+    "love",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-478d7db4",
+   "text": "Own less. Breathe more. Notice everything.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f78d66ec",
+   "text": "Simplicity is not having less. It is making room for what matters.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-305146bc",
+   "text": "A simple life is a full life when the heart is content.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5417af11",
+   "text": "Clear the table, clear the mind.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "rest"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-fa361cac",
+   "text": "Do fewer things, and do them with your whole heart.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "purpose"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8d90e182",
+   "text": "The less you carry, the further you can walk.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-dfff3f3d",
+   "text": "Let the unnecessary fall away until only what matters remains.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "letting-go"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ad480403",
+   "text": "Happiness is often hiding in the simplest moments.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-147102a2",
+   "text": "Eat slowly. Walk slowly. Speak slowly. Live fully.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-21764a34",
+   "text": "True elegance is simple, quiet and kind.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-772857ae",
+   "text": "Bread, warmth, and good company. What more could a person need?",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-41de5b1a",
+   "text": "A walk, a breeze, a patch of sun. Medicine for the soul.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c5f70849",
+   "text": "When life feels heavy, ask what you can set down.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-32db82d7",
+   "text": "Show up, especially on the days you do not feel like it.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f0fd99c6",
+   "text": "Keep the promises you make to yourself. They matter most.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e70972a0",
+   "text": "Begin with one small habit. Let it grow roots before you add another.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ec12bd65",
+   "text": "Do the hard thing first. The rest of the day will thank you.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b845fa7e",
+   "text": "Do one thing at a time, and give it all of your attention.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7ef51662",
+   "text": "Consistency beats intensity. Gentle and steady wins the race.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-321bb708",
+   "text": "A clear goal turns ordinary effort into extraordinary progress.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "purpose"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1d1eced4",
+   "text": "Rest is part of the work. Even the strongest need to recover.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "rest"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ec1374d7",
+   "text": "Small acts of discipline today save you from regret tomorrow.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a7737000",
+   "text": "Order in your space brings calm to your mind.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d225c8eb",
+   "text": "Letting go is not giving up. It is making room for something better.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-389c52a0",
+   "text": "You cannot heal by holding onto the thing that hurt you.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-748b103f",
+   "text": "Release what you cannot change. Hold what you can.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4fd1154a",
+   "text": "Unclench your hands. You were never meant to carry it all.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e60f47e1",
+   "text": "You can let go of the story and keep the lesson.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1b19c17f",
+   "text": "Leaves fall so that new ones can grow.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-50e69866",
+   "text": "You do not need everyone to understand you. You only need to understand yourself.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "self-worth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ecea4fb9",
+   "text": "Let the worry go. It has never once carried tomorrow's weight for you.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "anxiety"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f62a6313",
+   "text": "When one hand lets go, it is free to receive something new.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-081b3990",
+   "text": "Loving someone sometimes means letting them walk their own path.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0c97e943",
+   "text": "Not everything needs your reaction. Some things need only your silence.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-69435cdb",
+   "text": "Breathe out the day. Breathe in the night. Tomorrow is a fresh page.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9cd05984",
+   "text": "The present moment is full of small miracles if you slow down enough to see them.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "gratitude"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5a5404e3",
+   "text": "When your mind races, return to your breath. It is always here.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "anxiety"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1e072663",
+   "text": "Listen to the rain. It is teaching you how to slow down.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1905b6f4",
+   "text": "Pause. Notice your feet on the ground. You are here, and that is enough.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "rest"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-dab36367",
+   "text": "Pay attention to people. Attention is a form of love.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e889fecb",
+   "text": "Do not let the rush of life steal the beauty of the moment.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-626720f2",
+   "text": "Your thoughts are not facts. Watch them pass like birds across the sky.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f9525556",
+   "text": "Awareness is the first step of every change.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b74649cb",
+   "text": "One breath, one step, one moment. That is all life ever asks.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-95325ef0",
+   "text": "Watch the sunset without taking a picture. Some things belong only to the heart.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1007128b",
+   "text": "Taste your food, feel the sun, hear the birds. Life is here.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-66b41226",
+   "text": "Begin each morning with a few minutes of quiet. Let the day arrive gently.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "discipline"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e2f794e2",
+   "text": "Name five things you can see. The present moment will meet you there.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "anxiety"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e938f175",
+   "text": "Your purpose is not something you find. It is something you build every day.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7b4ae873",
+   "text": "A meaningful life is often made of small acts of service.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8da7479f",
+   "text": "Follow what makes you curious. Curiosity often knows the way.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a7359fe7",
+   "text": "Know your why, and the how becomes easier.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ca19eedd",
+   "text": "Do not spend your life waiting to live it.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-95e80167",
+   "text": "Find what matters to you, and let the rest become quiet.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d9349fb0",
+   "text": "Every life is a story still being written. Make yours worth reading.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2b1c332f",
+   "text": "Do what you love with the people you love, as often as you can.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8c3f5ef6",
+   "text": "Greatness is not in being above others, but in lifting them up.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d04bd635",
+   "text": "Light your own path, and others will find their way by it.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-6a87e7ac",
+   "text": "The meaning of life is found in how you live each ordinary day.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-fd85e33e",
+   "text": "Use your gifts. That is how you thank the world for giving them to you.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "gratitude"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-083a32f7",
+   "text": "Plant something good wherever you pass, even if you never see it bloom.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "kindness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-dd126fcf",
+   "text": "The wisest people are often the most gentle.",
+   "author": null,
+   "tags": [
+    "humility",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2f2169a8",
+   "text": "You do not need to be the loudest in the room to be the strongest.",
+   "author": null,
+   "tags": [
+    "humility",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-6129da15",
+   "text": "No one reaches the top alone. Remember the hands that helped you climb.",
+   "author": null,
+   "tags": [
+    "humility",
+    "gratitude"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-dec334fc",
+   "text": "There is great freedom in not needing to be right.",
+   "author": null,
+   "tags": [
+    "humility",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f663c29a",
+   "text": "Let your work speak, and keep your voice gentle.",
+   "author": null,
+   "tags": [
+    "humility",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9e38a294",
+   "text": "The mountain does not boast of its height.",
+   "author": null,
+   "tags": [
+    "humility",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-eb1f4a30",
+   "text": "Ask questions. The humble mind learns what the proud mind misses.",
+   "author": null,
+   "tags": [
+    "humility",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-85111bbc",
+   "text": "Treat everyone with respect, whatever their title or their past.",
+   "author": null,
+   "tags": [
+    "humility",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f257f438",
+   "text": "Simple words, honest deeds, a quiet heart.",
+   "author": null,
+   "tags": [
+    "humility",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b0938978",
+   "text": "Apologise sincerely. It mends more than pride ever could.",
+   "author": null,
+   "tags": [
+    "humility",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-58da5bfc",
+   "text": "Hope is a small light that refuses to go out.",
+   "author": null,
+   "tags": [
+    "hope",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-939a53f9",
+   "text": "After every storm, the sky remembers how to be blue.",
+   "author": null,
+   "tags": [
+    "hope",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-45c72b7e",
+   "text": "Keep a little hope in your pocket, for the days that need it.",
+   "author": null,
+   "tags": [
+    "hope",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c6869759",
+   "text": "Good days are coming. Keep your heart open for them.",
+   "author": null,
+   "tags": [
+    "hope",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-486b19ee",
+   "text": "The sun has never once failed to rise. Neither will your better days.",
+   "author": null,
+   "tags": [
+    "hope",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c08d3cc1",
+   "text": "Where there is a seed, there is the promise of a garden.",
+   "author": null,
+   "tags": [
+    "hope",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8b7f6b2a",
+   "text": "You are not behind. You are on your own path, at your own pace.",
+   "author": null,
+   "tags": [
+    "hope",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9404c0e7",
+   "text": "Even a small candle can push back a very large darkness.",
+   "author": null,
+   "tags": [
+    "hope",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ce8821a8",
+   "text": "Hope and love are the two lights that never truly go out.",
+   "author": null,
+   "tags": [
+    "hope",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-51c824bc",
+   "text": "Things can change for the better faster than you think.",
+   "author": null,
+   "tags": [
+    "hope",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-34c44438",
+   "text": "The thing you are worried about may never come. The good you hope for might.",
+   "author": null,
+   "tags": [
+    "hope",
+    "anxiety"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4ba3abee",
+   "text": "Rest is not a reward for finishing. It is part of living well.",
+   "author": null,
+   "tags": [
+    "rest",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-703919b9",
+   "text": "You are allowed to rest before you are exhausted.",
+   "author": null,
+   "tags": [
+    "rest",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-884ad2a2",
+   "text": "Even the fields lie fallow so they can grow again.",
+   "author": null,
+   "tags": [
+    "rest",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2fc48595",
+   "text": "Sleep early, wake gently, and let the morning be slow.",
+   "author": null,
+   "tags": [
+    "rest",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4414e4d6",
+   "text": "Be gentle with yourself on the days you have little to give.",
+   "author": null,
+   "tags": [
+    "rest",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0e7f9935",
+   "text": "Close your eyes for a moment. Let your shoulders fall. Breathe.",
+   "author": null,
+   "tags": [
+    "rest",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-77e4e0e6",
+   "text": "Rest is not laziness. It is how strength is rebuilt.",
+   "author": null,
+   "tags": [
+    "rest",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d5192977",
+   "text": "A tired mind sees mountains where there are only hills. Rest first.",
+   "author": null,
+   "tags": [
+    "rest",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-290b47cf",
+   "text": "Pause before you burn out. The world will wait for you.",
+   "author": null,
+   "tags": [
+    "rest",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-dcced52a",
+   "text": "Turn off the lights, turn off the noise, and simply be.",
+   "author": null,
+   "tags": [
+    "rest",
+    "solitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-3178864b",
+   "text": "A good night's sleep is a gift. Receive it gratefully.",
+   "author": null,
+   "tags": [
+    "rest",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-47f0ff56",
+   "text": "Things often look clearer after rest. Leave the big decisions for the morning.",
+   "author": null,
+   "tags": [
+    "rest",
+    "anxiety"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-41eb1da3",
+   "text": "Old friends are like old trees. Their shade is the coolest.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2bb9bf88",
+   "text": "Friendship is measured in moments shared, not in years counted.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2d2972fb",
+   "text": "The best friends are those with whom silence is comfortable.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-90a49d0f",
+   "text": "Surround yourself with people who make you want to be better.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1f90cbe2",
+   "text": "A friend can hold your hope for you when you cannot hold it yourself.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-58c8d575",
+   "text": "Good friends do not keep score. They simply keep showing up.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d6725a64",
+   "text": "A walk with a good friend is worth more than a room full of acquaintances.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-80506bec",
+   "text": "A real friend tells you the truth, kindly.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-107303e5",
+   "text": "Lean on others. That is what friendship is for.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-070e2e5b",
+   "text": "Go outside. The sky has a way of making problems feel smaller.",
+   "author": null,
+   "tags": [
+    "nature",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1f7a2545",
+   "text": "The earth gives us flowers without asking for anything in return.",
+   "author": null,
+   "tags": [
+    "nature",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-46462ee9",
+   "text": "Watch a leaf fall. Notice how it dances, without fear, all the way down.",
+   "author": null,
+   "tags": [
+    "nature",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c0869ac9",
+   "text": "A walk in the woods can untangle a knotted mind.",
+   "author": null,
+   "tags": [
+    "nature",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-da34bd08",
+   "text": "Every season is beautiful in its own way. So is every stage of life.",
+   "author": null,
+   "tags": [
+    "nature",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-bd9914de",
+   "text": "Like the oak tree, grow slowly, and grow strong.",
+   "author": null,
+   "tags": [
+    "nature",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-98874674",
+   "text": "The ocean breathes in and out. So should you.",
+   "author": null,
+   "tags": [
+    "nature",
+    "rest"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-12feb914",
+   "text": "The first bird of the morning sings before the sun is fully up. Be that bird.",
+   "author": null,
+   "tags": [
+    "nature",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f51aca77",
+   "text": "Mountains teach us to stand still and be steady.",
+   "author": null,
+   "tags": [
+    "nature",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2dec3da2",
+   "text": "The stars do not compete with one another. Each simply shines.",
+   "author": null,
+   "tags": [
+    "nature",
+    "solitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c708637c",
+   "text": "Flowers grow back even after the hardest winter.",
+   "author": null,
+   "tags": [
+    "nature",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-664ac248",
+   "text": "You are enough, exactly as you are, right now.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a458ecb5",
+   "text": "Do not shrink yourself to fit into places you have outgrown.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a2b7f5d7",
+   "text": "Your worth does not depend on anyone else's opinion.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8a1e1697",
+   "text": "Celebrate how far you have come, not only how far you have to go.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "growth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-722068e3",
+   "text": "You have been through so much, and you are still here. Be proud.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "resilience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2422c2dc",
+   "text": "Protect your energy. Not everyone deserves a front seat in your life.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8f84d269",
+   "text": "You are not too much, and you are not too little. You are you.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-26de829a",
+   "text": "You do not have to prove anything to anyone. Simply be true.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a61c44e6",
+   "text": "Anxiety is a visitor, not a resident. It will leave again.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b6fd92df",
+   "text": "When the mind runs ahead, gently bring it home to this moment.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7391320f",
+   "text": "You do not have to solve everything tonight. Rest, and try again tomorrow.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "rest"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ca0376be",
+   "text": "You have felt this way before, and you made it through. You will again.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-83554fd9",
+   "text": "Most of what we fear never happens. Let today be lighter.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "letting-go"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5f617a29",
+   "text": "Be gentle with your anxious heart. It is only trying to protect you.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0f139cf3",
+   "text": "Put your hand on a tree, your feet on the grass. The earth is steady even when you are not.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-df5d294c",
+   "text": "Breathe. This feeling is temporary. Calm will return.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b02d97a7",
+   "text": "Break the big worry into small tasks. Then do just one.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-eb0b803d",
+   "text": "One hour at a time. One breath at a time. That is enough.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-10be7118",
+   "text": "Thank those who raised you, in whatever way they could.",
+   "author": null,
+   "tags": [
+    "family",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4af253e2",
+   "text": "Be patient with the people you live with. They see you at your most tired.",
+   "author": null,
+   "tags": [
+    "family",
+    "kindness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e179e706",
+   "text": "Eat together, laugh together, and let the dishes wait.",
+   "author": null,
+   "tags": [
+    "family",
+    "time"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1984c336",
+   "text": "A peaceful home is built from small moments of patience.",
+   "author": null,
+   "tags": [
+    "family",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-93091783",
+   "text": "Sometimes the family we choose holds us as closely as the family we were born into.",
+   "author": null,
+   "tags": [
+    "family",
+    "friendship"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-6042792e",
+   "text": "Notice the small joys: warm light, a favourite song, a familiar voice.",
+   "author": null,
+   "tags": [
+    "joy",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-bb2bda6f",
+   "text": "Let yourself be happy without waiting for everything to be perfect.",
+   "author": null,
+   "tags": [
+    "joy",
+    "hope"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-3f1ea9c6",
+   "text": "The world is full of colour. Take a moment to see it.",
+   "author": null,
+   "tags": [
+    "joy",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-11e3c70f",
+   "text": "Share your joy. It grows when it is given away.",
+   "author": null,
+   "tags": [
+    "joy",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0c7d4ccf",
+   "text": "The best kind of happiness is the kind you share.",
+   "author": null,
+   "tags": [
+    "joy",
+    "love"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2dd41315",
+   "text": "Joy and calm are cousins. Invite them both in.",
+   "author": null,
+   "tags": [
+    "joy",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-ddef3294",
+   "text": "Tell the truth gently, and it will be easier to hear.",
+   "author": null,
+   "tags": [
+    "honesty",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d69b58d4",
+   "text": "Be true to yourself. It is the only way to be at peace with yourself.",
+   "author": null,
+   "tags": [
+    "honesty",
+    "self-worth"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-519038be",
+   "text": "The truth is simple. It is only lies that need many words.",
+   "author": null,
+   "tags": [
+    "honesty",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-bcfad6a6",
+   "text": "Admit what you do not know. It is the beginning of wisdom.",
+   "author": null,
+   "tags": [
+    "honesty",
+    "humility"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-34690583",
+   "text": "Wisdom begins with listening.",
+   "author": null,
+   "tags": [
+    "wisdom",
+    "mindfulness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f15cfc71",
+   "text": "Think before you speak. Pause before you act. Breathe before you decide.",
+   "author": null,
+   "tags": [
+    "wisdom",
+    "patience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1247ebde",
+   "text": "The wise do not need to be heard. They need only to understand.",
+   "author": null,
+   "tags": [
+    "wisdom",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b53b1584",
+   "text": "A wise person adapts, like water, to the shape of what is.",
+   "author": null,
+   "tags": [
+    "wisdom",
+    "discipline"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-3ba12432",
+   "text": "Some battles are won by walking away.",
+   "author": null,
+   "tags": [
+    "wisdom",
+    "letting-go"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c74d3fef",
+   "text": "A lake at dawn does not try to be calm. It simply stops being stirred.",
+   "author": null,
+   "tags": [
+    "peace",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e13ad0a0",
+   "text": "Set the kettle on and wait for it without reaching for your phone. That is a small meditation.",
+   "author": null,
+   "tags": [
+    "peace",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-bfb2bdca",
+   "text": "Tidy one drawer, answer one letter, take one walk. A calm day is built from small finished things.",
+   "author": null,
+   "tags": [
+    "peace",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8bd1d691",
+   "text": "The moss on the old wall took fifty winters to grow. Be gentle with your slow work.",
+   "author": null,
+   "tags": [
+    "patience",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-fccc041a",
+   "text": "Bread rises in its own time. Opening the oven to check only makes it fall.",
+   "author": null,
+   "tags": [
+    "patience",
+    "growth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-647debfe",
+   "text": "The answer you are waiting for may already be on its way, walking slowly.",
+   "author": null,
+   "tags": [
+    "patience",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f7e3bbde",
+   "text": "A cracked pot still holds water if you turn the crack toward the sky.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-142c1309",
+   "text": "The candle flickers in the draught, steadies, and keeps on burning. So can you.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5a39bf47",
+   "text": "You are allowed to be tired and still be unbreakable.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-56e057bd",
+   "text": "Mend what you can today. Leave the rest for tomorrow's hands.",
+   "author": null,
+   "tags": [
+    "resilience",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-589cbe28",
+   "text": "Fresh sheets, an open window and nowhere to be. Some evenings are quietly perfect.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d40ba24d",
+   "text": "Somewhere a bird is building a nest from scraps. Nothing is too small to be useful.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-4a0c515a",
+   "text": "Write to the friend who once helped you through. They may need your words today.",
+   "author": null,
+   "tags": [
+    "gratitude",
+    "friendship"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e90de76d",
+   "text": "Hold the door, learn the name, remember the birthday. Kindness lives in details.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-db36f665",
+   "text": "Gentleness takes more strength than anger ever has.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2f6070d9",
+   "text": "Be like the old oak that gives shade to anyone who sits beneath it.",
+   "author": null,
+   "tags": [
+    "kindness",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d88575d6",
+   "text": "A pruned rose grows back fuller. Losing a little can make room for much more.",
+   "author": null,
+   "tags": [
+    "growth",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d7ce4dd1",
+   "text": "The first page of anything new always feels clumsy. Write it anyway.",
+   "author": null,
+   "tags": [
+    "growth",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-721d1c0c",
+   "text": "Trust the slow years. They are building something you cannot yet see.",
+   "author": null,
+   "tags": [
+    "growth",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-68f72b6b",
+   "text": "An early walk with no one else around turns the whole world into a quiet library.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-be90628a",
+   "text": "Keep one corner of each day just for yourself, untouched by the noise.",
+   "author": null,
+   "tags": [
+    "solitude",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-3b6a3551",
+   "text": "The tide goes out, and the beach is renewed. Losses can clear the way.",
+   "author": null,
+   "tags": [
+    "change",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e914eada",
+   "text": "Pack light for the next chapter. You will not need everything you carried here.",
+   "author": null,
+   "tags": [
+    "change",
+    "courage"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-643ded7b",
+   "text": "New paths feel strange underfoot until, one day, they feel like home.",
+   "author": null,
+   "tags": [
+    "change",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-c4c392e3",
+   "text": "Wind down the day the way you would close a good book: slowly, and with thanks.",
+   "author": null,
+   "tags": [
+    "time",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-1bd9b4d6",
+   "text": "The clock counts hours. Your heart counts moments. Listen to the heart.",
+   "author": null,
+   "tags": [
+    "time",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-458a2615",
+   "text": "Keep the letters, the photographs, the small notes. One day they will be treasure.",
+   "author": null,
+   "tags": [
+    "time",
+    "gratitude"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-6564520b",
+   "text": "The harbour is safe, but the boat was built for open water.",
+   "author": null,
+   "tags": [
+    "courage",
+    "change"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5f08b262",
+   "text": "Light the lamp before you are sure the path is clear. Walking is how it clears.",
+   "author": null,
+   "tags": [
+    "courage",
+    "hope"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-045cf914",
+   "text": "A shared meal, a long walk, a quiet evening together. Love is often this simple.",
+   "author": null,
+   "tags": [
+    "love",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a8b2f550",
+   "text": "Keep choosing each other on the ordinary Tuesdays. That is where love lives.",
+   "author": null,
+   "tags": [
+    "love",
+    "patience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b50ee656",
+   "text": "Learn how the people you love like to be cared for, and care for them that way.",
+   "author": null,
+   "tags": [
+    "love",
+    "kindness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d9a4d29a",
+   "text": "An empty shelf can be more restful than a full one.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "peace"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-2bee9fda",
+   "text": "Take your shoes off in the grass. Some answers come up through the feet.",
+   "author": null,
+   "tags": [
+    "simplicity",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-059b2fa0",
+   "text": "The river shapes the valley not in a day, but by never stopping.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f8162961",
+   "text": "Lay one brick well each day, and one day you will be standing in a house.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "patience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-face5db3",
+   "text": "Make your bed, open the curtains, drink a glass of water. Small order invites calm.",
+   "author": null,
+   "tags": [
+    "discipline",
+    "mindfulness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0c57bda1",
+   "text": "The tree does not mourn its autumn leaves. It trusts the spring.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-0fa185a5",
+   "text": "Put the heavy thought down for an hour. It will still be there if you truly need it.",
+   "author": null,
+   "tags": [
+    "letting-go",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e6880a71",
+   "text": "Count the colours in the evening sky before they fade. Each one is here only once.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-632db3ca",
+   "text": "Drink your tea while it is warm. Do not save the good moments for later.",
+   "author": null,
+   "tags": [
+    "mindfulness",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-e950907e",
+   "text": "A lighthouse never chases ships. It simply keeps its light burning.",
+   "author": null,
+   "tags": [
+    "purpose",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-8bfae7dc",
+   "text": "Ask each morning: who can I make things a little easier for today?",
+   "author": null,
+   "tags": [
+    "purpose",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-f200a91c",
+   "text": "The tallest wave returns to the same sea as the smallest ripple.",
+   "author": null,
+   "tags": [
+    "humility",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-a9d24e78",
+   "text": "Be curious about the people who disagree with you. They can see what you cannot.",
+   "author": null,
+   "tags": [
+    "humility",
+    "growth"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-27e6f6c7",
+   "text": "Snowdrops push through frozen ground. Spring begins long before it looks like spring.",
+   "author": null,
+   "tags": [
+    "hope",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-7b0e3024",
+   "text": "Plant the tree even if you will never sit in its shade. Hope works across years.",
+   "author": null,
+   "tags": [
+    "hope",
+    "patience"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-13479bb7",
+   "text": "Even the sea grows still on windless nights. Allow yourself the same.",
+   "author": null,
+   "tags": [
+    "rest",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-79e1d39d",
+   "text": "Let today be a soft day. Not every day needs to be a strong one.",
+   "author": null,
+   "tags": [
+    "rest",
+    "kindness"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-6c797132",
+   "text": "Good friends are like old paths through the woods: always there when you return.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-22689ef0",
+   "text": "Remember the small things your friends tell you. That is how they know you listen.",
+   "author": null,
+   "tags": [
+    "friendship",
+    "kindness"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-943ba1b9",
+   "text": "Lie on your back and watch the clouds drift. Nothing up there is in a hurry.",
+   "author": null,
+   "tags": [
+    "nature",
+    "peace"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-994007a0",
+   "text": "Thank the rain. The garden is drinking.",
+   "author": null,
+   "tags": [
+    "nature",
+    "gratitude"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-19b82416",
+   "text": "The violet does not wish to be a rose. It knows its own colour is enough.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "nature"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-01c4f8c8",
+   "text": "Take up the space you need. You belong in the room.",
+   "author": null,
+   "tags": [
+    "self-worth",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-9ca0cced",
+   "text": "Watch the waves come in and go out. Your feelings move the same way.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-5adfce88",
+   "text": "Write the worry on paper. It is often smaller once it is outside your head.",
+   "author": null,
+   "tags": [
+    "anxiety",
+    "simplicity"
+   ],
+   "length_class": "medium",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-fa0baf35",
+   "text": "Dance in the kitchen when no one is watching. Joy needs no audience.",
+   "author": null,
+   "tags": [
+    "joy",
+    "simplicity"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-18611257",
+   "text": "Stop for the rainbow. The errands can wait two minutes.",
+   "author": null,
+   "tags": [
+    "joy",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-d645d422",
+   "text": "Say what you mean, gently, and mean what you say.",
+   "author": null,
+   "tags": [
+    "honesty",
+    "courage"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-24acda4d",
+   "text": "The old tree has seen many storms. It bends a little and stays rooted.",
+   "author": null,
+   "tags": [
+    "wisdom",
+    "nature"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  },
+  {
+   "id": "w-b47ddb4c",
+   "text": "Give an angry thought a night to cool before you let it speak.",
+   "author": null,
+   "tags": [
+    "wisdom",
+    "patience"
+   ],
+   "length_class": "short",
+   "status": "verified",
+   "source": null
+  }
+ ]
+}

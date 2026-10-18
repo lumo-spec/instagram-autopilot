@@ -1,0 +1,108 @@
+"""Alerts: plain-English titles that say what is wrong and what to do.
+
+Alerts become public GitHub issues, so wording is generic (page name, problem, fix, run link)
+and :func:`assert_public_safe` rejects anything that looks like a token, an ID or an error dump.
+"""
+
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass
+
+_TOKENISH = re.compile(
+    r"(IG[A-Za-z0-9_-]{20,}|EAA[A-Za-z0-9]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|[A-Za-z0-9_-]{40,})"
+)
+_LONG_NUMBER = re.compile(r"\d{9,}")
+_DUMPISH = re.compile(r"(Traceback|\{\"|error_subcode|fbtrace|access_token|Bearer\s)", re.I)
+
+
+@dataclass(frozen=True)
+class Alert:
+    """One alert; ``key`` deduplicates (one open issue per key)."""
+
+    key: str
+    title: str
+    body: str
+
+
+def assert_public_safe(text: str) -> None:
+    """Raise ValueError if ``text`` could leak something sensitive."""
+    if _TOKENISH.search(text) or _LONG_NUMBER.search(text) or _DUMPISH.search(text):
+        raise ValueError("alert text failed the public-safety check")
+
+
+def _make(key: str, title: str, body: str) -> Alert:
+    assert_public_safe(title)
+    assert_public_safe(body)
+    return Alert(key, title, body)
+
+
+def low_stock(page: str, left: int, days: float) -> Alert:
+    """Content bank running low."""
+    return _make(
+        f"low-stock-{page.lower()}",
+        f"ACTION NEEDED [{page}]: content running low — open Claude Code and type: Top up {page}",
+        f"{page} has {left} unused entries left (about {days:.0f} days). "
+        f"Open Claude Code in this repository and type: Top up {page}",
+    )
+
+
+def slot_skipped(page: str, slot: str, reason: str) -> Alert:
+    """Every format failed its gates or no content was eligible."""
+    return _make(
+        f"skipped-{page.lower()}-{slot}",
+        f"[{page}] a post was skipped — check the Status page",
+        f"The {slot} post was skipped: {reason}. Nothing flawed was posted. "
+        "If this repeats, ask Claude Code to look at the latest run.",
+    )
+
+
+def no_recent_post(page: str, hours: int) -> Alert:
+    """Nothing published for too long."""
+    return _make(
+        f"no-post-{page.lower()}",
+        f"[{page}] no post for {hours}+ hours — check the Status page",
+        f"{page} has not published for over {hours} hours. Open the Status page and the latest "
+        "Autopilot run.",
+    )
+
+
+def token_renewal_failed(page: str) -> Alert:
+    """Weekly token refresh failed."""
+    return _make(
+        f"token-renewal-{page.lower()}",
+        f"[{page}] token renewal failed — will retry; "
+        "if repeated, regenerate the token (README step 6)",
+        "The old token is kept and still valid. The renewal is retried next week.",
+    )
+
+
+def token_expiring(page: str, days_left: int) -> Alert:
+    """Page token close to expiry."""
+    return _make(
+        f"token-expiry-{page.lower()}",
+        f"ACTION NEEDED [{page}]: Instagram token expires in {days_left} days — "
+        "regenerate it (README step 6)",
+        "Automatic renewal has not succeeded. Follow README step 6 to set a fresh token.",
+    )
+
+
+def renewal_key_expiring(expires_on: str) -> Alert:
+    """Fine-grained GitHub token close to expiry."""
+    return _make(
+        "renewal-key-expiry",
+        f"ACTION NEEDED: renewal key expires {expires_on} — renew it (README step 5)",
+        "Create a new fine-grained token exactly as in README step 5 "
+        "and set it with the command shown there.",
+    )
+
+
+def api_version_retiring(retires_on: str) -> Alert:
+    """Pinned Graph API version near retirement."""
+    return _make(
+        "api-version",
+        f"Instagram API version retires on {retires_on} — ask Claude Code to upgrade",
+        "Open Claude Code in this repository and ask it to follow the upgrade procedure "
+        "in CLAUDE.md.",
+    )

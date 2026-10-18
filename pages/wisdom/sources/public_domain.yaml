@@ -1,0 +1,110 @@
+# Verified public-domain quotes for the Wisdom page.
+# Every entry's text must appear verbatim (whitespace/quote-style normalised) inside the
+# listed Project Gutenberg text, within the given line range (the author's own words, not an
+# editor's introduction or notes). Check with: python scripts/verify_pd_quotes.py
+sources:
+  marcus:
+    author: Marcus Aurelius
+    work: "Meditations (Thoughts), trans. George Long, 1862"
+    gutenberg_id: 15877
+    lines: [2120, 7174]
+  epictetus:
+    author: Epictetus
+    work: "The Enchiridion, trans. Thomas Wentworth Higginson, 1865"
+    gutenberg_id: 45109
+    start_marker: "There are things which are within our power"
+  laotzu:
+    author: Lao Tzu
+    work: "Tao Te Ching, trans. James Legge, 1891"
+    gutenberg_id: 216
+  thoreau:
+    author: Henry David Thoreau
+    work: "Walden, 1854"
+    gutenberg_id: 205
+  emerson:
+    author: Ralph Waldo Emerson
+    work: "Essays, First Series, 1841, and The American Scholar, 1837"
+    gutenberg_id: 16643
+    lines: [545, 6780]
+quotes:
+  - {src: marcus, tags: [growth, mindfulness], text: "Give thyself time to learn something new and good, and cease to be whirled around."}
+  - {src: marcus, tags: [self-worth, courage], text: "A man then must stand erect, not be kept erect by others."}
+  - {src: marcus, tags: [change, mindfulness], text: "The universe is transformation: life is opinion."}
+  - {src: marcus, tags: [letting-go, peace], text: "Take away thy opinion, and then there is taken away the complaint, \"I have been harmed.\" Take away the complaint, \"I have been harmed,\" and the harm is taken away."}
+  - {src: marcus, tags: [time, purpose], text: "Do not act as if thou wert going to live ten thousand years."}
+  - {src: marcus, tags: [kindness, time], text: "While thou livest, while it is in thy power, be good."}
+  - {src: marcus, tags: [simplicity, peace], text: "For the greatest part of what we say and do being unnecessary, if a man takes this away, he will have more leisure and less uneasiness."}
+  - {src: marcus, tags: [simplicity, discipline], text: "Accordingly, on every occasion a man should ask himself, Is this one of the unnecessary things?"}
+  - {src: marcus, tags: [mindfulness, discipline], text: "Thou must turn to profit the present by the aid of reason and justice."}
+  - {src: marcus, tags: [time, humility], text: "Everything is only for a day, both that which remembers and that which is remembered."}
+  - {src: marcus, tags: [resilience, courage], text: "Be like the promontory against which the waves continually break, but it stands firm and tames the fury of the water around it."}
+  - {src: marcus, tags: [resilience, courage], text: "Remember too on every occasion which leads thee to vexation to apply this principle; not that this is a misfortune, but that to bear it nobly is good fortune."}
+  - {src: marcus, tags: [purpose, discipline], text: "In the morning when thou risest unwillingly, let this thought be present,--I am rising to the work of a human being."}
+  - {src: marcus, tags: [peace, letting-go], text: "How easy it is to repel and to wipe away every impression which is troublesome or unsuitable, and immediately to be in all tranquillity."}
+  - {src: marcus, tags: [mindfulness, growth], text: "Such as are thy habitual thoughts, such also will be the character of thy mind; for the soul is dyed by the thoughts."}
+  - {src: marcus, tags: [resilience, courage], text: "Nothing happens to any man which he is not formed by nature to bear."}
+  - {src: marcus, tags: [change, time], text: "Often think of the rapidity with which things pass by and disappear, both the things which are and the things which are produced."}
+  - {src: marcus, tags: [peace, purpose], text: "Thou canst pass thy life in an equable flow of happiness, if thou canst go by the right way, and think and act in the right way."}
+  - {src: marcus, tags: [change, nature], text: "Motions and changes are continually renewing the world, just as the uninterrupted course of time is always renewing the infinite duration of ages."}
+  - {src: marcus, tags: [humility, growth], text: "If any man is able to convince me and show me that I do not think or act right, I will gladly change; for I seek the truth, by which no man was ever injured."}
+  - {src: marcus, tags: [kindness, patience], text: "Teach them then, and show them without being angry."}
+  - {src: marcus, tags: [kindness, simplicity], text: "Keep thyself then simple, good, pure, serious, free from affectation, a friend of justice, a worshipper of the gods, kind, affectionate, strenuous in all proper acts."}
+  - {src: marcus, tags: [self-worth, humility], text: "Neither worse then nor better is a thing made by being praised."}
+  - {src: marcus, tags: [peace, self-worth], text: "Be cheerful also, and seek not external help nor the tranquillity which others give."}
+  - {src: marcus, tags: [mindfulness, kindness], text: "Do not have such an opinion of things as he has who does thee wrong, or such as he wishes thee to have, but look at them as they are in truth."}
+  - {src: epictetus, tags: [letting-go, peace], text: "There are things which are within our power, and there are things which are beyond our power."}
+  - {src: epictetus, tags: [mindfulness, peace], text: "Men are disturbed not by things, but by the views which they take of things."}
+  - {src: epictetus, tags: [letting-go, peace], text: "Demand not that events should happen as you wish; but wish them to happen as they do happen, and you will go on well."}
+  - {src: epictetus, tags: [courage, discipline], text: "You can be unconquerable if you enter into no combat in which it is not in your own power to conquer."}
+  - {src: epictetus, tags: [patience, peace], text: "When, therefore, anyone provokes you, be assured that it is your own opinion which provokes you."}
+  - {src: epictetus, tags: [mindfulness, patience], text: "Try, therefore, in the first place, not to be bewildered by appearances."}
+  - {src: epictetus, tags: [discipline, purpose], text: "In every affair consider what precedes and what follows, and then undertake it."}
+  - {src: epictetus, tags: [resilience, self-worth], text: "You will then be hurt when you consent to be hurt."}
+  - {src: epictetus, tags: [simplicity, humility], text: "Be mostly silent, or speak merely what is needful, and in few words."}
+  - {src: epictetus, tags: [resilience, mindfulness], text: "Everything has two handles: one by which it may be borne, another by which it cannot."}
+  - {src: epictetus, tags: [humility, discipline], text: "Never proclaim yourself a philosopher, nor make much talk among the ignorant about your principles, but show them by actions."}
+  - {src: epictetus, tags: [self-worth, resilience], text: "The condition and characteristic of a philosopher is that he looks to himself for all help or harm."}
+  - {src: epictetus, tags: [growth, purpose], text: "This instant, then, think yourself worthy of living as a man grown up and a proficient."}
+  - {src: epictetus, tags: [discipline, purpose], text: "Let whatever appears to be the best be to you an inviolable law."}
+  - {src: epictetus, tags: [kindness, patience], text: "Where it is practically necessary for you to pursue or avoid anything, do even this with discretion and gentleness and moderation."}
+  - {src: epictetus, tags: [growth, humility], text: "If you would improve, be content to be thought foolish and dull with regard to externals."}
+  - {src: epictetus, tags: [humility, growth], text: "And if anyone tells you that you know nothing, and you are not nettled at it, then you may be sure that you have really entered on your work."}
+  - {src: laotzu, tags: [simplicity, letting-go], text: "It is better to leave a vessel unfilled, than to attempt to carry it when it is full."}
+  - {src: laotzu, tags: [simplicity, solitude], text: "Clay is fashioned into vessels; but it is on their empty hollowness, that their use depends."}
+  - {src: laotzu, tags: [patience, peace], text: "Let it be still, and it will gradually become clear."}
+  - {src: laotzu, tags: [rest, patience], text: "Let movement go on, and the condition of rest will gradually arise."}
+  - {src: laotzu, tags: [change, hope], text: "A violent wind does not last for a whole morning; a sudden rain does not last for the whole day."}
+  - {src: laotzu, tags: [peace, discipline], text: "Gravity is the root of lightness; stillness, the ruler of movement."}
+  - {src: laotzu, tags: [self-worth, growth], text: "He who knows other men is discerning; he who knows himself is intelligent."}
+  - {src: laotzu, tags: [discipline, courage], text: "He who overcomes others is strong; he who overcomes himself is mighty."}
+  - {src: laotzu, tags: [kindness, patience], text: "The soft overcomes the hard; and the weak the strong."}
+  - {src: laotzu, tags: [gratitude, simplicity], text: "Therefore the sufficiency of contentment is an enduring and unchanging sufficiency."}
+  - {src: laotzu, tags: [patience, growth], text: "All difficult things in the world are sure to arise from a previous state in which they were easy, and all great things from one in which they were small."}
+  - {src: laotzu, tags: [humility, discipline], text: "He who lightly promises is sure to keep but little faith; he who is continually thinking things easy is sure to find them difficult."}
+  - {src: laotzu, tags: [discipline, purpose], text: "Action should be taken before a thing has made its appearance; order should be secured before disorder has begun."}
+  - {src: laotzu, tags: [peace, humility], text: "Because he does not strive, no one finds it possible to strive with him."}
+  - {src: laotzu, tags: [kindness, courage], text: "Gentleness is sure to be victorious even in battle, and firmly to maintain its ground."}
+  - {src: laotzu, tags: [simplicity, humility], text: "Sincere words are not fine; fine words are not sincere."}
+  - {src: laotzu, tags: [kindness, gratitude], text: "The more that he expends for others, the more does he possess of his own; the more that he gives to others, the more does he have himself."}
+  - {src: laotzu, tags: [peace, mindfulness], text: "Purity and stillness give the correct law to all under heaven."}
+  - {src: laotzu, tags: [change, humility], text: "So it is that some things are increased by being diminished, and others are diminished by being increased."}
+  - {src: laotzu, tags: [resilience, change], text: "Constant action overcomes cold; being still overcomes heat."}
+  - {src: thoreau, tags: [purpose, courage], text: "The mass of men lead lives of quiet desperation."}
+  - {src: thoreau, tags: [hope, mindfulness], text: "Morning is when I am awake and there is a dawn in me."}
+  - {src: thoreau, tags: [solitude, rest], text: "I find it wholesome to be alone the greater part of the time."}
+  - {src: thoreau, tags: [solitude, peace], text: "I never found the companion that was so companionable as solitude."}
+  - {src: thoreau, tags: [hope, growth], text: "To him whose elastic and vigorous thought keeps pace with the sun, the day is a perpetual morning."}
+  - {src: thoreau, tags: [mindfulness, nature], text: "Let us spend one day as deliberately as Nature, and not be thrown off the track by every nutshell and mosquito’s wing that falls on the rails."}
+  - {src: thoreau, tags: [mindfulness, growth], text: "Books must be read as deliberately and reservedly as they were written."}
+  - {src: thoreau, tags: [nature, mindfulness], text: "The morning wind forever blows, the poem of creation is uninterrupted; but few are the ears that hear it."}
+  - {src: thoreau, tags: [simplicity, nature], text: "Every morning was a cheerful invitation to make my life of equal simplicity, and I may say innocence, with Nature herself."}
+  - {src: thoreau, tags: [simplicity, solitude], text: "Solitude is not measured by the miles of space that intervene between a man and his fellows."}
+  - {src: thoreau, tags: [simplicity, discipline], text: "Simplicity, simplicity, simplicity!"}
+  - {src: emerson, tags: [self-worth, courage], text: "Trust thyself: every heart vibrates to that iron string."}
+  - {src: emerson, tags: [peace, self-worth], text: "Nothing can bring you peace but yourself."}
+  - {src: emerson, tags: [purpose, peace], text: "The day is always his who works in it with serenity and great aims."}
+  - {src: emerson, tags: [self-worth, discipline], text: "In self-trust all the virtues are comprehended."}
+  - {src: emerson, tags: [mindfulness, time], text: "Give me insight into to-day, and you may have the antique and future worlds."}
+  - {src: emerson, tags: [courage, discipline], text: "The law of nature is, Do the thing, and you shall have the power: but they who do not the thing have not the power."}
+  - {src: emerson, tags: [change, growth], text: "The changes which break up at short intervals the prosperity of men are advertisements of a nature whose law is growth."}
+  - {src: emerson, tags: [growth, hope], text: "Then there can be enlargement, and the man of to-day scarcely recognizes the man of yesterday."}

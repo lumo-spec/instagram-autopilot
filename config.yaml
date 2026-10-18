@@ -1,0 +1,111 @@
+# Instagram Autopilot settings. Every tunable value lives here.
+# Values marked "DOC:" differ from the original spec because current official guidance differs;
+# see CLAUDE.md -> "Spec vs current docs".
+
+timezone: Europe/London
+graph_api_host: graph.instagram.com
+graph_api_version: "v26.0"          # latest Graph API at build time (July 2026)
+graph_api_retires_on: null          # set to "YYYY-MM-DD" once Meta announces it; alert 90 days before
+api_retire_warning_days: 90
+jitter_minutes: 10
+catchup_window_hours: 5
+min_minutes_before_next_slot: 60    # don't catch up a slot this close to the next one
+
+limits:
+  caption_max_chars: 2000           # Instagram allows 2,200; we stay below
+  max_hashtags: 5                   # DOC: Instagram now allows at most 5 hashtags per post (Dec 2025)
+  min_hashtags: 3
+  quota_stop_at: 40                 # DOC: API limit is now 100 posts / 24 h; we still stop at 40
+  text_max_chars: { quotes: 180, facts: 200 }
+  image_max_bytes: 8000000          # Instagram JPEG limit 8 MB
+  reel_max_bytes: 300000000         # Instagram reel limit 300 MB
+
+publish:
+  container_poll_seconds: [15, 30, 60, 60, 60, 60]   # DOC: Meta asks for ~1/min, max 5 min
+  container_timeout_seconds: 300
+  publish_retries: 3
+
+safe_zones:                         # fractions of the frame kept clear of text
+  reel: { top: 0.14, bottom: 0.35, sides: 0.08 }   # DOC: Meta guidance keeps the bottom 35% clear
+  image: { width: 0.90, height: 0.80 }
+
+render:
+  image_size: [1080, 1350]
+  reel_size: [1080, 1920]
+  fps: 30
+  reel_seconds: [10, 30]
+  jpeg_quality: 92
+  font_px: { max: 104, min: 44, step: 2 }
+  line_spacing: 1.32
+  text_inset: 0.04                  # extra side margin inside the safe zone (fraction of width)
+  watermark_px: 34                  # decorative; placement-gated, see gates.watermark_*
+  reading_words_per_second: 2.3     # pacing for music-only reels
+
+gates:
+  min_font_px: 44
+  min_contrast: 4.5
+  contrast_percentile: 2            # worst-case background pixels (2nd percentile) must still pass
+  watermark_min_px: 28
+  watermark_min_contrast: 3.0
+  voice_onset_s: [0.5, 1.0]
+  voice_tail_min_s: 1.0
+  word_sync_ms: 150
+  loudness_lufs: [-15, -13]
+  true_peak_max_dbtp: -1.0
+  av_duration_tolerance_s: 0.1
+  speech_min_active_share: 0.5      # share of the spoken interval with real speech energy
+
+audio:
+  weights: { "voice+music": 0.5, music: 0.3, voice: 0.2 }
+  voices: [bm_george, bm_fable, bm_lewis]   # Kokoro British male voices (VOICES.md, verified)
+  voice_style: { rate: 0.88, pitch_semitones: -1.5, reverb: light, lead_in_s: 0.7 }
+  music_source: procedural          # or: library (CC0 tracks listed in assets/music/licences.json)
+  duck_db: 12
+  target_lufs: -14
+  sample_rate: 48000
+
+tts:
+  engine: kokoro
+  repo: hexgrad/Kokoro-82M
+  revision: f3ff3571791e39611d31c381e3a41a3af07b4987
+  lang_code: b                      # British English
+  sha256:
+    config.json: 5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f
+    kokoro-v1_0.pth: 496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4
+    voices/bm_george.pt: f1bc812213dc59774769e5c80004b13eeb79bd78130b11b2d7f934542dab811b
+    voices/bm_fable.pt: d44935f3135257a9064df99f007fc1342ff1aa767552b4a4fa4c3b2e6e59079c
+    voices/bm_lewis.pt: b5204750dcba01029d2ac9cec17aec3b20a6d64073c579d694a23cb40effbd0e
+
+ai_disclosure:
+  api_flag: true                    # DOC: the API supports is_ai_generated=true; used on narrated reels
+  caption: true                     # also add a caption line (belt and braces)
+  caption_text: "Voiceover: AI-generated"
+ai_generation: { enabled: false }
+
+alerts: { low_stock_warning: 80, token_days_warning: 14, pat_days_warning: 30, no_post_hours: 30 }
+topup_batch: 150
+near_duplicate: { threshold: 85, recent_posts: 200 }
+recycle_min_days: { quotes: 0, facts: 120 }
+
+rehearsal:
+  days: 14
+  output_dir: rehearsal-output
+  failures: [container_error, publish_transient, crash_after_publish, quota_high, missed_runs, voice_gate]
+
+pages:
+  wisdom:
+    enabled: true
+    type: quotes
+    handle: "@CHANGE_ME"            # ask the owner during setup
+    theme: daily_wisdom
+    slots:
+      morning: { time: "08:30", format: image }
+      evening: { time: "19:30", format: reel }
+  science:
+    enabled: false                  # enable after its account, content bank and secrets exist
+    type: facts
+    handle: "@CHANGE_ME"
+    theme: science_facts
+    slots:
+      midday: { time: "12:20", format: reel }
+      night: { time: "21:10", format: image }
