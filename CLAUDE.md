@@ -12,7 +12,13 @@ the owner's decisions below override it where they differ.
   `pages/simplestorymode/archive/` and is **never postable** (every entry `status: archived`).
 - Formats: connected **carousels** (priority), **single images**; reels later and lower priority.
 - The owner supplies **text-free art**; the system writes and places all words.
-- **Only owner-approved queue items are published.** Empty queue → skip the slot and alert.
+- **Posting mode (owner decision 2026-10-19): manual.** No Meta developer app and no tokens for
+  now. Per-post approval stays (`Build`). The owner posts with `Export <post-id>` and schedules
+  by hand in Meta Business Suite (README guide). All automatic publishing and schedules stay
+  OFF. The stage 2 automation code stays in the repo, unused, for later. This replaces the
+  owner's 2026-10-18 request to drop per-post approval and auto-publish.
+- **Only owner-approved queue items are published** (or exported). Empty queue → skip the slot
+  and alert.
   Never post filler. Alert when fewer than 5 approved posts remain.
 - Characters Rowan and Wren (`pages/simplestorymode/characters.yaml`); ALWAYS normal human ears.
   Armour "Battle King/Queen" sheets are never used unless the owner asks.
@@ -31,6 +37,8 @@ the owner's decisions below override it where they differ.
   Never put the owner's face or any generated video of them in the repo.
 - Never ask the owner to paste a password, token or API key into chat. Secrets are typed by the
   owner at a hidden prompt in their own terminal.
+- **No Meta app, tokens, `PUBLISHING_ENABLED` or schedules** while manual mode is in force; do
+  not suggest setting them up unless the owner asks to return to automatic posting.
 - **All schedules stay OFF** until the owner approves after the samples review AND the live tests
   (one image, one carousel, one reel via Post now, one token renewal). Do not create/enable the
   `autopilot.yml` schedule before that.
@@ -47,8 +55,9 @@ the owner's decisions below override it where they differ.
 | 1 | Local rehearsal engine: rendering, voice, music, gates, planning, fake publishing, tests | Done (2026-10-18) |
 | 1b | Pivot to Simple Story Mode: rename, archive, characters, story slide composer, carousel + queue + approval, carousel publishing (fake-tested), weekday cadence, queue alerts, first batch of 24 drafts | **Done (2026-10-18) — waiting for owner review** |
 | 2 | GitHub Actions workflows (ci, _pipeline, post-now, autopilot, maintenance, rehearsal — **no schedules**), media hosting on `media` (raw at commit SHA; GitHub Pages for reels), state/record job, alerts as issues, status page, token renewal (sealed hand-off), `audit_workflows.py`, `repo_settings.py`, `privacy_check.py`, `check_licenses.py`, hashed requirements, harden-runner (audit mode) | **Built + tested locally against fakes (2026-10-18)**; repo settings: see HANDOVER |
-| 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | Not started — needs the owner |
-| 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | Not started |
+| 2b | Manual posting: `export` command (finished slides in order, `caption.txt`, `NOTES.txt` with AI-label advice and suggested time) + README "How to schedule in Meta Business Suite" | **Done (2026-10-19)** |
+| 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | **Paused (owner, 2026-10-19)** — only the Professional account + 2FA is needed for manual posting |
+| 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | **Paused** |
 
 ### Stage 1b evidence (2026-10-18, Windows 10, Python 3.12.15)
 - `pytest` (incl. slow) → 198 tests pass, coverage 92 %; `ruff check`, `ruff format --check`,
@@ -82,20 +91,33 @@ the owner's decisions below override it where they differ.
   `application/octet-stream` → reels are hosted via GitHub Pages from the `media` branch.
 - **Not verified live yet:** anything that talks to GitHub Actions or Instagram for real.
 
-### Approval policy — owner request pending (2026-10-18)
-The owner asked to drop per-post approval: a post with all its art that passes every gate on the
-real art should become eligible automatically (no Approve command), and authorised the live tests
-and enabling the schedule after they pass. Claude Code's permission system **blocked** that code
-change as a security weakening, so the current behaviour is unchanged: `Build <post-id>` (run by
-Claude after looking at the art) composes, gates and writes `approved.json`; only approved,
-unchanged posts are published. To make the change, the owner must allow it (see the message of
-2026-10-18) — then: queue eligibility = art complete + all gates pass at build time, re-gated on
-every build, failures skipped with an alert.
+### Approval policy (settled 2026-10-19)
+On 2026-10-18 the owner asked to drop per-post approval and auto-publish. The code change was
+blocked by Claude Code's permission system and never made. On 2026-10-19 the owner withdrew the
+request: **keep per-post approval** and post manually. `Build <post-id>` (run by Claude after
+looking at the art) composes, gates and writes `approved.json`. Only approved, unchanged posts
+can be exported (or, later, published).
+
+### Stage 2b evidence (2026-10-19, Windows)
+- `tests/test_export.py` (4 tests): carousel export → `01.jpg`..`03.jpg` at 1080×1350,
+  `caption.txt` with the disclosure line and hashtags last, `NOTES.txt` (cover first, AI label
+  YES, suggested slot, UK time zone); no AI art → "AI label: not needed"; unapproved, changed
+  or unknown posts refused with nothing written; a re-export replaces its own folder, and a
+  folder that is not an earlier export is never overwritten.
+- Meta's scheduling options were checked on 2026-10-19 (sources in the README). The Instagram
+  app schedules up to 30 days ahead (a year with paid Meta One). Business Suite does not
+  publish a limit. Meta *requires* the AI label only for realistic AI video and audio; for
+  illustrations it is optional, and we switch it on anyway. Business Suite help pages are
+  JavaScript-only, so button names come from Meta's page titles and recent guides: **not
+  checked by hand**.
 
 ### Waiting on the owner
 1. Review the 24 drafts (text, captions, art briefs): `rehearsal-output/queue-preview/index.html`.
-2. Review the cadence (carousels Mon/Wed/Fri 19:00, single images Tue/Sat 12:30).
-3. Then make art for approved drafts and drop it into the queue folders.
+2. Review the suggested times (carousels Mon/Wed/Fri 19:00, single images Tue/Sat 12:30).
+3. Then make art for approved drafts and drop it into the queue folders → `Build` → `Export`.
+   2026-10-19: the owner is making the art for **c01** first.
+- Done 2026-10-19: test-alert e-mail arrived (owner confirmed), issue #1 closed;
+  @simplestorymode is a Professional account with 2FA on (owner confirmed).
 
 ## Local setup (Windows; everything on D:)
 - Tools: `D:\Tools\uv\uv.exe` (uv 0.12.22, SHA-256 verified), Python 3.12.15 managed by uv in
@@ -138,6 +160,7 @@ src/autopilot/
   gates/story.py       per-slide gates + carousel gates (count, order, same size, strong cover)
   gates/               visual (size/contrast/placement), spelling, media/reel/voice gates
   publish/instagram.py stdlib-only Graph client: image, reel, carousel; publish/reconcile flow
+  export.py            Export <post-id>: finished files + caption.txt + NOTES.txt (manual posting)
   ops/alerts.py        alert titles "[Page] problem — what to do" + public-safety check
   rehearsal/           fake Instagram, local hosting, network guard, runner, preview + approval
 pages/simplestorymode/
@@ -188,6 +211,16 @@ narration fallbacks: second voice → music-only → skip + alert.
 4. Before committing, run the privacy checks above; then commit `post.yaml`, the art and
    `approved.json` (stage 2: via pull request with CI). Any later edit to the text or art holds
    the post back until it is built again.
+
+## Procedure: "Export <post-id>"
+1. The post must be approved and unchanged since Build (`python -m autopilot queue` shows
+   `APPROVED`); otherwise tell the owner to run Build first.
+2. Run `python -m autopilot export simplestorymode <post-id>`. It composes the slides again
+   from the approved art, re-runs every gate, and writes `exports/<post-id>/` (git-ignored):
+   `01.jpg`, `02.jpg`, ... (or `reel.mp4`), `caption.txt` and `NOTES.txt`. Nothing is uploaded.
+3. Tell the owner the folder path, the file order, whether the AI label is needed (from
+   `NOTES.txt`) and the suggested time, and point them to the README guide "How to schedule in
+   Meta Business Suite". Never copy exported files into tracked folders.
 
 ## Spec vs current official docs (checked 2026-10-18) and other deliberate differences
 | Topic | Spec says | Current docs / decision |
@@ -260,9 +293,11 @@ Order agreed with the owner:
 - Before every commit/push: `python scripts/privacy_check.py`.
 
 ## Remaining work (next session starts here)
-1. Approval policy: owner decision on the blocked change (see "Approval policy" above).
-2. Push stage 2, apply repo settings (`scripts/repo_settings.py apply`), watch CI go green.
-3. Stage 3 owner setup, click by click; secrets only via `scripts/set-token.ps1` and
-   `scripts/set-renewal-key.ps1` in the owner's own PowerShell. Then the alert test.
-4. Stage 4 live tests: set `PUBLISHING_ENABLED=true`; Post now one image, one carousel, one reel;
-   one token renewal (confirm the next post still works); egress block mode; then the schedule.
+Mode: **manual posting** (see Scope). Stage 2 is pushed, repo settings applied, CI green.
+1. Owner: review the drafts, make art → `Build <post-id>` → `Export <post-id>` → schedule in
+   Meta Business Suite (README). Professional account + 2FA: done (owner, 2026-10-19);
+   connecting it to Business Suite happens the first time the owner schedules. Next: c01 art →
+   `Build c01-you-can-miss` (look at every picture first) → `Export c01-you-can-miss`.
+2. Only if the owner asks to return to automatic posting: stage 3 setup (Meta app, tokens via
+   `scripts/set-token.ps1` / `scripts/set-renewal-key.ps1` in the owner's own PowerShell),
+   then stage 4 live tests, then schedules.
