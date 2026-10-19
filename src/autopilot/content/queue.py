@@ -33,6 +33,7 @@ BRIEF_FIELDS = ("scene", "emotion", "composition")
 AUDIO_MODES = ("voice+music", "voice", "music")
 NO_TEXT = "No text, no letters, no numbers, no signs, no logos, no watermark."
 MAX_ID_LEN = 48
+HOLD_LINE_RE = re.compile(r"^hold\s*:")
 
 
 @dataclass(frozen=True)
@@ -62,6 +63,7 @@ class Post:
     priority: int = 100
     audio: str = "voice+music"
     template: str = ""
+    hold: str = ""  # non-empty: on hold (the reason) - never published or exported
 
     @property
     def art_paths(self) -> list[Path]:
@@ -184,6 +186,8 @@ def parse_post(post_dir: Path) -> tuple[Post | None, list[str]]:
     _require("#" not in caption, problems, "put hashtags in 'hashtags', not in the caption")
     audio = str(data.get("audio", "voice+music"))
     _require(audio in AUDIO_MODES, problems, f"audio must be one of {AUDIO_MODES}")
+    hold = data.get("hold", False)
+    _require(isinstance(hold, bool | str), problems, "hold must be true/false or a short reason")
     if problems:
         return None, [f"{post_dir.name}: {p}" for p in problems]
     return (
@@ -199,9 +203,16 @@ def parse_post(post_dir: Path) -> tuple[Post | None, list[str]]:
             priority=int(data.get("priority", 100)),
             audio=audio,
             template=str(data.get("template", "")),
+            hold=_hold_reason(hold),
         ),
         [],
     )
+
+
+def _hold_reason(value: object) -> str:
+    if value is True:
+        return "put on hold by the owner"
+    return " ".join(value.split())[:200] if isinstance(value, str) else ""
 
 
 def structure_problems(post: Post, slide_range: tuple[int, int], cover_max_words: int) -> list[str]:
@@ -225,7 +236,11 @@ def structure_problems(post: Post, slide_range: tuple[int, int], cover_max_words
 def _sha256(path: Path) -> str:
     data = path.read_bytes()
     if path.suffix in (".yaml", ".yml"):
-        data = data.replace(b"\r\n", b"\n")  # same hash on Windows and Linux checkouts
+        # Same hash on Windows and Linux checkouts; the hold line is not content (putting a post
+        # on hold and releasing it keeps its approval). Any other edit changes the hash.
+        lines = data.decode("utf-8").replace("\r\n", "\n").split("\n")
+        text = "\n".join(ln for ln in lines if not HOLD_LINE_RE.match(ln)).rstrip("\n")
+        data = text.encode("utf-8")
     return hashlib.sha256(data).hexdigest()
 
 
@@ -312,8 +327,28 @@ def load_queue(page_dir: Path) -> tuple[list[QueuedPost], list[str]]:
         item = QueuedPost(post, approval)
         if approval is not None:
             item.problems = approval_problems(post, approval)
+        if post.hold:
+            item.problems.append(f"on hold: {post.hold}")
         items.append(item)
     return items, errors
+
+
+def set_hold(post_dir: Path, reason: str | None) -> None:
+    """Put a post on hold (``reason``) or release it (``None``) by editing its ``post.yaml``.
+
+    Only the top-level ``hold:`` line changes, so the approval of an approved post is kept for
+    hold/release (``post.yaml`` is hashed without that line).
+    """
+    path = post_dir / "post.yaml"
+    before = path.read_text(encoding="utf-8")
+    kept = [ln for ln in before.splitlines() if not HOLD_LINE_RE.match(ln)]
+    if reason is not None:
+        kept.append(f"hold: {json.dumps(' '.join(reason.split())[:200] or 'on hold')}")
+    path.write_text("\n".join(kept) + "\n", encoding="utf-8")
+    post, problems = parse_post(post_dir)
+    if post is None:
+        path.write_text(before, encoding="utf-8")
+        raise ContentError("; ".join(problems))
 
 
 def find_post(page_dir: Path, post_id: str) -> Post:
@@ -343,14 +378,20 @@ def next_for_slot(items: list[QueuedPost], used: set[str], fmt: str) -> QueuedPo
     return None
 
 
+def style_paragraph(characters: dict[str, Any]) -> str:
+    """The locked art style (``style.paragraph`` in characters.yaml) that starts every prompt."""
+    style = characters.get("style", {})
+    text = str(style.get("paragraph") or style.get("look") or "Painterly storybook illustration")
+    return " ".join(text.split())
+
+
 def art_prompt(post: Post, slide: SlideSpec, characters: dict[str, Any]) -> str:
     """A copy-paste prompt for the owner's image tool, built from the slide's brief."""
-    style = characters.get("style", {})
     brief = slide.brief
     ratio = "9:16 portrait (1080x1920)" if post.format == "reel" else "4:5 portrait (1080x1350)"
     lines = [
-        f"{style.get('look', 'Painterly storybook illustration')}. Canvas: {ratio}.",
-        f"Palette: {', '.join(style.get('palette', []))}.",
+        style_paragraph(characters),
+        f"Canvas: {ratio}.",
         f"Scene: {brief.get('scene', '')}",
         f"Feeling: {brief.get('emotion', '')}",
         f"Composition: {brief.get('composition', '')} Keep the {slide.position} of the picture "

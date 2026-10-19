@@ -85,8 +85,8 @@ def story_style(cfg: Config) -> StoryStyle:
 
 
 # ----- art ------------------------------------------------------------------------------------
-def load_art(path: Path, size: tuple[int, int], focus: str) -> tuple[Image.Image, float]:
-    """Scale and crop art to fill ``size``; returns (image, upscale factor needed)."""
+def open_art(path: Path) -> Image.Image:
+    """The owner's art at full size, upright, as RGB (transparency flattened onto cream)."""
     try:
         with Image.open(path) as raw:
             img = ImageOps.exif_transpose(raw)
@@ -94,9 +94,14 @@ def load_art(path: Path, size: tuple[int, int], focus: str) -> tuple[Image.Image
                 img = img.convert("RGBA")
                 flat = Image.new("RGBA", img.size, (247, 240, 225, 255))
                 img = Image.alpha_composite(flat, img)
-            img = img.convert("RGB")
+            return img.convert("RGB")
     except OSError as exc:
         raise RenderError(f"cannot read art {path.name}") from exc
+
+
+def load_art(path: Path, size: tuple[int, int], focus: str) -> tuple[Image.Image, float]:
+    """Scale and crop art to fill ``size``; returns (image, upscale factor needed)."""
+    img = open_art(path)
     w, h = size
     scale = max(w / img.width, h / img.height)
     new = (max(w, math.ceil(img.width * scale)), max(h, math.ceil(img.height * scale)))
@@ -311,6 +316,36 @@ def choose_panel(
         if _worst_contrast(elements, bg, percentile) >= target:
             break
     return bg, opacity
+
+
+def panel_for_all(
+    backgrounds: list[Image.Image],
+    elements: list[TextElement],
+    style: StoryStyle,
+    target: float,
+    percentile: float,
+    pad: int,
+) -> tuple[Image.Image, float]:
+    """Lightest panel that gives ``target`` contrast on EVERY background (moving art).
+
+    Returns (panel mask, opacity); the strongest panel is returned if none reaches the target
+    (the contrast gate then fails).
+    """
+    mask = panel_mask(backgrounds[0].size, _union(elements), pad, style.feather_px)
+    opacity = 0.0
+    for opacity in style.panel_opacities:
+        if all(
+            _worst_contrast(elements, _with_panel(bg, mask, style.panel_color, opacity), percentile)
+            >= target
+            for bg in backgrounds
+        ):
+            break
+    return mask, opacity
+
+
+def with_panel(art: Image.Image, mask: Image.Image, color: RGB, opacity: float) -> Image.Image:
+    """``art`` with a cream panel (``mask`` scaled by ``opacity``) composited on top."""
+    return _with_panel(art, mask, color, opacity)
 
 
 @dataclass

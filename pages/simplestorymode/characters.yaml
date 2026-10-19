@@ -47,7 +47,15 @@ armour:  # do not use unless the owner explicitly asks
   wren_battle_queen: "Wren_ Fully Armored Battle Queen.png"
 
 style:
-  look: warm, nostalgic, painterly storybook illustration with a slightly magical British-European feel
+  # LOCKED by the owner on 2026-10-19: soft watercolour storybook. Every art prompt starts with
+  # this paragraph, and the review page shows it ready to paste. Never name a studio or an artist.
+  paragraph: >-
+    Soft watercolour storybook illustration: gentle hand-painted washes, visible paper texture,
+    soft edges, loose painterly detail, no hard black outlines. Warm golden autumn light,
+    nostalgic and calm. Palette of cream, olive green, rust, gold, warm brown and navy.
+    People have natural proportions and normal rounded human ears, never pointed. No text
+    anywhere in the picture: no letters, numbers, signs, logos or watermarks.
+  look: soft watercolour storybook illustration, warm and nostalgic, with a gentle British-European feel
   palette: [cream, olive, rust, gold, brown, navy]
   favourite_season: autumn (golden leaves, stone cottages, lanes, bridges, lakes, Scottish Highlands)
   other_settings: [rainy windows, cosy homes, castles, lavender fields, spring flowers]

@@ -103,6 +103,22 @@ story:                              # Simple Story Mode slides (carousels and si
   contrast_margin: 0.5              # choose the lightest panel that clears the gate by this much
   art: { max_upscale: 1.6 }         # art smaller than this needs more enlarging -> gate fails
 
+story_reel:                         # a carousel turned into a 9:16 reel (Export; posted by hand)
+  seconds: [20, 30]                 # target length; slides stretch or shrink to land here
+  allowed_seconds: [8, 45]          # gate (Instagram: 3 s - 15 min; we keep reels short)
+  slide_seconds: [3.5, 7.0]         # each slide, before stretching to the target
+  words_per_second: 3.3             # reading pace (~200 words a minute): each slide's words stay fully visible at least this long
+  linger_s: 0.4                     # extra time with the words fully visible
+  text_delay_s: 0.4                 # the picture is seen first, then the words fade in
+  text_fade_s: 0.6
+  crossfade_s: 0.6
+  tail_s: 1.2                       # last slide stays a little longer
+  motion_scale: 1.08                # art is enlarged this much so it can zoom / pan
+  zoom: 1.06                        # slow zoom-in / zoom-out amount
+  text_area: { top: [0.14, 0.44], middle: [0.26, 0.58], bottom: [0.36, 0.645] }  # inside the reel safe zone
+  music: procedural                 # or the file name of a CC0 track in assets/music (licences.json)
+  music_lead: piano                 # procedural music: soft pad + piano-like notes
+
 alerts: { low_stock_warning: 80, token_days_warning: 14, pat_days_warning: 30, no_post_hours: 30 }
 
 github:

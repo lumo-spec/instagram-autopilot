@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from autopilot.config import Config, Page
-from autopilot.content.queue import Post, art_prompt, load_queue, write_approval
+from autopilot.content.queue import Post, art_prompt, load_queue, style_paragraph, write_approval
 from autopilot.errors import ContentError
 from autopilot.gates import GateReport
 from autopilot.pipeline import Caption, Composed, StoryBuilder
@@ -100,9 +100,13 @@ def write_review_page(
 .strip{{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}}
 .strip img,.strip video{{height:420px;border-radius:6px;flex:none}}
 pre{{white-space:pre-wrap;font:13px system-ui;background:#faf6ee;padding:8px;border-radius:6px}}
-.fail li{{color:#b3261e}} .texts{{color:#4a3a2c;font-size:14px}}</style>
+.fail li{{color:#b3261e}} .texts{{color:#4a3a2c;font-size:14px}}
+.style{{background:#fff8e6;border:2px solid #c9a227}}</style>
 <h1>{html.escape(title)}</h1><p>{ok} of {len(previews)} posts pass every gate.
-Slides use placeholder art until real art is supplied.</p>{cards}"""
+Slides use placeholder art until real art is supplied.</p>
+<section class="post style"><h2>Art style (locked) <small>paste this first in a new image chat;
+every art prompt below already starts with it</small></h2>
+<pre>{html.escape(style_paragraph(builder.characters))}</pre></section>{cards}"""
     out.mkdir(parents=True, exist_ok=True)
     index = out / "index.html"
     index.write_text(page, encoding="utf-8")

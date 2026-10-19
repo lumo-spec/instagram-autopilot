@@ -24,7 +24,7 @@ def test_export_carousel_writes_slides_caption_and_notes(
     cfg, page = story
     write_post(page, post_data("c01-real", n=3), art="quiet")
     build_and_approve(cfg, page, "c01-real")
-    result = export_post(cfg, page, "c01-real", tmp_path / "exports", NOW)
+    result = export_post(cfg, page, "c01-real", tmp_path / "exports", NOW, reel=False)
 
     folder = tmp_path / "exports" / "c01-real"
     assert result.folder == folder and result.media == ["01.jpg", "02.jpg", "03.jpg"]
@@ -51,7 +51,7 @@ def test_export_without_ai_art_says_label_not_needed(
     cfg = dataclasses.replace(cfg, pages=(page,))
     write_post(page, post_data("i01-single", fmt="image", n=1), art="quiet")
     build_and_approve(cfg, page, "i01-single")
-    result = export_post(cfg, page, "i01-single", tmp_path, NOW)
+    result = export_post(cfg, page, "i01-single", tmp_path, NOW, reel=False)
     assert result.media == ["01.jpg"] and result.ai_label == []
     assert "AI LABEL: not needed" in (result.folder / NOTES).read_text(encoding="utf-8")
 
@@ -78,9 +78,9 @@ def test_export_replaces_its_own_folder_but_not_other_files(
     cfg, page = story
     write_post(page, post_data("c01-real", n=2), art="quiet")
     build_and_approve(cfg, page, "c01-real")
-    export_post(cfg, page, "c01-real", tmp_path, NOW)
+    export_post(cfg, page, "c01-real", tmp_path, NOW, reel=False)
     (tmp_path / "c01-real" / "03.jpg").write_bytes(b"stale")
-    export_post(cfg, page, "c01-real", tmp_path, NOW)  # re-export replaces the old folder
+    export_post(cfg, page, "c01-real", tmp_path, NOW, reel=False)  # replaces the old folder
     assert not (tmp_path / "c01-real" / "03.jpg").exists()
 
     other = tmp_path / "other"

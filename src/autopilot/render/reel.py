@@ -226,7 +226,7 @@ class _Sprites:
                 frame.paste(solid, pos, mask)
 
 
-def _encode(
+def encode_mp4(
     frames_iter: Iterator[Image.Image], size: tuple[int, int], fps: int, wav: Path, out: Path
 ) -> None:
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
@@ -346,7 +346,7 @@ def render_reel(
             audio[:need] if len(audio) >= need else np.pad(audio, ((0, need - len(audio)), (0, 0)))
         )
         sf.write(wav, track, sr, subtype="PCM_24")
-        _encode(frames(), size, fps, wav, out)
+        encode_mp4(frames(), size, fps, wav, out)
     samples = [base(i) for i in (0, n_frames // 2, n_frames - 1)]
     return RenderedReel(
         out, elements, samples, reveals, spoken, voice, duration, audio_mode, template.name
