@@ -67,7 +67,18 @@ the owner's decisions below override it where they differ.
 | 2b | Manual posting: `export` command (finished slides in order, `caption.txt`, `NOTES.txt` with AI-label advice and suggested time) + README "How to schedule in Meta Business Suite" | **Done (2026-10-19)** |
 | 2c | Locked watercolour art style in every prompt; story reels (carousel → 9:16 reel, piano-like generated music or a CC0 track) in Export; per-post hold; `send-posts.ps1` (one command per batch) | **Done (2026-10-19)**; approval removal blocked (see below) |
 | 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | **Resumed (owner, late 2026-10-19).** Professional account + 2FA done; `set-token.ps1` now takes the token once and looks up the user ID itself (parse-checked, **not run yet**); next: owner creates the Meta app (README "Connecting Instagram" step 1) |
-| 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | Authorised by the owner; **blocked on art** (no post has art yet) and on stage 3 |
+| 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | Authorised by the owner; **blocked on art** (no post has art yet) and on stage 3. **Priority (owner, 2026-10-19): first live post = c01 carousel via Post now ASAP**; renewal key, image/reel/renewal tests and story reels come after it |
+
+### First-live-post readiness (2026-10-19, Windows)
+- c01 rehearsal in a scratch clone with stand-in art at ChatGPT's portrait size (6 × 1024×1536
+  PNG, enlarged ×1.05): `build` → APPROVED 93/93; `export` → `01.jpg`..`06.jpg`, caption,
+  NOTES (AI label YES), no story reel by default; jobs `build` with `AP_POST_ID=c01-you-can-miss`
+  → status built, carousel of 6, `ai_generated` true. Host/publish/record: existing fake tests.
+- `publish/instagram.py` re-checked against Meta's content-publishing guide and IG User Media
+  reference: host `graph.instagram.com`, JSON body, `children` as a comma-separated string (as
+  in Meta's own example), `is_ai_generated` allowed on the container, not on children.
+- Renewal key is not needed for publishing (only `renew-*` jobs use `GH_SECRETS_PAT`); token
+  lasts 60 days and can be refreshed once ≥ 24 h old → set it within ~6 weeks.
 
 ### Stage 1b evidence (2026-10-18, Windows 10, Python 3.12.15)
 - `pytest` (incl. slow) → 198 tests pass, coverage 92 %; `ruff check`, `ruff format --check`,
@@ -264,9 +275,10 @@ narration fallbacks: second voice → music-only → skip + alert.
    `APPROVED`); otherwise tell the owner to run Build first.
 2. Run `python -m autopilot export simplestorymode <post-id>`. It composes the slides again
    from the approved art, re-runs every gate, and writes `exports/<post-id>/` (git-ignored):
-   `01.jpg`, `02.jpg`, ... (or `reel.mp4`), `caption.txt` and `NOTES.txt`; for carousels also
-   `story-reel.mp4` + `story-reel-cover.jpg` (about a minute to render; `--no-reel` skips it,
-   `--music <file>` uses a licensed CC0 track from `assets/music/`). Nothing is uploaded.
+   `01.jpg`, `02.jpg`, ... (or `reel.mp4`), `caption.txt` and `NOTES.txt`. Story reels are
+   **postponed until after the first live post** (owner, 2026-10-19): only with `--reel` are
+   `story-reel.mp4` + `story-reel-cover.jpg` made (about a minute; `--music <file>` uses a
+   licensed CC0 track from `assets/music/`; `--no-reel` is still accepted). Nothing is uploaded.
 3. Tell the owner the folder path, the file order, whether the AI label is needed (from
    `NOTES.txt`), the suggested time, and whether the story reel was made (and if not, why),
    and point them to the README guide "How to schedule in Meta Business Suite". Never copy
@@ -359,10 +371,12 @@ Order agreed with the owner:
 
 ## Remaining work (next session starts here)
 Mode: **moving to automatic posting** (see Scope); manual until the live tests pass.
-1. Stage 3, one step at a time with the owner (README "Connecting Instagram" steps 1-7): Meta
-   developer account → app (Other / Business) → Instagram product → tester → Generate token →
-   `set-token.ps1` → renewal PAT + `set-renewal-key.ps1`. When the owner says "token set":
-   check the Maintenance `token-set` run, set repo variable `PUBLISHING_ENABLED=true`.
+1. **First live post first** (owner priority 2026-10-19; README "Connecting Instagram" A-G):
+   c01 art → `Build c01-you-can-miss` → `send-posts.ps1`; Meta app (Other / Business) →
+   Instagram product → tester → Generate token → `set-token.ps1`. When the owner says "token
+   set": check the Maintenance `token-set` run, set repo variable `PUBLISHING_ENABLED=true`,
+   then the owner runs Post now with `c01-you-can-miss`; record the result in HANDOVER.
+   Renewal PAT (step H) after that, within ~6 weeks.
 2. Art (owner): no post has art yet. Live tests need at least one single image (`i01`...), one
    carousel (c01 is in progress) and art for a reel test. Then `Build` each (look at every
    picture first) → live tests via Post now → token renewal test → schedule (owner authorised).

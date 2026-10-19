@@ -89,3 +89,24 @@ def test_export_replaces_its_own_folder_but_not_other_files(
     with pytest.raises(ContentError, match="not an earlier export"):
         export_post(cfg, page, "c01-real", other, NOW)
     assert (other / "c01-real" / "mine.txt").read_text(encoding="utf-8") == "keep"
+
+
+@pytest.mark.parametrize(
+    ("flags", "reel"), [([], False), (["--reel"], True), (["--no-reel"], False)]
+)
+def test_export_command_makes_the_story_reel_only_when_asked(
+    flags: list[str], reel: bool, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    import autopilot.export
+    from autopilot.__main__ import main
+
+    seen: dict[str, object] = {}
+
+    def fake_export(*args: object, **kwargs: object) -> object:
+        seen.update(kwargs)
+        raise ContentError("stop here")
+
+    monkeypatch.setattr(autopilot.export, "export_post", fake_export)
+    argv = ["export", "simplestorymode", "c01-you-can-miss", "--out", str(tmp_path), *flags]
+    assert main(argv) == 1
+    assert seen["reel"] is reel
