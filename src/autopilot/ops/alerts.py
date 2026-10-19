@@ -188,6 +188,28 @@ def token_check_failed(page: str) -> Alert:
     )
 
 
+def art_failed(page: str, post_id: str, slide: int, reason: str) -> Alert:
+    """Automatic art for a post failed its checks (or could not be made): the post is skipped."""
+    return _make(
+        f"art-failed-{_slug(page)}-{post_id}",
+        f"[{page}] art for {post_id} failed its checks — the post was skipped",
+        f"Slide {slide} of {post_id} could not get an image that passed the automatic checks "
+        f"({reason}). Nothing was saved or posted for it. Look at the rejected pictures in "
+        f"the post's preview/rejected folder, then run generate-art again, adjust the slide's "
+        "brief, or add the art by hand.",
+    )
+
+
+def art_budget_reached(page: str, cap_gbp: float) -> Alert:
+    """The monthly art cost cap stopped generation."""
+    return _make(
+        f"art-budget-{_slug(page)}",
+        f"ACTION NEEDED [{page}]: monthly art budget (£{cap_gbp:.2f}) reached — generation paused",
+        "No more images are generated this month, so posts without art wait. Raise "
+        "art_generation.monthly_cap_gbp in config.yaml or wait for next month.",
+    )
+
+
 def setup_test_alert() -> Alert:
     """Harmless alert used once during setup to prove the e-mail path works."""
     return _make(

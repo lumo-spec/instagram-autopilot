@@ -34,6 +34,7 @@ AUDIO_MODES = ("voice+music", "voice", "music")
 NO_TEXT = "No text, no letters, no numbers, no signs, no logos, no watermark."
 MAX_ID_LEN = 48
 HOLD_LINE_RE = re.compile(r"^hold\s*:")
+ART_CHECKS = "art-check.json"  # written by generate-art: SHA-256 of every checked picture
 
 
 @dataclass(frozen=True)
@@ -245,12 +246,15 @@ def _sha256(path: Path) -> str:
 
 
 def input_hashes(post: Post) -> dict[str, str]:
-    """SHA-256 of post.yaml and every art file that exists."""
+    """SHA-256 of post.yaml, every art file that exists and the automatic art-check record."""
     files = {"post.yaml": _sha256(post.dir / "post.yaml")}
     for s in post.slides:
         art = post.dir / s.art
         if art.is_file():
             files[s.art] = _sha256(art)
+    checks = post.dir / ART_CHECKS
+    if checks.is_file():
+        files[ART_CHECKS] = _sha256(checks)
     return files
 
 

@@ -36,6 +36,7 @@ SECRET_REF = re.compile(r"secrets\.([A-Za-z_][A-Za-z0-9_]*)")
 ENV_SECRETS = {
     "page-": {"IG_ACCESS_TOKEN", "IG_USER_ID"},
     "renewal": {"GH_SECRETS_PAT"},
+    "art-generation": {"IMAGE_API_KEY", "CHECK_API_KEY"},
 }
 ALLOWED_PERMS = {
     ("contents", "read"),

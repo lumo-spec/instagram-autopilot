@@ -86,6 +86,34 @@ ai_disclosure:
   art_caption_text: "Illustrations: AI-generated"
 ai_generation: { enabled: false }
 
+art_generation:
+  # Automatic text-free art for queued posts (python -m autopilot generate-art). Every image is
+  # checked by a vision model before it is saved as art-NN.png; rejected images are never used.
+  # The key is read from the IMAGE_API_KEY environment variable or the git-ignored .env file
+  # (scripts/set-image-key.ps1 stores it there and as a GitHub Environment secret).
+  provider: gemini                  # gemini | openai | fake (fake: tests and rehearsals only)
+  checker: gemini                   # gemini | openai | fake
+  max_regenerations: 3              # after a rejection, try again up to this many times
+  monthly_cap_gbp: 10.0             # never start a paid call that could go over this (per month)
+  usd_to_gbp: 0.80                  # rounded up on purpose, so the cap errs on the safe side
+  ledger: .cache/art-spend.json     # git-ignored running total per month (Europe/London)
+  output_size: [1080, 1350]         # 4:5; generated larger, cropped to 4:5 and resized
+  reference_max_px: 1536            # reference sheets are shrunk to this before upload
+  providers:
+    gemini:                         # Google Gemini API ("Nano Banana Pro"), checked 2026-10-19
+      model: gemini-3-pro-image     # keeps up to 5 people consistent from reference images
+      aspect_ratio: "4:5"
+      image_size: "2K"
+      usd_per_image: 0.14           # $0.134 per 1K/2K image + reference-image input
+    openai:
+      model: gpt-image-1.5
+      size: 1024x1536               # 2:3; cropped to 4:5 (1024x1280) and enlarged 1.05x
+      quality: high
+      usd_per_image: 0.25
+  checkers:
+    gemini: { model: gemini-3-flash-preview, usd_per_check: 0.01 }
+    openai: { model: gpt-5-mini, usd_per_check: 0.01 }
+
 story:                              # Simple Story Mode slides (carousels and single images)
   slide_size: [1080, 1350]          # 4:5; Instagram crops every carousel slide to the first one's ratio
   slides: { min: 2, max: 10 }       # DOC: the API allows at most 10 carousel items (the app allows 20)

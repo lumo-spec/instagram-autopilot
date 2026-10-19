@@ -12,8 +12,8 @@ checks each post, and only posts the owner has approved can be exported or publi
 ## Cheat sheet
 1. **New post:** in Claude Code type `New post: <topic>`. Claude writes the slides, caption,
    hashtags and an art prompt for each slide.
-2. **Make the art** in the locked style (see "Art style" below; every art prompt already starts
-   with it), with no text in it. Save it as
+2. **Get the art:** type `Generate art <post-id>` in Claude Code (see "Automatic art" below), or
+   make it yourself in the locked style and save it as
    `pages/simplestorymode/queue/<post-id>/art-01.png`, `art-02.png`, ...
 3. **Approve:** type `Build <post-id>`. Claude looks at every picture, composes the slides, runs
    every check, and only then approves the post.
@@ -99,6 +99,35 @@ updated Sep 2024); Meta for Developers, "IG User Media" reference (reel video sp
 19 Oct 2026). The *AI-generated profile* label comes from 2026 news reports, not a Meta page we
 could read. Button names come from Meta's help pages and recent guides; they may differ
 slightly on your screen.
+
+## Automatic art (no drawing by hand)
+`python -m autopilot generate-art simplestorymode <post-id>` draws every slide that has no art
+yet, using the slide's brief, the locked style below and the Rowan/Wren character sheets in
+`references/` (only those two sheets are ever sent; nothing else in that folder is read).
+- **Provider:** Google Gemini API, model *Nano Banana Pro* (`gemini-3-pro-image`), 4:5 at 2K,
+  then cropped and resized to 1080×1350. It keeps up to five people consistent from reference
+  pictures. Switch to OpenAI (`gpt-image-1.5`) or another model in `config.yaml` →
+  `art_generation`.
+- **Safety check:** every picture goes to a vision model (`gemini-3-flash-preview`) with the
+  character sheets. It is rejected for pointed/elf ears, any visible text or letters, or
+  characters that do not match their sheets. A rejected picture is redrawn (up to 3 more times)
+  with the reason added to the prompt; rejected pictures are kept in the post's
+  `preview/rejected/` folder (never sent anywhere). After 3 failed redraws the post is skipped
+  and you get an alert e-mail. Only pictures that passed are saved, and `art-check.json`
+  records their fingerprints: `Build` refuses a generated picture that changed afterwards.
+- **Cost:** about £0.12 per picture (£0.11 image + £0.01 check), so a 6-slide carousel is about
+  **£0.72**, or up to £2.88 if every slide needs all its redraws. The monthly cap is
+  `monthly_cap_gbp: 10` in `config.yaml`; no paid call starts that could go over it (alert e-mail
+  when reached). The running total is in `.cache/art-spend.json` on your PC. Also set a budget
+  alert in Google's billing page as a second safety net.
+- **Generate only:** this never approves or posts anything. Look at the preview it prints, then
+  `Build <post-id>` → `Export <post-id>` as usual. `--dry-run` shows the prompts and the cost
+  without sending anything; `--slides 2,5` redraws slides you did not like; `--all-missing`
+  does every post that still needs art; `--fake` is a free rehearsal on a copy of the queue.
+- **Key:** run `powershell -ExecutionPolicy Bypass -File .\scripts\set-image-key.ps1` in your
+  own PowerShell window and paste the key at the hidden prompt. It is saved in `.env` (never
+  committed) and as the GitHub secret `IMAGE_API_KEY` (environment `art-generation`), then
+  checked for free with `python -m autopilot art-key-check`.
 
 ## Art style (locked)
 Every art prompt on the review page starts with this paragraph, and the review page shows it in
