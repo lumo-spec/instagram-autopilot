@@ -21,7 +21,7 @@ run. "Not run" items are waiting for a later stage.
 | 9 | State writes with `main` protected; two writers at once; per-page media folders | PASS (local git origin) | `test_concurrent_writers_both_land_without_force`, `test_push_media_puts_files_in_page_folder` |
 | 10 | Idempotency/reconcile; crash after publish causes no double post | PASS (fake Instagram) | `test_crash_after_publish_is_reconciled_not_reposted`, `test_lost_record_step_does_not_double_post`, rehearsal |
 | 11 | Keepalive re-enables schedules; missed slot caught up | catch-up PASS (rehearsal); keepalive API call unit-tested only — live test in stage 4 | |
-| 12 | Alert path end to end (test alert received and closed) | issue #1 opened + locked by Maintenance run 39167833815; **waiting for the owner to confirm the e-mail**, then close it | |
+| 12 | Alert path end to end (test alert received and closed) | PASS (2026-10-19) | issue #1 opened + locked by Maintenance run 39167833815; owner confirmed the e-mail arrived; closed 2026-10-19 |
 
 ## Quality
 | # | Check | Result | Evidence |

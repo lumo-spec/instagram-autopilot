@@ -115,8 +115,9 @@ can be exported (or, later, published).
 1. Review the 24 drafts (text, captions, art briefs): `rehearsal-output/queue-preview/index.html`.
 2. Review the suggested times (carousels Mon/Wed/Fri 19:00, single images Tue/Sat 12:30).
 3. Then make art for approved drafts and drop it into the queue folders → `Build` → `Export`.
-4. Issue #1 (the stage 2 test alert) is still open. Ask whether the e-mail arrived, then close
-   it (`gh issue close 1`). Alerts belong to the paused automation.
+   2026-10-19: the owner is making the art for **c01** first.
+- Done 2026-10-19: test-alert e-mail arrived (owner confirmed), issue #1 closed;
+  @simplestorymode is a Professional account with 2FA on (owner confirmed).
 
 ## Local setup (Windows; everything on D:)
 - Tools: `D:\Tools\uv\uv.exe` (uv 0.12.22, SHA-256 verified), Python 3.12.15 managed by uv in
@@ -294,9 +295,9 @@ Order agreed with the owner:
 ## Remaining work (next session starts here)
 Mode: **manual posting** (see Scope). Stage 2 is pushed, repo settings applied, CI green.
 1. Owner: review the drafts, make art → `Build <post-id>` → `Export <post-id>` → schedule in
-   Meta Business Suite (README). The only account setup needed is an Instagram Professional
-   account with 2FA (and connecting it to Business Suite).
-2. Close test-alert issue #1 once the owner says whether its e-mail arrived.
-3. Only if the owner asks to return to automatic posting: stage 3 setup (Meta app, tokens via
+   Meta Business Suite (README). Professional account + 2FA: done (owner, 2026-10-19);
+   connecting it to Business Suite happens the first time the owner schedules. Next: c01 art →
+   `Build c01-you-can-miss` (look at every picture first) → `Export c01-you-can-miss`.
+2. Only if the owner asks to return to automatic posting: stage 3 setup (Meta app, tokens via
    `scripts/set-token.ps1` / `scripts/set-renewal-key.ps1` in the owner's own PowerShell),
    then stage 4 live tests, then schedules.
