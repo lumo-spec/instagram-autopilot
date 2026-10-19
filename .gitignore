@@ -43,6 +43,11 @@ exports/
 # Fonts and fixtures are committed explicitly; generated images are not
 /media/
 /samples/
+# CC0 music for story reels may be committed (each needs a record in licences.json)
+!assets/music/*.wav
+!assets/music/*.flac
+!assets/music/*.ogg
+!assets/music/*.mp3
 
 # --- OS / editors ---
 .DS_Store

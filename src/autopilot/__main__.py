@@ -1,6 +1,7 @@
 """Command line: ``python -m autopilot <command>``.
 
-Local commands: validate, queue, preview, build, export, rehearse, pronunciation-report.
+Local commands: validate, queue, preview, build, export, hold, release, rehearse,
+pronunciation-report.
 The GitHub Actions jobs (plan, build, host, publish, record, renew, ...) live in
 ``python -m autopilot.jobs``.
 """
@@ -40,7 +41,8 @@ def cmd_validate(args: argparse.Namespace) -> int:
                 bad += 1
                 print(f"  {post.id}: {report.summary()}")
             for problem in item.problems:
-                print(f"  {post.id}: approval not valid: {problem}")
+                label = "" if problem.startswith("on hold") else "approval not valid: "
+                print(f"  {post.id}: {label}{problem}")
         for e in errors:
             print(f"  INVALID {e}")
         approved = sum(1 for i in items if i.publishable)
@@ -63,7 +65,9 @@ def cmd_queue(args: argparse.Namespace) -> int:
         print(f"{page.title} queue ({len(order)} approved):")
         for item in items:
             post = item.post
-            if item.publishable:
+            if post.hold:
+                status = f"ON HOLD ({post.hold}) — release with: autopilot release"
+            elif item.publishable:
                 status = f"APPROVED #{order[post.id]}"
             elif item.approval is not None:
                 status = "CHANGED since approval — run Build again"
@@ -108,6 +112,17 @@ def cmd_build(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_hold(args: argparse.Namespace) -> int:
+    """Put one post on hold, or release it. A held post is never published or exported."""
+    from autopilot.content.queue import find_post, set_hold
+
+    cfg = load_config()
+    post = find_post(cfg.page(args.page).dir, args.post_id)
+    set_hold(post.dir, None if args.release else args.reason)
+    print(f"{'RELEASED' if args.release else 'ON HOLD'}: {post.id}")
+    return 0
+
+
 def cmd_export(args: argparse.Namespace) -> int:
     """``Export <post-id>``: finished files + caption + notes for posting by hand."""
     from autopilot.export import NOTES, export_post
@@ -116,7 +131,9 @@ def cmd_export(args: argparse.Namespace) -> int:
     page = cfg.page(args.page)
     out = Path(args.out) if args.out else ROOT / "exports"
     try:
-        result = export_post(cfg, page, args.post_id, out)
+        result = export_post(
+            cfg, page, args.post_id, out, reel=not args.no_reel, music=args.music or ""
+        )
     except AutopilotError as exc:
         print(f"NOT EXPORTED: {exc}")
         return 1
@@ -124,6 +141,13 @@ def cmd_export(args: argparse.Namespace) -> int:
     print(f"  files in order: {', '.join(result.media)}")
     label = "YES (" + "; ".join(result.ai_label) + ")" if result.ai_label else "not needed"
     print(f"  AI label: {label}")
+    if result.reel is not None:
+        if result.reel.made:
+            print(
+                f"  story reel: story-reel.mp4 ({result.reel.seconds:.0f} s), {result.reel.music}"
+            )
+        else:
+            print(f"  story reel NOT made: {result.reel.problems}")
     print(f"  read {result.folder / NOTES} before posting")
     return 0
 
@@ -203,7 +227,18 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("page")
     p.add_argument("post_id")
     p.add_argument("--out", help="parent folder (default: exports/)")
+    p.add_argument("--no-reel", action="store_true", help="carousels: skip the story reel")
+    p.add_argument("--music", help="story reel music: procedural, or a CC0 file in assets/music")
     p.set_defaults(func=cmd_export)
+    p = sub.add_parser("hold", help="put one post on hold (never published or exported)")
+    p.add_argument("page")
+    p.add_argument("post_id")
+    p.add_argument("reason", nargs="?", default="put on hold by the owner")
+    p.set_defaults(func=cmd_hold, release=False)
+    p = sub.add_parser("release", help="take a post off hold")
+    p.add_argument("page")
+    p.add_argument("post_id")
+    p.set_defaults(func=cmd_hold, release=True, reason=None)
     p = sub.add_parser("pronunciation-report", help="words the voice may mispronounce")
     p.add_argument("page")
     p.set_defaults(func=cmd_pronunciation_report)

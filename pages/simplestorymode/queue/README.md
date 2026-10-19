@@ -38,7 +38,11 @@ caption: |
   Words under the post (no hashtags here).
 hashtags: ["#simplestorymode", "#healing", "#feelings"]   # 3-5
 audio: voice+music              # reels only: voice+music | voice | music
+hold: "check slide 2"           # optional: on hold - never published or exported (true or a reason)
 ```
+
+`hold` can be added or removed at any time (also from the GitHub app); it does not undo an
+approval. Every carousel can also be exported as a 9:16 story reel (see the main README).
 
 Rules the gates enforce: slide text is at least 60 px with contrast of at least 7:1; every slide
 after the first uses the same size and the first is the same size or larger; the first slide has

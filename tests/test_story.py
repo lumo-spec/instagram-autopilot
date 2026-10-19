@@ -18,11 +18,15 @@ from autopilot.content.queue import (
     load_queue,
     next_for_slot,
     parse_post,
+    publishable,
     read_approval,
+    set_hold,
     structure_problems,
+    style_paragraph,
     write_approval,
 )
 from autopilot.errors import ContentError
+from autopilot.export import export_post
 from autopilot.pipeline import Request, used_post_ids
 from autopilot.rehearsal.preview import build_and_approve
 from autopilot.render.story import parse_story_text
@@ -106,6 +110,44 @@ def test_art_prompt_always_forbids_text_and_elf_ears(story: tuple[Config, Page])
     assert "No text, no letters" in prompt and "not elf ears" in prompt
     assert "olive-green long coat with gold leaf embroidery" in prompt
     assert "4:5" in prompt and "Keep the top of the picture calm" in prompt
+
+
+def test_art_prompt_starts_with_locked_watercolour_style(story: tuple[Config, Page]) -> None:
+    _, page = story
+    post, _ = parse_post(write_post(page, post_data("c01-test", n=2)))
+    assert post is not None
+    chars = yaml.safe_load((page.dir / "characters.yaml").read_text(encoding="utf-8"))
+    style = style_paragraph(chars)
+    assert style.startswith("Soft watercolour storybook illustration")
+    for word in (
+        "golden autumn light",
+        "nostalgic",
+        "cream",
+        "olive",
+        "rust",
+        "gold",
+        "brown",
+        "navy",
+        "rounded human ears",
+        "No text",
+    ):
+        assert word in style
+    for slide in post.slides:
+        assert art_prompt(post, slide, chars).startswith(style)
+    banned = (
+        "ghibli",
+        "miyazaki",
+        "disney",
+        "pixar",
+        "dreamworks",
+        "potter",
+        "studio",
+        "in the style of",
+    )
+    text = (page.dir / "characters.yaml").read_text(encoding="utf-8").lower()
+    prompts = " ".join(art_prompt(post, sl, chars) for sl in post.slides).lower()
+    assert not [b for b in banned if b in prompts]
+    assert "never name a studio" in text  # the rule is written next to the style
 
 
 # ----- composition and gates -------------------------------------------------------------------
@@ -218,6 +260,29 @@ def test_build_approves_and_detects_later_changes(
     item = load_queue(page.dir)[0][0]
     assert not item.publishable and item.approval is not None
     assert any("changed since approval" in p for p in approval_problems(item.post, item.approval))
+
+
+def test_hold_blocks_a_post_and_release_restores_it(
+    story: tuple[Config, Page], tmp_path: Path
+) -> None:
+    cfg, page = story
+    folder = write_post(page, post_data("c01-real", n=2), art="quiet")
+    build_and_approve(cfg, page, "c01-real")
+    text = (folder / "post.yaml").read_text(encoding="utf-8")
+    set_hold(folder, "check the ears on slide 2")
+    item = load_queue(page.dir)[0][0]
+    assert item.post.hold == "check the ears on slide 2"
+    assert not item.publishable and item.problems == ["on hold: check the ears on slide 2"]
+    assert publishable(load_queue(page.dir)[0], set()) == []
+    with pytest.raises(ContentError, match="on hold"):
+        export_post(cfg, page, "c01-real", tmp_path, reel=False)
+    set_hold(folder, None)  # release: the approval is still valid (the hold line is not content)
+    assert load_queue(page.dir)[0][0].publishable
+    assert (folder / "post.yaml").read_text(encoding="utf-8").strip() == text.strip()
+    (folder / "post.yaml").write_text(text + "hold: true\n", encoding="utf-8")  # by hand, too
+    assert load_queue(page.dir)[0][0].post.hold == "put on hold by the owner"
+    (folder / "post.yaml").write_text(text + "hold: [1, 2]\n", encoding="utf-8")
+    assert load_queue(page.dir)[1]  # invalid hold value: the post does not even load
 
 
 def test_build_refuses_without_art(story: tuple[Config, Page]) -> None:

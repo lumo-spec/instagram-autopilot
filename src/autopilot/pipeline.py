@@ -21,7 +21,7 @@ import yaml
 from PIL import Image
 
 from autopilot.audio.mix import mix
-from autopilot.audio.music import make_music
+from autopilot.audio.music import licence_problems, licensed_track, make_music, procedural
 from autopilot.audio.voice import Narrator, VoiceTrack, load_pronunciations
 from autopilot.config import Config, Page
 from autopilot.content.captions import HASHTAG_RE
@@ -37,7 +37,7 @@ from autopilot.content.queue import (
 )
 from autopilot.errors import AutopilotError, ContentError
 from autopilot.gates import GateReport
-from autopilot.gates.media import check_reel
+from autopilot.gates.media import check_image_file, check_reel
 from autopilot.gates.spelling import load_allowed, unknown_words
 from autopilot.gates.story import check_slides
 from autopilot.gates.visual import check_visual
@@ -51,10 +51,20 @@ from autopilot.render.story import (
     compose_slide,
     load_art,
     max_fit_px,
+    open_art,
     panel_mask,
     placeholder_art,
     story_style,
     story_text_box,
+)
+from autopilot.render.story_reel import (
+    ReelSlide,
+    SlideTiming,
+    build_slide,
+    plan_story_timing,
+    reel_settings,
+    render_story_reel,
+    text_sizes,
 )
 from autopilot.render.theme import Template, load_theme
 from autopilot.state import PageState, used_post_ids
@@ -97,6 +107,9 @@ class Composed:
     audio_mode: str = ""
     voice: str = ""
     fallback: str = ""
+    cover: Path | None = None  # story reels: the 9:16 cover image
+    music: str = ""  # story reels: "procedural" or the licensed track's file name
+    seconds: float = 0.0  # story reels: length
 
 
 @dataclass
@@ -457,6 +470,176 @@ class StoryBuilder:
                 return last
         last.fallback = "skipped"
         return last
+
+    # ----- story reels (a carousel as a 9:16 reel) -----------------------------------------
+    def story_reel_music(self, duration: float, seed: int, choice: str = "") -> tuple[Any, str]:
+        """(audio, source label): our own generated music or a licensed CC0 track by name."""
+        sr = int(self.cfg.section("audio", "sample_rate"))
+        name = choice or str(self.cfg.section("story_reel", "music"))
+        if name == "procedural":
+            lead = str(self.cfg.section("story_reel", "music_lead"))
+            return procedural(duration, sr, seed, lead), "procedural"
+        return licensed_track(name, duration, sr), name
+
+    def compose_story_reel(
+        self, post: Post, out_dir: Path, allow_placeholder: bool, music: str = ""
+    ) -> Composed:
+        """Turn a carousel into a 9:16 reel: slow zoom/pan art, words fading in, gentle music."""
+        rs = reel_settings(self.cfg)
+        st = self.style
+        report = GateReport()
+        if post.format != "carousel":
+            report.add("story-reel:format", False, "only carousels become story reels")
+            return Composed([], report, False)
+        texts = [s.text for s in post.slides]
+        try:
+            cover_px, body_px = text_sizes(texts, [s.position for s in post.slides], st, rs)
+        except ContentError as exc:
+            report.add("story-reel:text-fit", False, str(exc)[:100])
+            return Composed([], report, False)
+        words = [len(strip_markup(t).split()) for t in texts]
+        timings, duration = plan_story_timing(words, rs)
+        try:
+            slides, placeholder = self._story_reel_slides(
+                post, (cover_px, body_px), words, timings, allow_placeholder, report
+            )
+        except ContentError as exc:
+            report.add("story-reel:art-supplied", False, str(exc)[:100])
+            return Composed([], report, False)
+        if not allow_placeholder:
+            report.add(
+                "story-reel:art-supplied", not placeholder, "placeholder art is never posted"
+            )
+        seed = seed_int(f"{post.id}-story-reel")
+        source = music or str(self.cfg.section("story_reel", "music"))
+        if source != "procedural":
+            problems = licence_problems(source)
+            report.add("music:licence", not problems, "; ".join(problems) or f"{source}: CC0")
+            if problems:
+                return Composed([], report, placeholder)
+        try:
+            track, label = self.story_reel_music(duration, seed, source)
+        except AutopilotError as exc:
+            report.add("music:source", False, str(exc)[:100])
+            return Composed([], report, placeholder)
+        return self._finish_story_reel(
+            post, out_dir, slides, duration, track, label, placeholder, report
+        )
+
+    def _story_reel_slides(
+        self,
+        post: Post,
+        sizes: tuple[int, int],
+        words: list[int],
+        timings: list[SlideTiming],
+        allow_placeholder: bool,
+        report: GateReport,
+    ) -> tuple[list[ReelSlide], bool]:
+        """Lay out and gate every slide of a story reel; returns (slides, any placeholder)."""
+        rs, st, gates = reel_settings(self.cfg), self.style, self.cfg.gates
+        cover_px, body_px = sizes
+        story_gates = replace(
+            gates, min_font_px=gates.story_min_font_px, min_contrast=gates.story_min_contrast
+        )
+        slides: list[ReelSlide] = []
+        placeholder = False
+        for spec, timing, n_words in zip(post.slides, timings, words, strict=True):
+            path = post.dir / spec.art
+            if path.is_file():
+                art = open_art(path)
+            elif allow_placeholder:
+                art = placeholder_art(
+                    self._template(post), st.size, seed_int(f"{post.id}-{spec.index}")
+                )
+                placeholder = True
+            else:
+                raise ContentError(f"{spec.art} has not been supplied yet")
+            slide = build_slide(
+                spec.index,
+                art,
+                spec.text,
+                spec.position,
+                spec.focus,
+                cover_px if spec.index == 1 else body_px,
+                n_words,
+                timing,
+                st,
+                rs,
+                gates.story_min_contrast + st.contrast_margin,
+                gates.contrast_percentile,
+            )
+            slides.append(slide)
+            n = spec.index
+            for r in check_visual(slide.elements, slide.samples, rs.safe, story_gates).results:
+                report.add(f"reel-slide{n}:{r.name}", r.passed, r.detail)
+            if path.is_file():
+                up = slide.motion.upscale
+                report.add(
+                    f"reel-slide{n}:art-resolution",
+                    up <= st.max_upscale,
+                    f"art enlarged x{up:.2f}, maximum x{st.max_upscale:.2f}",
+                )
+            need = n_words / rs.words_per_second
+            shown = timing.reading_time(rs, n == len(post.slides))
+            report.add(
+                f"reel-slide{n}:reading-time",
+                shown >= need,
+                f"words fully shown {shown:.1f}s, need {need:.1f}s",
+            )
+        return slides, placeholder
+
+    def _finish_story_reel(
+        self,
+        post: Post,
+        out_dir: Path,
+        slides: list[ReelSlide],
+        duration: float,
+        track: Any,
+        label: str,
+        placeholder: bool,
+        report: GateReport,
+    ) -> Composed:
+        """Mix the music, encode the reel and cover, and run the file and audio gates."""
+        rs = reel_settings(self.cfg)
+        sr = int(self.cfg.section("audio", "sample_rate"))
+        audio = mix(
+            None,
+            track,
+            sr,
+            duration,
+            float(self.cfg.section("audio", "duck_db")),
+            float(self.cfg.section("audio", "target_lufs")),
+        )
+        out = out_dir / f"{post.id}-story-reel.mp4"
+        cover = out_dir / f"{post.id}-story-reel-cover.jpg"
+        try:
+            render_story_reel(
+                slides,
+                duration,
+                audio,
+                sr,
+                rs,
+                out,
+                cover,
+                int(self.cfg.section("render", "jpeg_quality")),
+            )
+        except AutopilotError as exc:
+            report.add("render", False, str(exc)[:80])
+            return Composed([], report, placeholder)
+        report.extend(check_reel(out, self.cfg, "music", None, [], [], rs.allowed_seconds))
+        size = (int(rs.size[0]), int(rs.size[1]))
+        cover_report = check_image_file(cover, self.cfg, size)
+        for r in cover_report.results:
+            report.add(f"cover:{r.name}", r.passed, r.detail)
+        return Composed(
+            [out],
+            report,
+            placeholder,
+            audio_mode="music",
+            cover=cover,
+            music=label,
+            seconds=duration,
+        )
 
     # ----- whole post ---------------------------------------------------------------------
     def compose(

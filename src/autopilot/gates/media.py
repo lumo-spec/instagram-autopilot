@@ -21,10 +21,10 @@ from autopilot.gates import GateReport
 FRAME_S = 0.01
 
 
-def check_image_file(path: Path, cfg: Config) -> GateReport:
-    """JPEG, exact size, RGB, within Instagram's file-size limit."""
+def check_image_file(path: Path, cfg: Config, expect: tuple[int, int] | None = None) -> GateReport:
+    """JPEG, exact size (default ``render.image_size``), RGB, within the file-size limit."""
     report = GateReport()
-    size = tuple(int(v) for v in cfg.section("render", "image_size"))
+    size = expect or tuple(int(v) for v in cfg.section("render", "image_size"))
     limit = int(cfg.section("limits", "image_max_bytes"))
     with Image.open(path) as img:
         report.add("image:format", img.format == "JPEG", str(img.format))
@@ -45,8 +45,13 @@ def decode_audio(path: Path) -> tuple[dsp.Audio, int]:
     return data, sr
 
 
-def probe_reel(path: Path, cfg: Config) -> tuple[GateReport, float, float]:
-    """Check container/codec specs; returns the report and video/audio durations (s)."""
+def probe_reel(
+    path: Path, cfg: Config, seconds: tuple[float, float] | None = None
+) -> tuple[GateReport, float, float]:
+    """Check container/codec specs; returns the report and video/audio durations (s).
+
+    ``seconds`` overrides the allowed duration range (default ``render.reel_seconds``).
+    """
     report = GateReport()
     w, h = (int(v) for v in cfg.section("render", "reel_size"))
     fps = int(cfg.section("render", "fps"))
@@ -69,7 +74,7 @@ def probe_reel(path: Path, cfg: Config) -> tuple[GateReport, float, float]:
             report.add("reel:audio-rate", int(a.rate) <= 48000, str(a.rate))
         data, sr = decode_audio(path)
         audio_s = len(data) / sr
-    lo, hi = (float(x) for x in cfg.section("render", "reel_seconds"))
+    lo, hi = seconds or tuple(float(x) for x in cfg.section("render", "reel_seconds"))
     report.add("reel:duration", lo - 0.05 <= video_s <= hi + 0.05, f"{video_s:.2f}s")
     nbytes = path.stat().st_size
     report.add(
@@ -92,10 +97,11 @@ def check_reel(
     voice: VoiceTrack | None,
     reveal_times: list[float],
     spoken_starts: list[float | None],
+    seconds: tuple[float, float] | None = None,
 ) -> GateReport:
     """All reel gates: specs, A/V duration, loudness/peaks and (if narrated) voice gates."""
     g = cfg.gates
-    report, video_s, audio_s = probe_reel(path, cfg)
+    report, video_s, audio_s = probe_reel(path, cfg, seconds)
     report.add(
         "reel:av-duration",
         abs(video_s - audio_s) <= g.av_duration_tolerance_s,

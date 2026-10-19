@@ -10,8 +10,14 @@ the owner's decisions below override it where they differ.
   belonging, everyday happiness. Science and the old "Wisdom" page are gone.
 - The old quote bank (367 originals + 81 public-domain quotes) is archived in
   `pages/simplestorymode/archive/` and is **never postable** (every entry `status: archived`).
-- Formats: connected **carousels** (priority), **single images**; reels later and lower priority.
+- Formats: connected **carousels** (priority), **single images**; every carousel can also be
+  exported as a **story reel** (9:16, slow zoom/pan, words fade in, gentle music; see below).
+  Narrated reels later and lower priority.
 - The owner supplies **text-free art**; the system writes and places all words.
+- **Art style LOCKED (owner, 2026-10-19): soft watercolour storybook**, warm golden autumn
+  light, nostalgic, painterly, cream/olive/rust/gold/brown/navy, human ears only, no text.
+  The paragraph lives in `characters.yaml` → `style.paragraph`; every art prompt starts with
+  it and the review page shows it ready to paste. Never name a studio or an artist in prompts.
 - **Posting mode (owner decision 2026-10-19): manual.** No Meta developer app and no tokens for
   now. Per-post approval stays (`Build`). The owner posts with `Export <post-id>` and schedules
   by hand in Meta Business Suite (README guide). All automatic publishing and schedules stay
@@ -56,6 +62,7 @@ the owner's decisions below override it where they differ.
 | 1b | Pivot to Simple Story Mode: rename, archive, characters, story slide composer, carousel + queue + approval, carousel publishing (fake-tested), weekday cadence, queue alerts, first batch of 24 drafts | **Done (2026-10-18) — waiting for owner review** |
 | 2 | GitHub Actions workflows (ci, _pipeline, post-now, autopilot, maintenance, rehearsal — **no schedules**), media hosting on `media` (raw at commit SHA; GitHub Pages for reels), state/record job, alerts as issues, status page, token renewal (sealed hand-off), `audit_workflows.py`, `repo_settings.py`, `privacy_check.py`, `check_licenses.py`, hashed requirements, harden-runner (audit mode) | **Built + tested locally against fakes (2026-10-18)**; repo settings: see HANDOVER |
 | 2b | Manual posting: `export` command (finished slides in order, `caption.txt`, `NOTES.txt` with AI-label advice and suggested time) + README "How to schedule in Meta Business Suite" | **Done (2026-10-19)** |
+| 2c | Locked watercolour art style in every prompt; story reels (carousel → 9:16 reel, piano-like generated music or a CC0 track) in Export; per-post hold; `send-posts.ps1` (one command per batch) | **Done (2026-10-19)**; approval removal blocked (see below) |
 | 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | **Paused (owner, 2026-10-19)** — only the Professional account + 2FA is needed for manual posting |
 | 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | **Paused** |
 
@@ -91,12 +98,22 @@ the owner's decisions below override it where they differ.
   `application/octet-stream` → reels are hosted via GitHub Pages from the `media` branch.
 - **Not verified live yet:** anything that talks to GitHub Actions or Instagram for real.
 
-### Approval policy (settled 2026-10-19)
-On 2026-10-18 the owner asked to drop per-post approval and auto-publish. The code change was
-blocked by Claude Code's permission system and never made. On 2026-10-19 the owner withdrew the
-request: **keep per-post approval** and post manually. `Build <post-id>` (run by Claude after
-looking at the art) composes, gates and writes `approved.json`. Only approved, unchanged posts
-can be exported (or, later, published).
+### Approval policy (open again, 2026-10-19)
+History: 2026-10-18 the owner asked to drop per-post approval (blocked by Claude Code's
+permission check, not made). Earlier on 2026-10-19 the owner withdrew it (manual posting, keep
+approval). **Later on 2026-10-19 the owner asked again, in writing, accepting that nobody
+reviews the art before it posts:** eligible = all art present + every automated check passes;
+re-check at publish time; failures skipped with an alert; keep per-post hold and the global
+pause; publishing and schedules stay OFF until the live tests. Claude Code's permission check
+**blocked the change again** ("security weaken"), even as a local commit, so nothing changed:
+`Build <post-id>` still writes `approved.json` and only approved, unchanged posts can be
+exported or published. Hold (`hold:` in `post.yaml`) was added on top. To make the change the
+owner must allow it in Claude Code (a permission rule), then re-implement: `QueuedPost.eligible`
+= no hold + no missing art; `eligible()`/`candidates_for_slot()` replace `publishable()`;
+`StoryBuilder.build` tries up to 3 eligible posts per slot, skipping ones that fail their
+checks (`BuildResult.failed` → one alert per failed post, resolved when it publishes); `Build`
+becomes a check that writes no approval; Export needs eligibility only; remove `approved.json`
+and the approval-changed alert; update tests, README and this file.
 
 ### Stage 2b evidence (2026-10-19, Windows)
 - `tests/test_export.py` (4 tests): carousel export → `01.jpg`..`03.jpg` at 1080×1350,
@@ -110,6 +127,28 @@ can be exported (or, later, published).
   illustrations it is optional, and we switch it on anyway. Business Suite help pages are
   JavaScript-only, so button names come from Meta's page titles and recent guides: **not
   checked by hand**.
+
+### Stage 2c evidence (2026-10-19, Windows): art style, story reels, hold, send-posts
+- Story reel (`render/story_reel.py`, `StoryBuilder.compose_story_reel`): every carousel slide's
+  full-height art, cropped to 9:16, with alternating zoom-in / pan right / zoom-out / pan left;
+  words + cream panel fade in after 0.4 s; 0.6 s cross-fades; text in the reel safe zone (top
+  14 %, bottom 35 %, sides 8 %); one text size (≥ 60 px), contrast ≥ 7:1 checked on 3 frames
+  per slide (the art moves); reading time ≥ words ÷ 3.3 per second (about 200 words a minute);
+  length aimed at 20-30 s, gate 8-45 s. Music: procedural pad + piano-like additive notes
+  (`audio/music.py`, `lead="piano"`), or a named CC0 track in `assets/music/` with a complete
+  `licences.json` record (title, creator, https source, CC0-1.0, sha256). Gates: H.264,
+  1080×1920, 30 fps, yuv420p, AAC ≤ 48 kHz, A/V length, −15…−13 LUFS, true peak ≤ −1 dBTP,
+  cover JPEG 1080×1920, art enlargement ≤ 1.6×. Export adds `story-reel.mp4` +
+  `story-reel-cover.jpg` for carousels. A failing reel never blocks the carousel; NOTES says
+  why.
+- Trial render (5 slides incl. busy noise art): 45/45 gates pass, 27 s, −14.0 LUFS, about 85 s
+  to render. Frames inspected by eye: fade-in, panel and positions as designed. c01 would be
+  about 37 s and c02 about 33 s (their slides are wordy; reading time wins over the 30 s target).
+- Not wired into automatic publishing (publishing is off; would need a `story-reel` slot format
+  that reuses carousel posts).
+- **Generated music not judged by ear** (Claude cannot listen). The owner must listen to the
+  first story reel and decide whether a recorded CC0 piano/flute track is needed.
+- `scripts/send-posts.ps1`: parse-checked only, **not run yet** (it pushes and opens a PR).
 
 ### Waiting on the owner
 1. Review the 24 drafts (text, captions, art briefs): `rehearsal-output/queue-preview/index.html`.
@@ -217,10 +256,28 @@ narration fallbacks: second voice → music-only → skip + alert.
    `APPROVED`); otherwise tell the owner to run Build first.
 2. Run `python -m autopilot export simplestorymode <post-id>`. It composes the slides again
    from the approved art, re-runs every gate, and writes `exports/<post-id>/` (git-ignored):
-   `01.jpg`, `02.jpg`, ... (or `reel.mp4`), `caption.txt` and `NOTES.txt`. Nothing is uploaded.
+   `01.jpg`, `02.jpg`, ... (or `reel.mp4`), `caption.txt` and `NOTES.txt`; for carousels also
+   `story-reel.mp4` + `story-reel-cover.jpg` (about a minute to render; `--no-reel` skips it,
+   `--music <file>` uses a licensed CC0 track from `assets/music/`). Nothing is uploaded.
 3. Tell the owner the folder path, the file order, whether the AI label is needed (from
-   `NOTES.txt`) and the suggested time, and point them to the README guide "How to schedule in
-   Meta Business Suite". Never copy exported files into tracked folders.
+   `NOTES.txt`), the suggested time, and whether the story reel was made (and if not, why),
+   and point them to the README guide "How to schedule in Meta Business Suite". Never copy
+   exported files into tracked folders.
+
+## Procedure: "Hold <post-id>" / "Release <post-id>"
+`python -m autopilot hold simplestorymode <post-id> "<reason>"` adds `hold: "<reason>"` to
+`post.yaml`; `release` removes it. A held post is never published or exported (approved or
+not); hold/release does not invalidate an approval (the hold line is excluded from the hash).
+The global pause stays the repository variable `PUBLISHING_ENABLED` (and disabling the
+Autopilot workflow).
+
+## Procedure: getting new art onto GitHub
+Owner, in their own PowerShell window, once per batch (after Build):
+`powershell -ExecutionPolicy Bypass -File .\scripts\send-posts.ps1` (or `-DryRun` first). It
+pulls main, runs the privacy check and `validate`, sends only `post.yaml` / `approved.json` /
+`art-NN.*` under `pages/*/queue/*/` on a `posts-<time>` branch as a PR with auto-merge (squash)
+after the required checks, waits, then returns to an up-to-date main. Claude cannot merge PRs
+itself (Claude Code's permission check refuses "merge without review").
 
 ## Spec vs current official docs (checked 2026-10-18) and other deliberate differences
 | Topic | Spec says | Current docs / decision |
@@ -297,7 +354,9 @@ Mode: **manual posting** (see Scope). Stage 2 is pushed, repo settings applied, 
 1. Owner: review the drafts, make art → `Build <post-id>` → `Export <post-id>` → schedule in
    Meta Business Suite (README). Professional account + 2FA: done (owner, 2026-10-19);
    connecting it to Business Suite happens the first time the owner schedules. Next: c01 art →
-   `Build c01-you-can-miss` (look at every picture first) → `Export c01-you-can-miss`.
-2. Only if the owner asks to return to automatic posting: stage 3 setup (Meta app, tokens via
+   `Build c01-you-can-miss` (look at every picture first) → `Export c01-you-can-miss` (with its
+   story reel) → owner listens to the generated music → `send-posts.ps1`.
+2. Approval removal: waiting for the owner to allow it in Claude Code (see "Approval policy").
+3. Only if the owner asks to return to automatic posting: stage 3 setup (Meta app, tokens via
    `scripts/set-token.ps1` / `scripts/set-renewal-key.ps1` in the owner's own PowerShell),
    then stage 4 live tests, then schedules.
