@@ -34,6 +34,8 @@ models/
 out/
 output/
 rehearsal-output/
+# Finished posts exported for posting by hand (python -m autopilot export)
+exports/
 *.mp4
 *.mov
 *.wav

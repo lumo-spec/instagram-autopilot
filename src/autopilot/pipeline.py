@@ -186,6 +186,15 @@ class StoryBuilder:
             if i.post.id != post.id and " ".join(i.post.caption.lower().split()) == mine
         ]
 
+    def ai_label_reasons(self, post: Post, composed: Composed) -> list[str]:
+        """Why the post needs Instagram's AI label (empty when it does not)."""
+        reasons = []
+        if self.page.ai_generated_art and (post.format != "reel" or not composed.placeholder):
+            reasons.append("the illustrations are AI-generated")
+        if "voice" in composed.audio_mode:
+            reasons.append("the voiceover is AI-generated")
+        return reasons
+
     def text_gates(self, post: Post, caption: Caption) -> GateReport:
         """Spelling, lengths, hashtags and structure (no rendering needed)."""
         report = GateReport()
@@ -522,10 +531,6 @@ class StoryBuilder:
         ):
             urls.append(self.hosting.host(self.page.name, name, path))
         disc = self.cfg.section("ai_disclosure")
-        narrated = "voice" in composed.audio_mode
-        uses_art = self.page.ai_generated_art and (
-            post.format != "reel" or not composed.placeholder
-        )
         result.manifest = Manifest(
             page=self.page.name,
             slot_key=key,
@@ -537,7 +542,7 @@ class StoryBuilder:
             caption=caption.text,
             hashtags=caption.hashtags,
             media_urls=tuple(urls),
-            ai_generated=bool(disc["api_flag"]) and (narrated or uses_art),
+            ai_generated=bool(disc["api_flag"]) and bool(self.ai_label_reasons(post, composed)),
         )
         result.media_paths, result.fallback = composed.paths, composed.fallback
         return result

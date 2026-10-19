@@ -1,6 +1,6 @@
 """Command line: ``python -m autopilot <command>``.
 
-Local commands: validate, queue, preview, build, rehearse, pronunciation-report.
+Local commands: validate, queue, preview, build, export, rehearse, pronunciation-report.
 The GitHub Actions jobs (plan, build, host, publish, record, renew, ...) live in
 ``python -m autopilot.jobs``.
 """
@@ -108,6 +108,26 @@ def cmd_build(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_export(args: argparse.Namespace) -> int:
+    """``Export <post-id>``: finished files + caption + notes for posting by hand."""
+    from autopilot.export import NOTES, export_post
+
+    cfg = load_config()
+    page = cfg.page(args.page)
+    out = Path(args.out) if args.out else ROOT / "exports"
+    try:
+        result = export_post(cfg, page, args.post_id, out)
+    except AutopilotError as exc:
+        print(f"NOT EXPORTED: {exc}")
+        return 1
+    print(f"EXPORTED {args.post_id} -> {result.folder}")
+    print(f"  files in order: {', '.join(result.media)}")
+    label = "YES (" + "; ".join(result.ai_label) + ")" if result.ai_label else "not needed"
+    print(f"  AI label: {label}")
+    print(f"  read {result.folder / NOTES} before posting")
+    return 0
+
+
 def cmd_pronunciation_report(args: argparse.Namespace) -> int:
     """List non-dictionary words in reel narrations that are neither overridden nor waived."""
     import yaml
@@ -179,6 +199,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("page")
     p.add_argument("post_id")
     p.set_defaults(func=cmd_build)
+    p = sub.add_parser("export", help="write an approved post's files for posting by hand")
+    p.add_argument("page")
+    p.add_argument("post_id")
+    p.add_argument("--out", help="parent folder (default: exports/)")
+    p.set_defaults(func=cmd_export)
     p = sub.add_parser("pronunciation-report", help="words the voice may mispronounce")
     p.add_argument("page")
     p.set_defaults(func=cmd_pronunciation_report)
