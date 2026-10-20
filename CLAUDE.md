@@ -79,6 +79,7 @@ the owner's decisions below override it where they differ.
   in Meta's own example), `is_ai_generated` allowed on the container, not on children.
 - Renewal key is not needed for publishing (only `renew-*` jobs use `GH_SECRETS_PAT`); token
   lasts 60 days and can be refreshed once ≥ 24 h old → set it within ~6 weeks.
+| 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | Authorised by the owner; **blocked on art** (no post has art yet) and on stage 3 |
 
 ### Stage 1b evidence (2026-10-18, Windows 10, Python 3.12.15)
 - `pytest` (incl. slow) → 198 tests pass, coverage 92 %; `ruff check`, `ruff format --check`,
@@ -377,6 +378,10 @@ Mode: **moving to automatic posting** (see Scope); manual until the live tests p
    set": check the Maintenance `token-set` run, set repo variable `PUBLISHING_ENABLED=true`,
    then the owner runs Post now with `c01-you-can-miss`; record the result in HANDOVER.
    Renewal PAT (step H) after that, within ~6 weeks.
+1. Stage 3, one step at a time with the owner (README "Connecting Instagram" steps 1-7): Meta
+   developer account → app (Other / Business) → Instagram product → tester → Generate token →
+   `set-token.ps1` → renewal PAT + `set-renewal-key.ps1`. When the owner says "token set":
+   check the Maintenance `token-set` run, set repo variable `PUBLISHING_ENABLED=true`.
 2. Art (owner): no post has art yet. Live tests need at least one single image (`i01`...), one
    carousel (c01 is in progress) and art for a reel test. Then `Build` each (look at every
    picture first) → live tests via Post now → token renewal test → schedule (owner authorised).

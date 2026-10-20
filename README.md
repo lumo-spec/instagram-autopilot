@@ -239,6 +239,38 @@ missing, look for the closest match and tell Claude Code what you see.
   `powershell -ExecutionPolicy Bypass -File .\scripts\set-renewal-key.ps1`.
 - **I. Before the schedule goes on:** live tests for one single image and one reel via Post now,
   one token renewal (needs H), egress block mode. Only then is the weekly schedule switched on.
+You asked on 19 Oct 2026 to go back to automatic posting. Until every step below is done and the
+live tests pass, nothing is posted automatically and you keep scheduling by hand. Do the steps
+in order; each one is small. Checked against Meta's developer docs on 19 Oct 2026; Meta renames
+buttons often, so if one is missing, look for the closest match and tell Claude Code.
+
+1. **Meta developer account.** Go to <https://developers.facebook.com/>, log in with the Facebook
+   account that manages @simplestorymode (or any of yours) and click **Get started** if you have
+   never used it. Confirm your e-mail/phone if asked.
+2. **Create the app.** <https://developers.facebook.com/apps> → **Create App** → use case
+   **Other** → app type **Business** → app name `simplestorymode-autopilot` and your contact
+   e-mail → **Create app**. Leave the app in *Development* mode; no App Review is needed to post
+   to your own account.
+3. **Add Instagram.** In the app dashboard find the **Instagram** product → **Set up**. This adds
+   **API setup with Instagram login**.
+4. **Add @simplestorymode as a tester.** **App roles → Roles → Add people → Instagram Tester**,
+   type `simplestorymode`. Then in the Instagram app (or instagram.com) on @simplestorymode:
+   **Settings → Website permissions / Apps and websites → Tester invites → Accept**.
+5. **Generate the token.** **Instagram → API setup with Instagram login → Generate access
+   tokens → Add account**, log in as @simplestorymode, allow the permissions, then **Generate
+   token** next to the account. Tick "I understand", **Copy**. This token lasts 60 days; the
+   weekly renewal job keeps it fresh. Do not paste it anywhere except the next step.
+6. **Store the token** in your own PowerShell window:
+   `cd D:\Projects\instagram-autopilot` then `.\scripts\set-token.ps1`. Paste at the hidden
+   prompt; it shows the account name (it must be @simplestorymode), type `yes`. It looks up the
+   account ID itself and stores both secrets encrypted in GitHub.
+7. **Renewal key.** <https://github.com/settings/personal-access-tokens/new>: name
+   `ig-token-renewal`, expiration 1 year, repository access *Only select repositories* →
+   `lumo-spec/instagram-autopilot`, permission **Environments: Read and write** (nothing else) →
+   **Generate**, copy, then run `.\scripts\set-renewal-key.ps1` in your own PowerShell window.
+8. **Tell Claude Code "token set".** It switches on `PUBLISHING_ENABLED` and runs the live tests
+   (one image, one carousel, one reel via Post now; one token renewal). These need posts with
+   finished art. Only after they pass is the schedule switched on.
 
 Never paste a token or key into a chat, an issue or a file.
 
