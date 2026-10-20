@@ -18,11 +18,14 @@ the owner's decisions below override it where they differ.
   light, nostalgic, painterly, cream/olive/rust/gold/brown/navy, human ears only, no text.
   The paragraph lives in `characters.yaml` → `style.paragraph`; every art prompt starts with
   it and the review page shows it ready to paste. Never name a studio or an artist in prompts.
-- **Posting mode (owner decision 2026-10-19): manual.** No Meta developer app and no tokens for
-  now. Per-post approval stays (`Build`). The owner posts with `Export <post-id>` and schedules
-  by hand in Meta Business Suite (README guide). All automatic publishing and schedules stay
-  OFF. The stage 2 automation code stays in the repo, unused, for later. This replaces the
-  owner's 2026-10-18 request to drop per-post approval and auto-publish.
+- **Posting mode (owner decision, late 2026-10-19): return to automatic posting.** The owner
+  asked to continue towards automatic publishing and authorised in writing: publishing without
+  per-post approval, the live tests, and enabling the schedule after the live tests pass. Stage 3
+  (Meta app, token, renewal key) is resumed; README "Connecting Instagram" is the step-by-step
+  guide. Until the live tests pass, posting stays manual (`Export` + Meta Business Suite) and
+  per-post approval (`Build`) stays in the code (Claude Code's permission check blocked its
+  removal a third time; see "Approval policy"). This replaces the earlier 2026-10-19 manual-mode
+  decision.
 - **Only owner-approved queue items are published** (or exported). Empty queue → skip the slot
   and alert.
   Never post filler. Alert when fewer than 5 approved posts remain.
@@ -46,8 +49,8 @@ the owner's decisions below override it where they differ.
   Never put the owner's face or any generated video of them in the repo.
 - Never ask the owner to paste a password, token or API key into chat. Secrets are typed by the
   owner at a hidden prompt in their own terminal.
-- **No Meta app, tokens, `PUBLISHING_ENABLED` or schedules** while manual mode is in force; do
-  not suggest setting them up unless the owner asks to return to automatic posting.
+- **`PUBLISHING_ENABLED` and schedules** only after the token is set (owner, `set-token.ps1`);
+  `PUBLISHING_ENABLED=true` is needed for the live tests, the schedule only after they pass.
 - **All schedules stay OFF** until the owner approves after the samples review AND the live tests
   (one image, one carousel, one reel via Post now, one token renewal). Do not create/enable the
   `autopilot.yml` schedule before that.
@@ -67,8 +70,8 @@ the owner's decisions below override it where they differ.
 | 2b | Manual posting: `export` command (finished slides in order, `caption.txt`, `NOTES.txt` with AI-label advice and suggested time) + README "How to schedule in Meta Business Suite" | **Done (2026-10-19)** |
 | 2c | Locked watercolour art style in every prompt; story reels (carousel → 9:16 reel, piano-like generated music or a CC0 track) in Export; per-post hold; `send-posts.ps1` (one command per batch) | **Done (2026-10-19)**; approval removal blocked (see below) |
 | 2d | Automatic art: `generate-art` (Gemini Nano Banana Pro with the character sheets as references; OpenAI swappable), vision check per picture (ears / text / character match, 3 redraws, then skip + alert e-mail), `art-check.json` fingerprints enforced by Build, monthly cost cap (£10), `art-key-check`, `set-image-key.ps1` | **Built + tested with fakes (2026-10-19)**; no real API call yet (needs the owner's key) |
-| 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | **Paused (owner, 2026-10-19)** — only the Professional account + 2FA is needed for manual posting |
-| 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | **Paused** |
+| 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | **Resumed (owner, late 2026-10-19).** Professional account + 2FA done; `set-token.ps1` now takes the token once and looks up the user ID itself (parse-checked, **not run yet**); next: owner creates the Meta app (README "Connecting Instagram" step 1) |
+| 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | Authorised by the owner; **blocked on art** (no post has art yet) and on stage 3 |
 
 ### Stage 1b evidence (2026-10-18, Windows 10, Python 3.12.15)
 - `pytest` (incl. slow) → 198 tests pass, coverage 92 %; `ruff check`, `ruff format --check`,
@@ -118,6 +121,11 @@ owner must allow it in Claude Code (a permission rule), then re-implement: `Queu
 checks (`BuildResult.failed` → one alert per failed post, resolved when it publishes); `Build`
 becomes a check that writes no approval; Export needs eligibility only; remove `approved.json`
 and the approval-changed alert; update tests, README and this file.
+**Third attempt (late 2026-10-19, owner authorised it again with live tests + schedule):** the
+`queue.py` and `pipeline.py` parts went through, but the auto-mode classifier denied the step
+that removes the approval requirement from Export/Build ("judged this action dangerous"). The
+partial edits were reverted (nothing committed). Do not retry without the owner's permission
+rule; a design-identical re-implementation is ready to apply once it is allowed.
 
 ### Stage 2b evidence (2026-10-19, Windows)
 - `tests/test_export.py` (4 tests): carousel export → `01.jpg`..`03.jpg` at 1080×1350,
@@ -394,16 +402,16 @@ Order agreed with the owner:
 - Before every commit/push: `python scripts/privacy_check.py`.
 
 ## Remaining work (next session starts here)
-Mode: **manual posting** (see Scope). Stage 2 is pushed, repo settings applied, CI green.
-1. Owner: review the drafts, make art → `Build <post-id>` → `Export <post-id>` → schedule in
-   Meta Business Suite (README). Professional account + 2FA: done (owner, 2026-10-19);
-   connecting it to Business Suite happens the first time the owner schedules. Next: c01 art →
-   `Build c01-you-can-miss` (look at every picture first) → `Export c01-you-can-miss` (with its
-   story reel) → owner listens to the generated music → `send-posts.ps1`.
-   Automatic art (stage 2d, separate PR): once the owner has a Gemini key (`set-image-key.ps1`),
-   `Generate art c01-you-can-miss` can replace drawing c01 by hand. It must not delay the
-   Instagram connection work.
-2. Approval removal: waiting for the owner to allow it in Claude Code (see "Approval policy").
-3. Only if the owner asks to return to automatic posting: stage 3 setup (Meta app, tokens via
-   `scripts/set-token.ps1` / `scripts/set-renewal-key.ps1` in the owner's own PowerShell),
-   then stage 4 live tests, then schedules.
+Mode: **moving to automatic posting** (see Scope); manual until the live tests pass.
+1. Stage 3, one step at a time with the owner (README "Connecting Instagram" steps 1-7): Meta
+   developer account → app (Other / Business) → Instagram product → tester → Generate token →
+   `set-token.ps1` → renewal PAT + `set-renewal-key.ps1`. When the owner says "token set":
+   check the Maintenance `token-set` run, set repo variable `PUBLISHING_ENABLED=true`.
+2. Art (owner): no post has art yet. Live tests need at least one single image (`i01`...), one
+   carousel (c01 is in progress) and art for a reel test. Then `Build` each (look at every
+   picture first) → live tests via Post now → token renewal test → schedule (owner authorised).
+   Note: no `r..` reel post exists in the queue; the reel live test needs one (or a `story-reel`
+   slot format, not built yet).
+   Automatic art (stage 2d, PR #7): once the owner has a Gemini key (`set-image-key.ps1`),
+   `Generate art c01-you-can-miss` can replace drawing by hand. It must not delay stage 3.
+3. Approval removal: waiting for the owner to allow it in Claude Code (see "Approval policy").
