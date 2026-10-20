@@ -43,7 +43,7 @@ from autopilot.config import Config, Page
 from autopilot.content.queue import find_post, input_hashes, set_hold, write_approval
 from autopilot.errors import ArtError, BudgetError, ConfigError, ContentError
 from autopilot.rehearsal.preview import build_and_approve
-from story_helpers import make_art, post_data, write_post
+from story_helpers import make_art, post_data, unillustrated_carousel, write_post
 
 KEY = "fake-test-key"
 LONDON = ZoneInfo("Europe/London")
@@ -504,29 +504,30 @@ def test_settings_and_keys(
 def test_cli_fake_rehearsal_never_touches_the_real_queue(
     tmp_path: Path, capsys: pytest.CaptureFixture[str], cfg: Config
 ) -> None:
-    real = cfg.page("simplestorymode").dir / "queue" / "c01-you-can-miss"
+    pid, n = unillustrated_carousel(cfg.page("simplestorymode"))
+    real = cfg.page("simplestorymode").dir / "queue" / pid
     before = sorted(p.name for p in real.iterdir())
     out = tmp_path / "rehearsal"
-    assert (
-        main(["generate-art", "simplestorymode", "c01-you-can-miss", "--fake", "--out", str(out)])
-        == 0
-    )
+    assert main(["generate-art", "simplestorymode", pid, "--fake", "--out", str(out)]) == 0
     text = capsys.readouterr().out
-    assert "c01-you-can-miss: DONE" in text
-    copy = out / "page" / "queue" / "c01-you-can-miss"
+    assert f"{pid}: DONE" in text
+    copy = out / "page" / "queue" / pid
     assert sorted(p.name for p in copy.glob("art-*.png")) == [
-        f"art-{n:02d}.png" for n in range(1, 7)
+        f"art-{i:02d}.png" for i in range(1, n + 1)
     ]
     assert (copy / "art-check.json").is_file()
     assert (out / "preview" / "index.html").is_file()
     assert sorted(p.name for p in real.iterdir()) == before
 
 
-def test_cli_dry_run_shows_prompts_and_cost(capsys: pytest.CaptureFixture[str]) -> None:
-    assert main(["generate-art", "simplestorymode", "c01-you-can-miss", "--dry-run"]) == 0
+def test_cli_dry_run_shows_prompts_and_cost(
+    capsys: pytest.CaptureFixture[str], cfg: Config
+) -> None:
+    pid, n = unillustrated_carousel(cfg.page("simplestorymode"))
+    assert main(["generate-art", "simplestorymode", pid, "--dry-run"]) == 0
     text = capsys.readouterr().out
-    assert text.count("--- c01-you-can-miss art-") == 6
-    assert "6 pictures to draw" in text and "Nothing was sent" in text
+    assert text.count(f"--- {pid} art-") == n
+    assert f"{n} pictures to draw" in text and "Nothing was sent" in text
     assert main(["generate-art", "simplestorymode"]) == 2  # no post named
 
 
