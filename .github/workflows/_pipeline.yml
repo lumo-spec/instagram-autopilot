@@ -17,6 +17,14 @@ on:
       post_id:
         type: string
         default: ""
+    # Environment secrets reach a called workflow only when the caller passes them by name
+    # (otherwise they are silently empty); `required` makes a missing pass fail loudly. They
+    # resolve only in the publish job, which runs in the page's environment.
+    secrets:
+      IG_ACCESS_TOKEN:
+        required: true
+      IG_USER_ID:
+        required: true
 
 permissions: {}
 

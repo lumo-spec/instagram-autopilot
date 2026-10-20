@@ -106,6 +106,51 @@ def test_unsafe_patterns_fail(tmp_path: Path, change, expected: str) -> None:  #
     assert any(expected in p for p in problems), problems
 
 
+def caller_job(**secrets: str) -> dict[str, object]:
+    return {
+        "uses": "./.github/workflows/_pipeline.yml",
+        "permissions": {"contents": "write", "issues": "write"},
+        "with": {"page": "simplestorymode"},
+        "secrets": secrets,
+    }
+
+
+def test_pipeline_caller_may_pass_page_secrets_by_name(tmp_path: Path) -> None:
+    job = caller_job(
+        IG_ACCESS_TOKEN="${{ secrets.IG_ACCESS_TOKEN }}", IG_USER_ID="${{ secrets.IG_USER_ID }}"
+    )
+    assert audit_workflows.audit(write(tmp_path, base(post=job)), False) == []
+
+
+@pytest.mark.parametrize(
+    "secrets",
+    [
+        {"GH_SECRETS_PAT": "${{ secrets.GH_SECRETS_PAT }}"},  # not a page secret
+        {"IG_ACCESS_TOKEN": "${{ secrets.GH_SECRETS_PAT }}"},  # renamed on the way
+        {"IG_ACCESS_TOKEN": "${{ toJSON(secrets) }}"},
+    ],
+)
+def test_pipeline_caller_may_not_pass_other_secrets(
+    tmp_path: Path, secrets: dict[str, str]
+) -> None:
+    problems = audit_workflows.audit(write(tmp_path, base(post=caller_job(**secrets))), False)
+    assert problems, secrets
+
+
+def test_only_the_pipeline_may_receive_secrets(tmp_path: Path) -> None:
+    job = caller_job(IG_ACCESS_TOKEN="${{ secrets.IG_ACCESS_TOKEN }}")
+    job["uses"] = "./.github/workflows/other.yml"
+    problems = audit_workflows.audit(write(tmp_path, base(post=job)), False)
+    assert any("may not pass secret IG_ACCESS_TOKEN" in p for p in problems), problems
+
+
+def test_secrets_inherit_still_fails(tmp_path: Path) -> None:
+    job = caller_job()
+    job["secrets"] = "inherit"
+    problems = audit_workflows.audit(write(tmp_path, base(post=job)), False)
+    assert any("passes all secrets" in p for p in problems), problems
+
+
 def test_secret_jobs_install_only_minimal_hashed_requirements(tmp_path: Path) -> None:
     env_job = good_job(
         environment="page-simplestorymode",

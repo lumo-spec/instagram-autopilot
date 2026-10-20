@@ -59,3 +59,6 @@ jobs:
       page: ${{ matrix.slot.page }}
       slot_key: ${{ matrix.slot.slot_key }}
       format: ${{ matrix.slot.format }}
+    secrets: # by name only, never `inherit`; see _pipeline.yml
+      IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
