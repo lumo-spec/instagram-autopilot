@@ -24,6 +24,30 @@
    "status": "failed",
    "template": "art",
    "text": ""
+  },
+  {
+   "audio_mode": "",
+   "container_id": "",
+   "content_id": "c01-you-can-miss",
+   "date": "2026-10-20",
+   "fallback": "",
+   "format": "carousel",
+   "hashtags": [
+    "#simplestorymode",
+    "#healing",
+    "#lettinggo",
+    "#heartbreak",
+    "#feelings"
+   ],
+   "media_id": "",
+   "permalink": "",
+   "recorded_at": "2026-10-20T16:07+01:00",
+   "slides": 6,
+   "slot": "now160459",
+   "slot_key": "simplestorymode-2026-10-20-now160459",
+   "status": "failed",
+   "template": "art",
+   "text": ""
   }
  ],
  "token": {
