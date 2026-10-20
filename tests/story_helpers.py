@@ -13,6 +13,7 @@ import yaml
 from PIL import Image
 
 from autopilot.config import Config, Page
+from autopilot.content.queue import load_queue
 from autopilot.pipeline import StoryBuilder
 from autopilot.rehearsal.fakes import LocalHosting
 
@@ -23,6 +24,23 @@ PAGE_FILES = (
     "characters.yaml",
     "pronunciations.yaml",
 )
+
+
+def unillustrated_carousel(page: Page) -> tuple[str, int]:
+    """(id, slide count) of a real queued carousel with no art and no approval yet.
+
+    CLI tests use the real queue; picking the post at run time keeps them working as the owner
+    adds art to posts.
+    """
+    for item in load_queue(page.dir)[0]:
+        post = item.post
+        if (
+            post.format == "carousel"
+            and item.approval is None
+            and len(post.missing_art()) == len(post.slides)
+        ):
+            return post.id, len(post.slides)
+    pytest.skip("every queued carousel already has art")
 
 
 def brief(chars: list[str] | None = None) -> dict[str, Any]:
