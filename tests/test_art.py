@@ -45,7 +45,7 @@ from autopilot.errors import ArtError, BudgetError, ConfigError, ContentError
 from autopilot.rehearsal.preview import build_and_approve
 from story_helpers import make_art, post_data, write_post
 
-KEY = "test-key-0123456789abcdefghij"
+KEY = "fake-test-key"
 LONDON = ZoneInfo("Europe/London")
 
 
