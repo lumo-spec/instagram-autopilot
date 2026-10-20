@@ -21,7 +21,7 @@ from collections.abc import Callable
 from typing import Any
 
 REPO = "lumo-spec/instagram-autopilot"
-ENVIRONMENTS = ("page-simplestorymode", "renewal")
+ENVIRONMENTS = ("page-simplestorymode", "renewal", "art-generation")
 REQUIRED_CHECK = "ci-ok"
 RUNTIME_BRANCHES = {
     "state": "Runtime records and STATUS.md (written by the record job).\n",

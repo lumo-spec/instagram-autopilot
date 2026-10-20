@@ -8,7 +8,7 @@
 #   1. Makes sure you are on main and up to date with GitHub (and finishes an earlier batch).
 #   2. Runs the privacy check (nothing from references/ may ever be committed).
 #   3. Checks every queued post (python -m autopilot validate).
-#   4. Collects ONLY files inside pages/<page>/queue/<post-id>/ named post.yaml,
+#   4. Collects ONLY files inside pages/<page>/queue/<post-id>/ named post.yaml, art-check.json,
 #      approved.json or art-NN.png/.jpg/.jpeg/.webp. Anything else is listed and left alone.
 #   5. Puts them on a new branch, opens a pull request, asks GitHub to merge it by itself once
 #      the required checks pass, waits for that (about 5-15 minutes), then returns you to an
@@ -64,7 +64,7 @@ Step "3/5 Checking every queued post..."
 if ($LASTEXITCODE -ne 0) { Fail "a post has a problem (listed above). Nothing was sent." }
 
 Step "4/5 Collecting new and changed post files..."
-$allowed = '^pages/[a-z0-9-]+/queue/[a-z0-9-]+/(post\.yaml|approved\.json|art-\d{2}\.(png|jpg|jpeg|webp))$'
+$allowed = '^pages/[a-z0-9-]+/queue/[a-z0-9-]+/(post\.yaml|approved\.json|art-check\.json|art-\d{2}\.(png|jpg|jpeg|webp))$'
 $changed = git -c core.quotepath=off status --porcelain=v1 --untracked-files=all -- pages
 $send = @(); $skipped = @()
 foreach ($line in $changed) {

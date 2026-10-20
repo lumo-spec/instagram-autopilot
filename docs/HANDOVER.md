@@ -44,3 +44,9 @@ approval for all external contributors; rulesets main (PR + `ci-ok`, no force-pu
 state (no force-push/deletion), media (no deletion); Pages from `media`; environments
 `page-simplestorymode` and `renewal` limited to `main`; branches `state` and `media` exist.
 Environment secrets: none set yet.
+
+## Automatic art (2026-10-19, local, fakes only)
+`generate-art` with fake painter/checker: 26 tests in `tests/test_art.py`; c01 rehearsal on a copy
+(6/6 slides, carousel 87/87 gates). Real Gemini calls not made yet (no key). New environment
+`art-generation` (main only) is created by `scripts/set-image-key.ps1` and checked by
+`repo_settings.py`; details in CLAUDE.md "Stage 2d evidence".

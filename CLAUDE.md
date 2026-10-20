@@ -40,7 +40,10 @@ the owner's decisions below override it where they differ.
   Instagram user IDs, raw API responses or stack traces from secret-holding jobs anywhere.
 - **Privacy:** `references/` holds the owner's read-only originals, including a sheet with the
   owner's **face**. It is git-ignored and must never be committed, copied into the repo or
-  uploaded. Before EVERY commit or push run `git status --short --ignored`, `git ls-files` and a
+  uploaded. **Only exception (owner request, 2026-10-19):** `generate-art` sends the two
+  character sheets named in `characters.yaml` (`characters.rowan/wren.reference`, shrunk to
+  1536 px) to the configured image API and vision checker; it reads nothing else there (never
+  the face, presenter or armour sheets). Before EVERY commit or push run `git status --short --ignored`, `git ls-files` and a
   history check (`git log --all --name-only` / `git rev-list --all --objects`) to confirm nothing
   from it is tracked; if anything ever was, **stop and tell the owner instead of pushing**.
   Never put the owner's face or any generated video of them in the repo.
@@ -66,6 +69,7 @@ the owner's decisions below override it where they differ.
 | 2 | GitHub Actions workflows (ci, _pipeline, post-now, autopilot, maintenance, rehearsal — **no schedules**), media hosting on `media` (raw at commit SHA; GitHub Pages for reels), state/record job, alerts as issues, status page, token renewal (sealed hand-off), `audit_workflows.py`, `repo_settings.py`, `privacy_check.py`, `check_licenses.py`, hashed requirements, harden-runner (audit mode) | **Built + tested locally against fakes (2026-10-18)**; repo settings: see HANDOVER |
 | 2b | Manual posting: `export` command (finished slides in order, `caption.txt`, `NOTES.txt` with AI-label advice and suggested time) + README "How to schedule in Meta Business Suite" | **Done (2026-10-19)** |
 | 2c | Locked watercolour art style in every prompt; story reels (carousel → 9:16 reel, piano-like generated music or a CC0 track) in Export; per-post hold; `send-posts.ps1` (one command per batch) | **Done (2026-10-19)**; approval removal blocked (see below) |
+| 2d | Automatic art: `generate-art` (Gemini Nano Banana Pro with the character sheets as references; OpenAI swappable), vision check per picture (ears / text / character match, 3 redraws, then skip + alert e-mail), `art-check.json` fingerprints enforced by Build, monthly cost cap (£10), `art-key-check`, `set-image-key.ps1` | **Built + tested with fakes (2026-10-19)**; no real API call yet (needs the owner's key) |
 | 3 | Owner setup: Instagram Professional account + 2FA, Meta app + Instagram Login + tester, long-lived token, fine-grained PAT, `set-token` | **Resumed (owner, late 2026-10-19).** Professional account + 2FA done; `set-token.ps1` now takes the token once and looks up the user ID itself (parse-checked, **not run yet**); next: owner creates the Meta app (README "Connecting Instagram" step 1) |
 | 4 | Live tests: one image, one carousel, one reel via Post now; one token renewal; egress block mode; then enable the schedule | Authorised by the owner; **blocked on art** (no post has art yet) and on stage 3. **Priority (owner, 2026-10-19): first live post = c01 carousel via Post now ASAP**; renewal key, image/reel/renewal tests and story reels come after it |
 
@@ -170,6 +174,31 @@ rule; a design-identical re-implementation is ready to apply once it is allowed.
   first story reel and decide whether a recorded CC0 piano/flute track is needed.
 - `scripts/send-posts.ps1`: parse-checked only, **not run yet** (it pushes and opens a PR).
 
+### Stage 2d evidence (2026-10-19, Windows): automatic art
+- `tests/test_art.py` (26 tests, fakes + fake HTTP transport): every slide drawn, checked and
+  saved at 1080×1350 with `art-check.json`; prompt = locked style + brief + "character sheet
+  for Wren" + no-text/ears lines; slide 2+ also gets slide 1 as a style reference; rejection
+  reason added to the next prompt; 1 + 3 tries then the post is skipped (no further slides
+  drawn, nothing unchecked saved) with an `art-failed-…` alert; provider refusal counts as a
+  try; cost cap stops before a paid call (`art-budget-…` alert); held/approved posts untouched;
+  `--slides` redo keeps the old picture unless the new one passes; missing reference sheet
+  stops before spending; Build refuses art changed after its check; Gemini/OpenAI request
+  shapes, key only in a header (never in URL/errors), retries on 429/5xx/network, strict
+  verdict parsing; local alert e-mail via the owner's `gh` login.
+- Full fast and slow suites pass, coverage 86 %; ruff, mypy strict, workflow audit, privacy check,
+  `validate` clean. `generate-art simplestorymode c01-you-can-miss --fake` → 6/6 slides, carousel
+  87/87 gates on the generated (fake) art, real queue untouched; `--dry-run` → 6 pictures,
+  about £0.72 (max £2.88).
+- **Not verified live:** Gemini model ids (`gemini-3-pro-image`, `gemini-3-flash-preview`) and
+  the request format come from Google's pricing/API pages and the long-standing
+  `generateContent` shape; `art-key-check` confirms the model ids for free once the key is set.
+  The first real `generate-art c01-you-can-miss` is the live test; Claude must still look at
+  every picture before Build. `set-image-key.ps1` parse-checked only, not run.
+- No CI workflow generates art yet: `references/` is local only, and Build (approval) is a
+  local step, so generation runs on the owner's PC. The GitHub secret (environment
+  `art-generation`, main only) is stored for a later workflow; the audit allows `IMAGE_API_KEY`
+  / `CHECK_API_KEY` only in that environment.
+
 ### Waiting on the owner
 1. Review the 24 drafts (text, captions, art briefs): `rehearsal-output/queue-preview/index.html`.
 2. Review the suggested times (carousels Mon/Wed/Fri 19:00, single images Tue/Sat 12:30).
@@ -220,6 +249,8 @@ src/autopilot/
   gates/               visual (size/contrast/placement), spelling, media/reel/voice gates
   publish/instagram.py stdlib-only Graph client: image, reel, carousel; publish/reconcile flow
   export.py            Export <post-id>: finished files + caption.txt + NOTES.txt (manual posting)
+  art/                 generate-art: clients (Gemini/OpenAI image + vision check), fakes, budget
+                       ledger, generator (references, retries, art-check.json), factory, keys
   ops/alerts.py        alert titles "[Page] problem — what to do" + public-safety check
   rehearsal/           fake Instagram, local hosting, network guard, runner, preview + approval
 pages/simplestorymode/
@@ -259,6 +290,18 @@ narration fallbacks: second voice → music-only → skip + alert.
    preview contains a copy-paste art prompt per slide (characters' must-have traits, "Normal
    rounded human ears — not pointed, not elf ears", "No text, no letters...").
 
+## Procedure: "Generate art <post-id>"
+1. Needs `IMAGE_API_KEY` (owner runs `scripts\set-image-key.ps1`; never ask for the key) and the
+   character sheets in `references/` (run from the main project folder, or set
+   `AP_REFERENCES_DIR`). First time: `python -m autopilot art-key-check` (free).
+2. Optional: `python -m autopilot generate-art simplestorymode <post-id> --dry-run` shows the
+   prompts and the cost; tell the owner the estimate.
+3. Run `python -m autopilot generate-art simplestorymode <post-id>` (about 1-2 minutes per
+   picture). Only pictures that pass the vision check are saved; tell the owner the result, the
+   budget left, and any alert. Rejected pictures + reasons: `queue/<id>/preview/rejected/`.
+4. Then follow "Build <post-id>" (still look at every picture yourself). `--slides 2,5` redraws
+   slides the owner did not like. It never approves or posts anything.
+
 ## Procedure: "Build <post-id>"
 1. Check the art files exist (`art-01.png` ... one per slide; 4:5 for posts, 9:16 for reels).
 2. **Look at every art file yourself** (Read the image) and report to the owner: Rowan/Wren
@@ -267,7 +310,8 @@ narration fallbacks: second voice → music-only → skip + alert.
 3. Run `python -m autopilot build simplestorymode <post-id>`. It composes the slides with the real
    art, runs every gate and, only if all pass, writes `approved.json` (SHA-256 of `post.yaml` and
    every art file). Show the owner `queue/<post-id>/preview/index.html`.
-4. Before committing, run the privacy checks above; then commit `post.yaml`, the art and
+4. Before committing, run the privacy checks above; then commit `post.yaml`, the art,
+   `art-check.json` (generated art) and
    `approved.json` (stage 2: via pull request with CI). Any later edit to the text or art holds
    the post back until it is built again.
 
@@ -387,4 +431,6 @@ Mode: **moving to automatic posting** (see Scope); manual until the live tests p
    picture first) → live tests via Post now → token renewal test → schedule (owner authorised).
    Note: no `r..` reel post exists in the queue; the reel live test needs one (or a `story-reel`
    slot format, not built yet).
+   Automatic art (stage 2d, PR #7): once the owner has a Gemini key (`set-image-key.ps1`),
+   `Generate art c01-you-can-miss` can replace drawing by hand. It must not delay stage 3.
 3. Approval removal: waiting for the owner to allow it in Claude Code (see "Approval policy").

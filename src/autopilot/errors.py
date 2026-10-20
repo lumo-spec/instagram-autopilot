@@ -31,3 +31,11 @@ class TransientPublishError(PublishError):
 
 class ValidationError(AutopilotError):
     """Data handed between jobs failed re-validation."""
+
+
+class ArtError(AutopilotError):
+    """Automatic art generation or its safety check failed (message never holds a key)."""
+
+
+class BudgetError(ArtError):
+    """The next paid art call could go over the monthly cost cap."""

@@ -1,7 +1,7 @@
 """Command line: ``python -m autopilot <command>``.
 
-Local commands: validate, queue, preview, build, export, hold, release, rehearse,
-pronunciation-report.
+Local commands: validate, queue, preview, generate-art, art-key-check, build, export, hold,
+release, rehearse, pronunciation-report.
 The GitHub Actions jobs (plan, build, host, publish, record, renew, ...) live in
 ``python -m autopilot.jobs``.
 """
@@ -15,6 +15,7 @@ from datetime import date
 from pathlib import Path
 
 from autopilot.config import ROOT, Config, Page, load_config
+from autopilot.content.queue import Post
 from autopilot.errors import AutopilotError
 
 
@@ -72,7 +73,10 @@ def cmd_queue(args: argparse.Namespace) -> int:
             elif item.approval is not None:
                 status = "CHANGED since approval — run Build again"
             elif post.missing_art():
-                status = f"needs art: {', '.join(post.missing_art())}"
+                status = (
+                    f"needs art: {', '.join(post.missing_art())} "
+                    f"(draw it, or: generate-art {page.name} {post.id})"
+                )
             else:
                 status = "art supplied — ready for Build"
             print(f"  {post.id:40s} {post.format:8s} {status}")
@@ -157,6 +161,128 @@ def cmd_export(args: argparse.Namespace) -> int:
     return 0
 
 
+def _slide_numbers(text: str | None) -> set[int]:
+    try:
+        return {int(n) for n in (text or "").replace(" ", "").split(",") if n}
+    except ValueError:
+        raise AutopilotError("--slides takes slide numbers like 2,5") from None
+
+
+def _art_dry_run(cfg: Config, page: Page, posts: list[Post], redo: set[int]) -> int:
+    from autopilot.art.factory import characters, settings
+    from autopilot.art.generate import NAMED, generation_prompt
+
+    art = settings(cfg)
+    chars = characters(page)
+    per_try = float(art["providers"].get(art["provider"], {}).get("usd_per_image", 0)) + float(
+        art["checkers"].get(art["checker"], {}).get("usd_per_check", 0)
+    )
+    count = 0
+    for post in posts:
+        for s in post.slides:
+            if s.index not in redo and (post.dir / s.art).is_file():
+                continue
+            count += 1
+            names = [
+                chars["characters"][n]["name"] for n in s.brief.get("characters", []) if n in NAMED
+            ]
+            print(f"--- {post.id} {s.art} (references: {', '.join(names) or 'none'}) ---")
+            print(generation_prompt(post, s, chars, names, s.index > 1, []))
+    rate = float(art["usd_to_gbp"])
+    tries = 1 + int(art["max_regenerations"])
+    print(
+        f"\n{count} pictures to draw. Estimated cost: about £{count * per_try * rate:.2f} "
+        f"if every picture passes first time, at most £{count * per_try * rate * tries:.2f} "
+        f"(cap £{float(art['monthly_cap_gbp']):.2f} a month). Nothing was sent."
+    )
+    return 0
+
+
+def _rehearsal_copy(cfg: Config, page: Page, out: Path) -> tuple[Config, Page]:
+    """``generate-art --fake`` works on a copy of the page, never on the real queue."""
+    import dataclasses
+    import shutil
+
+    copy = out / "page"
+    shutil.copytree(page.dir, copy, ignore=shutil.ignore_patterns("archive", "preview"))
+    page = dataclasses.replace(page, base_dir=copy)
+    return dataclasses.replace(cfg, pages=(page,)), page
+
+
+def _art_posts(page: Page, ids: list[str], all_missing: bool) -> list[Post]:
+    from autopilot.content.queue import find_post, load_queue
+
+    if ids:
+        return [find_post(page.dir, pid) for pid in ids]
+    if not all_missing:
+        raise AutopilotError("name one or more post ids, or use --all-missing")
+    items, _ = load_queue(page.dir)
+    ready = [i for i in items if i.approval is None and not i.post.hold and i.post.missing_art()]
+    return [i.post for i in sorted(ready, key=lambda i: (i.post.priority, i.post.id))]
+
+
+def cmd_generate_art(args: argparse.Namespace) -> int:
+    """``generate-art``: draw, check and save missing art (generate only; nothing is posted)."""
+    from datetime import datetime
+
+    from autopilot.art.factory import make_generator, send_alerts
+    from autopilot.ops.alerts import AlertPlan
+    from autopilot.rehearsal.preview import preview_queue
+
+    cfg = load_config()
+    page = cfg.page(args.page)
+    redo = _slide_numbers(args.slides)
+    ledger = None
+    if args.fake:
+        out = ROOT / "rehearsal-output" / "art-rehearsal" / datetime.now().strftime("%Y%m%d-%H%M%S")
+        cfg, page = _rehearsal_copy(cfg, page, Path(args.out) if args.out else out)
+        ledger = page.dir.parent / "art-spend.json"
+        print(f"Rehearsal (fake painter and checker, no cost) in {page.dir.parent}")
+    posts = _art_posts(page, args.post, args.all_missing)
+    if args.dry_run:
+        return _art_dry_run(cfg, page, posts, redo)
+    gen = make_generator(cfg, page, fake=args.fake, ledger_path=ledger)
+    plan = AlertPlan()
+    finished: list[str] = []
+    ok = True
+    for post in posts:
+        print(f"{post.id}: £{gen.ledger.left_gbp():.2f} of this month's art budget left")
+        result = gen.generate(post, redo)
+        plan.merge(result.alerts)
+        print(f"{post.id}: {result.status.upper()} {result.message}".rstrip())
+        if result.status == "done":
+            finished.append(post.id)
+        ok &= result.status in ("done", "nothing-to-do", "skipped")
+        if result.status == "budget":
+            break
+    if finished:
+        out = (
+            ROOT / "rehearsal-output" / "art-preview"
+            if not args.fake
+            else page.dir.parent / "preview"
+        )
+        index, _ = preview_queue(cfg, page, out, finished)
+        print(f"Look at the new art: {index}")
+        print(f"If you like it: python -m autopilot build {args.page} <post-id>")
+    for alert in plan.raise_:
+        print(f"ALERT: {alert.title}")
+    if args.fake or args.no_alert:
+        return 0 if ok else 1
+    note = send_alerts(cfg, plan)
+    if note:
+        print(note)
+    return 0 if ok else 1
+
+
+def cmd_art_key_check(args: argparse.Namespace) -> int:
+    """Prove the image key works and the configured models exist (free calls only)."""
+    from autopilot.art.factory import check_models
+
+    for name in check_models(load_config()):
+        print(f"OK: key accepted, model {name} available")
+    return 0
+
+
 def cmd_pronunciation_report(args: argparse.Namespace) -> int:
     """List non-dictionary words in reel narrations that are neither overridden nor waived."""
     import yaml
@@ -209,7 +335,7 @@ def cmd_rehearse(args: argparse.Namespace) -> int:
     return 0 if data["double_posts"] == 0 and data["posts_reused"] == 0 else 1
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915 (one parser per command)
     """Parse arguments and dispatch."""
     parser = argparse.ArgumentParser(prog="autopilot", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -246,6 +372,18 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("page")
     p.add_argument("post_id")
     p.set_defaults(func=cmd_hold, release=True, reason=None)
+    p = sub.add_parser("generate-art", help="draw + check missing art (generate only)")
+    p.add_argument("page")
+    p.add_argument("post", nargs="*", help="post ids (e.g. c01-you-can-miss)")
+    p.add_argument("--all-missing", action="store_true", help="every post that still needs art")
+    p.add_argument("--slides", help="redraw these slides even if they have art, e.g. 2,5")
+    p.add_argument("--dry-run", action="store_true", help="show prompts and cost, send nothing")
+    p.add_argument("--fake", action="store_true", help="rehearsal on a copy: fake painter/checker")
+    p.add_argument("--no-alert", action="store_true", help="print alerts instead of e-mailing")
+    p.add_argument("--out", help="--fake only: rehearsal folder")
+    p.set_defaults(func=cmd_generate_art)
+    p = sub.add_parser("art-key-check", help="check the image key and model names (free)")
+    p.set_defaults(func=cmd_art_key_check)
     p = sub.add_parser("pronunciation-report", help="words the voice may mispronounce")
     p.add_argument("page")
     p.set_defaults(func=cmd_pronunciation_report)

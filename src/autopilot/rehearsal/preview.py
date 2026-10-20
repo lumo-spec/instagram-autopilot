@@ -151,5 +151,10 @@ def build_and_approve(cfg: Config, page: Page, post_id: str) -> tuple[Preview, P
         )
     if not preview.passed:
         raise ContentError(f"gates failed: {preview.report.summary()}")
+    from autopilot.art.generate import check_problems
+
+    unchecked = check_problems(post)
+    if unchecked:
+        raise ContentError("; ".join(unchecked))
     write_approval(post, preview.report.summary())
     return preview, index
