@@ -72,8 +72,10 @@ class GraphClient:
             with urllib.request.urlopen(req, timeout=self._timeout) as resp:  # noqa: S310
                 return dict(json.loads(resp.read().decode()))
         except urllib.error.HTTPError as exc:
-            code = _error_code(exc)
-            msg = f"Instagram API HTTP {exc.code} (error code {code})"
+            code, sub = _error_code(exc)
+            msg = f"Instagram API {method} {_endpoint(path)}: HTTP {exc.code} (error code {code})"
+            if sub:
+                msg += f", subcode {sub}"
             if exc.code >= 500 or exc.code == 429:
                 raise TransientPublishError(msg) from None
             raise PublishError(msg) from None
@@ -140,13 +142,24 @@ class GraphClient:
         return [dict(m) for m in data.get("data", [])]
 
 
-def _error_code(exc: urllib.error.HTTPError) -> str:
-    """Only Meta's numeric error code is kept; messages are discarded (they may echo input)."""
+def _error_code(exc: urllib.error.HTTPError) -> tuple[str, str]:
+    """Meta's numeric error code and subcode ("" when absent); messages are discarded (they may
+    echo input)."""
     try:
         err = json.loads(exc.read().decode()).get("error", {})
-        return str(int(err.get("code", 0)))
-    except (ValueError, AttributeError, OSError):
-        return "unknown"
+        sub = err.get("error_subcode")
+        return str(int(err.get("code", 0))), str(int(sub)) if sub is not None else ""
+    except (ValueError, TypeError, AttributeError, OSError):
+        return "unknown", ""
+
+
+def _endpoint(path: str) -> str:
+    """A public-safe name for the endpoint: its last word ("media", "media_publish", ...).
+
+    Paths start with the account id or a container/media id, which never reach the logs.
+    """
+    last = path.rsplit("/", 1)[-1]
+    return "object" if last.isdigit() else last
 
 
 @dataclass

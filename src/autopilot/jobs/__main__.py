@@ -88,7 +88,9 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915 (one dispatch t
         elif args.job == "publish":
             from autopilot.jobs.publish import run_finish, run_prepare
 
-            (run_prepare if args.phase == "prepare" else run_finish)(cfg, work, ctx.repo)
+            done = (run_prepare if args.phase == "prepare" else run_finish)(cfg, work, ctx.repo)
+            if done.get("status") == "failed":
+                return 1  # show the run red; the record job still records the failure
         elif args.job == "record":
             from autopilot.jobs.record import run_record
 
