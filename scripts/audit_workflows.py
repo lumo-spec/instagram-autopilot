@@ -9,6 +9,8 @@ Checks every ``.github/workflows/*.yml``:
 - no ``${{ inputs.* }}``, ``${{ github.event.* }}``, ``${{ github.head_ref }}`` or
   ``${{ secrets.* }}`` inside ``run:`` (pass them through ``env:``);
 - secrets only in jobs whose environment holds them; no ``secrets: inherit``/``toJSON(secrets)``;
+  a job calling ``_pipeline.yml`` may pass the page secrets by name (GitHub hands environment
+  secrets to a called workflow only when the caller passes them) and nothing else;
 - jobs with an environment install only the hashed minimal requirement files (never the render
   stack) and hold no write permission;
 - ``actions/checkout`` keeps credentials only in jobs that need to push;
@@ -38,6 +40,10 @@ ENV_SECRETS = {
     "renewal": {"GH_SECRETS_PAT"},
     "art-generation": {"IMAGE_API_KEY", "CHECK_API_KEY"},
 }
+# Secrets a caller may pass by name to a local reusable workflow. They resolve only inside the
+# called job whose environment holds them (GitHub: "The caller workflow must still pass the
+# secret... You can pass a secret by name even if it only exists in the environment").
+CALLED_SECRETS = {"./.github/workflows/_pipeline.yml": ENV_SECRETS["page-"]}
 ALLOWED_PERMS = {
     ("contents", "read"),
     ("contents", "write"),
@@ -92,6 +98,13 @@ def audit_job(name: str, job: dict[str, Any], problems: list[str], where: str) -
     text = yaml.safe_dump(job)
     if "secrets: inherit" in text or re.search(r"toJSON\(\s*secrets", text):
         problems.append(f"{where}: job {name} passes all secrets")
+    passed = job.get("secrets") if "uses" in job else None
+    if isinstance(passed, dict):
+        allowed = CALLED_SECRETS.get(str(job["uses"]), set())
+        for key, value in passed.items():
+            if key not in allowed or value != f"${{{{ secrets.{key} }}}}":
+                problems.append(f"{where}: job {name} may not pass secret {key} to {job['uses']}")
+        text = yaml.safe_dump({k: v for k, v in job.items() if k != "secrets"})
     for used in SECRET_REF.findall(text):
         if used not in {"GITHUB_TOKEN", *_secrets_for(env)}:
             problems.append(f"{where}: job {name} uses secret {used} outside its environment")
