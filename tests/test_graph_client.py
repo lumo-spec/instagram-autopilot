@@ -193,6 +193,20 @@ def test_http_errors_mapped_without_echoing_body(
     assert f"HTTP {code}" in text and "190" in text
 
 
+def test_error_names_the_call_but_never_the_account(
+    monkeypatch: pytest.MonkeyPatch, client: GraphClient
+) -> None:
+    denied = {"error": {"message": f"no permission for {USER}", "code": 200, "error_subcode": 7}}
+    install(monkeypatch, [http_error(400, denied), http_error(400, {"error": {"code": 100}})])
+    with pytest.raises(PublishError) as info:
+        client.create_carousel_item("https://example.org/1.jpg")
+    assert str(info.value) == "Instagram API POST media: HTTP 400 (error code 200), subcode 7"
+    numeric = GraphClient("graph.instagram.com", "v26.0", "17841400000000000", TOKEN)
+    with pytest.raises(PublishError) as info:
+        numeric.container_status("17890000000000000")
+    assert str(info.value) == "Instagram API GET object: HTTP 400 (error code 100)"
+
+
 def test_unparseable_error_body(monkeypatch: pytest.MonkeyPatch, client: GraphClient) -> None:
     err = urllib.error.HTTPError("u", 400, "x", {}, io.BytesIO(b"<html>"))  # type: ignore[arg-type]
     install(monkeypatch, [err])

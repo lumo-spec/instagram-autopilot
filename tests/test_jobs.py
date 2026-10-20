@@ -437,3 +437,17 @@ def test_jobs_cli_plan(
     assert "any=" in out.read_text(encoding="utf-8")
     monkeypatch.delenv("GH_SECRETS_PAT", raising=False)
     assert main(["--work", str(tmp_path / "w"), "renew-keys"]) == 1  # no key in this job
+
+
+@pytest.mark.parametrize(("status", "code"), [("failed", 1), ("published", 0), ("not_run", 0)])
+def test_jobs_cli_failed_publish_turns_the_run_red(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, status: str, code: int
+) -> None:
+    from autopilot.jobs import publish
+    from autopilot.jobs.__main__ import main
+
+    monkeypatch.setenv("GITHUB_REPOSITORY", REPO)
+    monkeypatch.setattr(publish, "run_prepare", lambda *_a: {"status": status})
+    monkeypatch.setattr(publish, "run_finish", lambda *_a: {"status": status})
+    for phase in ("prepare", "finish"):
+        assert main(["--work", str(tmp_path / "w"), "publish", "--phase", phase]) == code
