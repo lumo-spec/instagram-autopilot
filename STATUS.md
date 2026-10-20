@@ -1,15 +1,15 @@
 # Instagram Autopilot — Status
 
-Updated Tue 20 Oct 2026 10:59 BST.
+Updated Tue 20 Oct 2026 15:32 BST.
 
 ## Simple Story Mode (@simplestorymode)
 
 - **Page enabled:** yes
 - **Automatic posting:** OFF (not started yet)
 - **Last post:** none yet
-- **Approved posts ready:** 0 carousels, 0 single images, 0 reels — lasts about 0 days
+- **Approved posts ready:** 1 carousels, 0 single images, 0 reels — lasts about 0 days
 - **Instagram token:** renewed 2026-10-20, expires 2026-12-19 (60 days left)
-- **Last 7 days:** 0 posted, 0 skipped, 0 failed (retried)
+- **Last 7 days:** 0 posted, 0 skipped, 1 failed (retried)
 
 **Renewal key expires:** not checked yet
 
