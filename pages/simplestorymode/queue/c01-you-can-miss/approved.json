@@ -1,0 +1,16 @@
+{
+ "approved_at": "2026-10-20T11:02:42+00:00",
+ "format": "carousel",
+ "gates": "93/93 passed",
+ "id": "c01-you-can-miss",
+ "inputs": {
+  "art-01.png": "6704992cc10f1acf598f2fd3bca03f4c912b121e4db40b0a77eaa98520f8ad42",
+  "art-02.png": "abd85c291722b385b0769acf076d7b97a931aec50ea3d28046966ce18dff4e9d",
+  "art-03.png": "414ae8381030ae2930e2a2bd09a6244a575971d1b9944948c7c36a86c81ea9de",
+  "art-04.png": "34e4974c507eef37a9e538853b5d9bbc7e5315c98aaa3d1887abcc5c2e060541",
+  "art-05.png": "c6d0be993df677ae842519ef3ab6845e80ae15a75b67b05348fc1df3264a9800",
+  "art-06.png": "d01f70e55953be7b0152a9f1a3f65365b83cd8cb336f2d238e2d5c013a6d9c69",
+  "post.yaml": "11bf99fb3bc74f752c806d11876f1f144cd3d6dd469794fe067ee03d537086d4"
+ },
+ "slides": 6
+}
