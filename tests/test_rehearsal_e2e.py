@@ -14,7 +14,7 @@ from autopilot.config import Config, Page
 from autopilot.pipeline import Request
 from autopilot.rehearsal import runner
 from autopilot.state import PageState
-from story_helpers import post_data, write_post
+from story_helpers import post_data, unillustrated_carousel, write_post
 
 
 def fill_queue(page: Page, carousels: int, images: int) -> None:
@@ -133,21 +133,25 @@ def test_music_reel_with_art_has_readable_panel(story: tuple[Config, Page], tmp_
     assert "Illustrations: AI-generated" in caption.text and "Voiceover" not in caption.text
 
 
-def test_cli_queue_validate_and_preview(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+def test_cli_queue_validate_and_preview(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], cfg: Config
+) -> None:
     from autopilot.__main__ import main
+
+    pid, _ = unillustrated_carousel(cfg.page("simplestorymode"))
 
     assert main(["validate", "--page", "simplestorymode"]) == 0
     assert main(["queue"]) == 0
     out = capsys.readouterr().out
-    assert "c01-you-can-miss" in out and "needs art" in out
-    assert main(["preview", "simplestorymode", "c01-you-can-miss", "--out", str(tmp_path)]) == 0
+    assert pid in out and "needs art" in out
+    assert main(["preview", "simplestorymode", pid, "--out", str(tmp_path)]) == 0
     assert (tmp_path / "index.html").exists()
     from autopilot.config import ROOT
 
-    preview = ROOT / "pages/simplestorymode/queue/c01-you-can-miss/preview"
+    preview = ROOT / "pages/simplestorymode/queue" / pid / "preview"
     existed = preview.exists()
     try:
-        assert main(["build", "simplestorymode", "c01-you-can-miss"]) == 1  # no art: refused
+        assert main(["build", "simplestorymode", pid]) == 1  # no art: refused
         assert "NOT APPROVED: art not supplied yet" in capsys.readouterr().out
         assert not (preview.parent / "approved.json").exists()
     finally:
