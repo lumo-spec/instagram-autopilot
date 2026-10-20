@@ -132,7 +132,12 @@ def cmd_export(args: argparse.Namespace) -> int:
     out = Path(args.out) if args.out else ROOT / "exports"
     try:
         result = export_post(
-            cfg, page, args.post_id, out, reel=not args.no_reel, music=args.music or ""
+            cfg,
+            page,
+            args.post_id,
+            out,
+            reel=args.reel and not args.no_reel,
+            music=args.music or "",
         )
     except AutopilotError as exc:
         print(f"NOT EXPORTED: {exc}")
@@ -227,7 +232,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("page")
     p.add_argument("post_id")
     p.add_argument("--out", help="parent folder (default: exports/)")
-    p.add_argument("--no-reel", action="store_true", help="carousels: skip the story reel")
+    # Story reels are postponed until after the first live post (owner, 2026-10-19): opt-in.
+    p.add_argument("--reel", action="store_true", help="carousels: also make the story reel")
+    p.add_argument("--no-reel", action="store_true", help="skip the story reel (the default)")
     p.add_argument("--music", help="story reel music: procedural, or a CC0 file in assets/music")
     p.set_defaults(func=cmd_export)
     p = sub.add_parser("hold", help="put one post on hold (never published or exported)")

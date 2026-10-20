@@ -18,8 +18,9 @@ checks each post, and only posts the owner has approved can be exported or publi
 3. **Approve:** type `Build <post-id>`. Claude looks at every picture, composes the slides, runs
    every check, and only then approves the post.
 4. **Export:** type `Export <post-id>`. You get a folder `exports/<post-id>/` with the finished
-   slides in order, `caption.txt`, `NOTES.txt` (including whether to switch on the AI label) and,
-   for carousels, a **story reel** (`story-reel.mp4`) you can post as a separate reel.
+   slides in order, `caption.txt` and `NOTES.txt` (including whether to switch on the AI label).
+   Story reels are postponed until after the first live post; `Export <post-id> with reel`
+   (`--reel`) still makes one (`story-reel.mp4`) to post as a separate reel.
 5. **Schedule it** in Meta Business Suite (next section).
 6. **Send the batch to GitHub** (keeps the public queue and its backup up to date): one command,
    see "Sending new art to GitHub" below.
@@ -153,9 +154,9 @@ On Windows, from this folder, after `uv sync`:
 .venv\Scripts\python -m autopilot queue                              # what each post still needs
 .venv\Scripts\python -m autopilot preview simplestorymode            # render every post (placeholder art)
 .venv\Scripts\python -m autopilot build simplestorymode <post-id>    # approve a post with its real art
-.venv\Scripts\python -m autopilot export simplestorymode <post-id>   # finished files (+ story reel) for Business Suite
-.venv\Scripts\python -m autopilot export simplestorymode <post-id> --no-reel             # carousel only (faster)
-.venv\Scripts\python -m autopilot export simplestorymode <post-id> --music quiet-piano.flac   # a CC0 track instead
+.venv\Scripts\python -m autopilot export simplestorymode <post-id>   # finished files for Business Suite
+.venv\Scripts\python -m autopilot export simplestorymode <post-id> --reel                # also the story reel (postponed)
+.venv\Scripts\python -m autopilot export simplestorymode <post-id> --reel --music quiet-piano.flac   # with a CC0 track
 .venv\Scripts\python -m autopilot hold simplestorymode <post-id> "reason"                # never posted while held
 .venv\Scripts\python -m autopilot release simplestorymode <post-id>
 .venv\Scripts\python -m autopilot rehearse --days 14                 # practise two weeks of posting (never posts)
@@ -169,6 +170,75 @@ a minute to make. CC0 music tracks go in `assets/music/` (see its README).
   roadmap).
 
 ## Connecting Instagram (automatic posting; set up in progress since 19 Oct 2026)
+You asked on 19 Oct 2026 to go back to automatic posting, first live post as fast as possible.
+The automatic carousel path (build → host → publish → record, started with **Post now**) is
+finished and tested against a fake Instagram; it has never talked to the real one. Until the
+first live post works you can still post by hand (`Build` + `Export`, guide above).
+
+**Minimum for the first live post** (everything else can wait):
+1. c01 art → `Build c01-you-can-miss` → `send-posts.ps1` (the art and its approval must be on
+   GitHub, because the robot builds the post there).
+2. Meta app + Instagram tester + token (steps A-F below), stored with `set-token.ps1`.
+3. Tell Claude Code **"token set"**: it switches on the safety switch `PUBLISHING_ENABLED`.
+4. Run **Post now** with `c01-you-can-miss` (step G).
+
+**Can wait until after the first post:** the renewal key (step H; needed within about 6 weeks,
+because the token lasts 60 days and can only be renewed once it is a day old), the image and
+reel live tests, the renewal test, egress block mode, and the weekly schedule. The schedule
+stays off until all of those pass.
+
+Checked against Meta's developer docs on 19 Oct 2026. Meta renames buttons often, so if one is
+missing, look for the closest match and tell Claude Code what you see.
+
+- **A. Account check.** On your phone, @simplestorymode must be a Professional account (done)
+  and **public**: Instagram app → profile → ☰ → **Account privacy** → *Private account* off.
+- **B. Meta developer account.** Go to <https://developers.facebook.com/>, log in with your
+  Facebook account and click **Get started** if you have never used it. Confirm your
+  e-mail/phone if asked.
+- **C. Create the app.** <https://developers.facebook.com/apps> → **Create App** (top right; the
+  first time **Create First App**).
+  1. *Connect a business:* choose the option to **not** connect a business portfolio now →
+     **Next**. (It can be added later; it is not needed to post to your own account.)
+  2. *Use case:* **Other** → **Next**.
+  3. *App type:* **Business** → **Next**.
+  4. *Details:* app name `simplestorymode-autopilot`, your contact e-mail → **Next** / **Create
+     app**. Enter your Facebook password if asked.
+
+  Leave the app in *Development* mode. App Review is only for other people's accounts; your own
+  account works as a tester (to be confirmed by the first live post).
+- **D. Add Instagram.** In the app dashboard scroll to **Instagram** → **Set up**. The left
+  menu now shows **Instagram → API setup with Instagram login**.
+- **E. Make @simplestorymode a tester.** Left menu **App roles → Roles** → **Add people** →
+  **Instagram Tester** → type `simplestorymode` → **Add**. Then accept the invite as
+  @simplestorymode: on a computer open <https://www.instagram.com/accounts/manage_access/>
+  → **Tester invites** → **Accept** (in the app: Settings → *Website permissions* → *Apps and
+  websites* → *Tester invites*). Skip this step if the next one adds the account directly.
+- **F. Generate and store the token.** Left menu **Instagram → API setup with Instagram login**
+  → section **1. Generate access tokens** → **Add account** → log in as @simplestorymode →
+  allow the permissions (at least *basic* and *content publish*). Back on the page, click
+  **Generate token** next to simplestorymode, tick "I understand", **Copy**. Do not paste it
+  anywhere else. Straight away, in **your own** PowerShell window:
+  ```powershell
+  cd D:\Projects\instagram-autopilot
+  powershell -ExecutionPolicy Bypass -File .\scripts\set-token.ps1
+  ```
+  Paste at the hidden prompt (only stars show) → Enter. It shows the account name; it must say
+  `@simplestorymode` → type `yes`. It stores the token and the account ID encrypted in GitHub
+  and records today's date (the token lasts 60 days). Then tell Claude Code **"token set"**.
+- **G. First live post: Post now.** On <https://github.com/lumo-spec/instagram-autopilot> →
+  **Actions** → left list **Post now** → **Run workflow** (right) → *Branch* `main`, *Page*
+  `simplestorymode`, *Post id* `c01-you-can-miss`, *Kind* `auto` → green **Run workflow**. It
+  takes about 5-10 minutes. Green ticks on *build*, *host*, *publish*, *record* = posted; the
+  status page shows the link. If anything goes red, tell Claude Code; nothing is posted twice.
+  (Phone: GitHub app → the repository → Actions → Post now → Run workflow.)
+- **H. Renewal key (later, within about 6 weeks).**
+  <https://github.com/settings/personal-access-tokens/new>: name `ig-token-renewal`, expiration
+  1 year, repository access *Only select repositories* → `lumo-spec/instagram-autopilot`,
+  permission **Environments: Read and write** (nothing else) → **Generate token**, copy, then
+  in your own PowerShell window run
+  `powershell -ExecutionPolicy Bypass -File .\scripts\set-renewal-key.ps1`.
+- **I. Before the schedule goes on:** live tests for one single image and one reel via Post now,
+  one token renewal (needs H), egress block mode. Only then is the weekly schedule switched on.
 You asked on 19 Oct 2026 to go back to automatic posting. Until every step below is done and the
 live tests pass, nothing is posted automatically and you keep scheduling by hand. Do the steps
 in order; each one is small. Checked against Meta's developer docs on 19 Oct 2026; Meta renames
