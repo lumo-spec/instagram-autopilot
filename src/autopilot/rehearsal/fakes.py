@@ -21,14 +21,15 @@ class SimulatedCrashError(Exception):
 
 
 @contextmanager
-def no_instagram_network() -> Iterator[None]:
-    """Make any attempt to resolve an Instagram/Meta host fail loudly."""
+def no_instagram_network(extra: tuple[str, ...] = ()) -> Iterator[None]:
+    """Make any attempt to resolve an Instagram/Meta host (or one of ``extra``) fail loudly."""
     original = socket.getaddrinfo
+    blocked = (*BLOCKED_HOSTS, *extra)
 
     def guarded(host: Any, *args: Any, **kwargs: Any) -> Any:
         if isinstance(host, (str, bytes)):
             name = host.decode() if isinstance(host, bytes) else host
-            if any(name == h or name.endswith("." + h) for h in BLOCKED_HOSTS):
+            if any(name == h or name.endswith("." + h) for h in blocked):
                 raise AssertionError(f"rehearsal tried to reach {name}")
         return original(host, *args, **kwargs)
 

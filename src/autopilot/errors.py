@@ -37,5 +37,9 @@ class ArtError(AutopilotError):
     """Automatic art generation or its safety check failed (message never holds a key)."""
 
 
+class InboxError(AutopilotError):
+    """The video inbox is not set up correctly (missing folder, bad inbox.yaml, ...)."""
+
+
 class BudgetError(ArtError):
     """The next paid art call could go over the monthly cost cap."""

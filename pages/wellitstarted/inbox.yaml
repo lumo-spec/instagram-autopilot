@@ -1,0 +1,44 @@
+# @wellitstarted: finished videos dropped into a watched folder on the owner's PC.
+# The folder path is NOT written here (this repository is public): it is WELLITSTARTED_DIR in
+# the git-ignored .env file, e.g. WELLITSTARTED_DIR=D:\...\wellitstarted
+# That folder holds postthem\ (owner's drop folder, never changed by us), working\, posted\,
+# failed\, .autopilot\ (ledger + log) and, when the owner wants everything to stop, PAUSE.txt.
+
+title: Well It Started
+timezone: Europe/London
+root_env: WELLITSTARTED_DIR
+inbox: postthem
+pause_file: PAUSE.txt
+
+# A folder is ready when it holds exactly one .mp4 plus these two files (other files ignored)
+# and nothing in it changed for settle_minutes (so half-copied folders are never posted).
+cover: cover.png
+copy: publication-copy.txt
+settle_minutes: 10
+
+# Vertical (or square) and at most this long -> "short" (Instagram Reel + YouTube Short);
+# anything else (landscape or longer) -> "long" (long YouTube video only).
+short_max_seconds: 180
+
+catchup_minutes: 90        # PC asleep at slot time: post when it wakes, within this window
+max_attempts: 3            # temporary errors: try again at the next slots, then failed\
+low_stock_days: 3          # e-mail when a destination's videos run out within 3 days
+ai_generated: true         # Instagram is_ai_generated / YouTube containsSyntheticMedia
+
+destinations:
+  instagram-reels:
+    label: Instagram Reels
+    enabled: true
+    kinds: [short]
+    times: ["07:30", "10:30", "13:00", "17:30", "20:30"]
+  youtube-shorts:
+    label: YouTube Shorts
+    enabled: false           # switched on once YouTube is connected (inbox youtube-login)
+    kinds: [short]
+    times: ["12:00"]
+  youtube-long:
+    label: YouTube videos
+    enabled: false
+    kinds: [long]
+    times: ["18:00"]
+    weekdays: [tue, sat]

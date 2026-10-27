@@ -46,6 +46,11 @@ def _make(key: str, title: str, body: str) -> Alert:
     return Alert(key, title, body)
 
 
+def make_alert(key: str, title: str, body: str) -> Alert:
+    """An alert with custom wording (raises ValueError if it fails the public-safety check)."""
+    return _make(key, title, body)
+
+
 def low_stock(page: str, left: int, days: float) -> Alert:
     """Content bank running low."""
     return _make(
