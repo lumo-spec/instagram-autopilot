@@ -199,6 +199,35 @@ rule; a design-identical re-implementation is ready to apply once it is allowed.
   `art-generation`, main only) is stored for a later workflow; the audit allows `IMAGE_API_KEY`
   / `CHECK_API_KEY` only in that environment.
 
+### @wellitstarted video inbox (2026-10-27, owner's PC; guide: `docs/WELLITSTARTED.md`)
+Owner decisions 2026-10-27: Instagram Reels daily 07:30/10:30/13:00/17:30/20:30, YouTube
+Shorts daily 12:00, long YouTube videos Tue/Sat 18:00 (UK time); **copy** from `postthem\`
+(never move/change the owner's folder) and move only the copy into `posted\`/`failed\`; runs
+on the owner's PC (Windows Task Scheduler, `scripts/install-inbox-task.ps1`); label AI content
+via the APIs; empty slot = skip silently; e-mail when < 3 days of videos remain; go live after
+rehearsal + account steps; **first live test = ONE video (`inbox post-now ... instagram-reels`),
+then wait for the owner's "continue" before installing the scheduled task.**
+- Code: `src/autopilot/inbox/` (config, folders, ledger, schedule, destinations, youtube,
+  setup, runner, fakes, rehearsal); settings `pages/wellitstarted/inbox.yaml`; folder path and
+  keys only in `.env` (`WELLITSTARTED_DIR`, `WELLITSTARTED_IG_*`, `WELLITSTARTED_YT_*`).
+  Ledger/log live in the owner's folder (`.autopilot\`), never in the repo. Kind rule:
+  vertical/square ≤ 180 s = short (Reels + Shorts), else long (YouTube only).
+- Evidence (Windows, fakes only): `tests/test_inbox.py` 27 tests; full suite, ruff, mypy strict
+  clean. `inbox rehearse --days 14` (24 Oct-7 Nov, clock change): 24 reels, 12 Shorts, 2 long,
+  2 crashes after publish/upload reconciled, 0 double posts, duplicate video posted once,
+  incomplete folder → failed + alert, pause held, drop folder unchanged, hosted copies removed.
+  `--sample` with copies of the owner's 10 finished 40 s reels: real ffmpeg probe + cover JPEG
+  conversion pass, 0 problems (after the working-copy clean-up fix).
+- **Blocked on an owner decision: video hosting for Instagram.** Instagram Login (our login
+  type) has no direct upload from a PC (Meta content-publishing guide, 2026-10-27): the video
+  needs a public URL. Options A Facebook Login for Business (resumable upload, nothing public),
+  B the repo's media branch (public for minutes, in branch history until clean-up), C private
+  bucket with short-lived links. `NoHost` refuses until chosen. YouTube is independent.
+- Not verified live: everything. YouTube `videos.insert` page (2026-10-27) says unaudited
+  projects are no longer forced to private and uploads cost 1 unit of a 100/day bucket —
+  check the first upload shows as Public. OAuth app must be *In production* (Testing-mode
+  refresh tokens expire after 7 days). `install-inbox-task.ps1` parse-checked only, not run.
+
 ### Waiting on the owner
 1. Review the 24 drafts (text, captions, art briefs): `rehearsal-output/queue-preview/index.html`.
 2. Review the suggested times (carousels Mon/Wed/Fri 19:00, single images Tue/Sat 12:30).
@@ -390,7 +419,8 @@ Order agreed with the owner:
    Children's topics: awareness and kindness only, nothing showing harm to children. Health and
    finance: general, sourced information, not personal advice. Note: the handle mentions lyrics
    although the page must not use any.
-3. **@wellitstarted** — sourced company and founder stories (two sources each, no logos, no
+3. **@wellitstarted** — **in progress (plan approved 2026-10-27): video inbox on the owner's
+   PC, see "@wellitstarted video inbox" above.** Sourced company and founder stories (two sources each, no logos, no
    unverified quotes). First version: narrated reels with animated text. Presenter videos use the
    owner's own face; if AI-generated they need the AI label — check Meta's rules and which paid
    tools would be needed; assume none. The owner's face images stay in `references/` only.

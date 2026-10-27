@@ -1,7 +1,7 @@
 """Command line: ``python -m autopilot <command>``.
 
 Local commands: validate, queue, preview, generate-art, art-key-check, build, export, hold,
-release, rehearse, pronunciation-report.
+release, rehearse, pronunciation-report, inbox (video pages posted from a folder on this PC).
 The GitHub Actions jobs (plan, build, host, publish, record, renew, ...) live in
 ``python -m autopilot.jobs``.
 """
@@ -335,6 +335,85 @@ def cmd_rehearse(args: argparse.Namespace) -> int:
     return 0 if data["double_posts"] == 0 and data["posts_reused"] == 0 else 1
 
 
+def cmd_inbox(args: argparse.Namespace) -> int:
+    """Video inbox of a page (e.g. wellitstarted): status, run, post-now, rehearse, set-up."""
+    import getpass
+    from datetime import UTC, datetime
+
+    from autopilot.inbox import setup
+    from autopilot.inbox.config import load_inbox_config, resolve_root
+    from autopilot.inbox.folders import ffmpeg_probe
+    from autopilot.inbox.runner import InboxRunner
+
+    cfg = load_inbox_config(args.page)
+    if args.action == "rehearse":
+        from autopilot.inbox.rehearsal import run_guarded
+
+        out = Path(args.out) if args.out else ROOT / "rehearsal-output" / f"inbox-{cfg.page}"
+        result = run_guarded(
+            cfg, out, days=args.days, sample=Path(args.sample) if args.sample else None
+        )
+        print(json.dumps(result.data, indent=1))
+        return 0 if result.passed else 1
+    if args.action == "instagram-token":
+        token = getpass.getpass("Paste the Instagram token (hidden), then press Enter: ").strip()
+        if not token:
+            print("nothing pasted; nothing changed")
+            return 1
+        user = setup.instagram_user_id(token)
+        p = setup.prefix(cfg)
+        setup.set_values(
+            {
+                f"{p}_IG_TOKEN": token,
+                f"{p}_IG_USER_ID": user,
+                f"{p}_IG_TOKEN_SET": date.today().isoformat(),
+            }
+        )
+        print(f"Instagram token saved for {cfg.title} (in .env, which is never committed).")
+        return 0
+    if args.action == "youtube-login":
+        from autopilot.inbox.youtube import YouTubeApi, login
+
+        cid = input("OAuth client ID (from Google Cloud): ").strip()
+        secret = getpass.getpass("OAuth client secret (hidden): ").strip()
+        refresh = login(cid, secret)
+        p = setup.prefix(cfg)
+        setup.set_values(
+            {
+                f"{p}_YT_CLIENT_ID": cid,
+                f"{p}_YT_CLIENT_SECRET": secret,
+                f"{p}_YT_REFRESH_TOKEN": refresh,
+            }
+        )
+        print(
+            f"YouTube connected to the channel: {YouTubeApi(cid, secret, refresh).channel_title()}"
+        )
+        return 0
+    root = resolve_root(cfg)
+    clock = lambda: datetime.now(UTC)  # noqa: E731
+    if args.action == "status":
+        runner = InboxRunner(cfg, root, {}, ffmpeg_probe, clock)
+        print("\n".join(runner.status()))
+        return 0
+    instagram_on = any(d.name.startswith("instagram") for d in cfg.enabled)
+    if instagram_on and setup.renew_instagram_token(cfg, date.today()):
+        print("Instagram token renewed (valid for another 60 days).")
+    runner = InboxRunner(cfg, root, setup.build_publishers(cfg), ffmpeg_probe, clock)
+    report = runner.post_now(args.destination) if args.action == "post-now" else runner.run()
+    if report.paused:
+        print(f"{cfg.title} is paused ({cfg.pause_file} exists): nothing posted.")
+        return 0
+    for line in report.lines:
+        print(line)
+    if not args.no_alert:
+        from autopilot.art.factory import send_alerts
+
+        note = send_alerts(load_config(), report.alerts)
+        if note:
+            print(note)
+    return 1 if report.failed else 0
+
+
 def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915 (one parser per command)
     """Parse arguments and dispatch."""
     parser = argparse.ArgumentParser(prog="autopilot", description=__doc__)
@@ -395,6 +474,23 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915 (one parser per
     p.add_argument("--out")
     p.add_argument("--no-failures", action="store_true", help="do not inject simulated failures")
     p.set_defaults(func=cmd_rehearse)
+    p = sub.add_parser("inbox", help="video page posted from a folder on this PC")
+    p.add_argument(
+        "action",
+        choices=["status", "run", "post-now", "rehearse", "instagram-token", "youtube-login"],
+    )
+    p.add_argument("page", help="e.g. wellitstarted")
+    p.add_argument(
+        "destination",
+        nargs="?",
+        default="instagram-reels",
+        help="post-now only: instagram-reels, youtube-shorts or youtube-long",
+    )
+    p.add_argument("--days", type=int, default=14, help="rehearse: simulated days")
+    p.add_argument("--sample", help="rehearse: folder of finished video folders to copy in")
+    p.add_argument("--out", help="rehearse: scratch folder")
+    p.add_argument("--no-alert", action="store_true", help="print alerts instead of e-mailing")
+    p.set_defaults(func=cmd_inbox)
     args = parser.parse_args(argv)
     try:
         return int(args.func(args))
