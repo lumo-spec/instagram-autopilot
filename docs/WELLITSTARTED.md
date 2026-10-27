@@ -52,13 +52,33 @@ Switch off with `ai_generated: false` in `pages/wellitstarted/inbox.yaml`.
 
 ## Setting up (one time)
 1. Add the folder to `.env` (one line): `WELLITSTARTED_DIR=<the folder that contains postthem>`.
-2. **Instagram** (@wellitstarted must be a Professional account with two-factor sign-in):
-   in the same Meta app as Simple Story Mode, add @wellitstarted under *Instagram → API setup
-   with Instagram login* (add it as an Instagram tester first and accept the invite in the
-   Instagram app), press *Generate token*, then in your own PowerShell window:
-   `.venv\Scripts\python -m autopilot inbox instagram-token wellitstarted` and paste the token at
-   the hidden prompt. It is renewed automatically every 30 days.
-   **Still open:** how the video reaches Instagram (see "Video hosting" below).
+2. **Instagram, direct upload from this PC** (owner's choice A, 2026-10-27: nothing is put on
+   a public web address). Meta only allows uploading a file from a PC with **Facebook Login
+   for Business**, so @wellitstarted is connected through a Facebook Page:
+   1. @wellitstarted must be a Professional account (Business or Creator) with two-factor
+      sign-in, **linked to a Facebook Page** you manage (Instagram app → *Edit profile →
+      Page → Connect*, or the Page's *Settings → Linked accounts → Instagram*).
+   2. In the same Meta app as Simple Story Mode (developers.facebook.com → *My Apps*), add
+      **Facebook Login for Business** (in the Instagram use case: *API setup with Facebook
+      login*). Leave the app in Development mode: you are its admin, so no App Review is
+      needed to post to your own account.
+   3. Open the **Graph API Explorer** (developers.facebook.com/tools/explorer), pick the app,
+      *User Token*, tick `instagram_basic`, `instagram_content_publish`, `pages_show_list`,
+      `pages_read_engagement` and `business_management`, press *Generate Access Token* and,
+      in the Facebook window, choose the Page and @wellitstarted. Copy the token
+      (**never paste it into chat**).
+   4. In your own PowerShell window:
+      `.venv\Scripts\python -m autopilot inbox facebook-login wellitstarted`
+      It asks for the app ID (*App settings → Basic*), then the app secret and the token at
+      hidden prompts, swaps the token for the Page's own token (Meta: no expiry date, so no
+      renewal) and prints the Page and the @handle it found. The app secret is used once and
+      not saved; the Page token and account number go into `.env` only.
+   If the Page token ever stops working (password change, Page role removed), run step 3-4
+   again.
+   **Cover:** with direct upload Instagram picks a frame of the video as the cover, because
+   Meta takes a custom cover only from a public web address. The result file says so; change
+   the cover in the Instagram app if needed. `cover.png` is still used for long YouTube videos.
+   Button names above come from Meta's developer docs and were **not checked by hand**.
 3. **YouTube** (only when you want Shorts / long videos):
    1. <https://console.cloud.google.com> → new project → *APIs & Services → Library* →
       **YouTube Data API v3** → Enable.
@@ -85,23 +105,37 @@ Switch off with `ai_generated: false` in `pages/wellitstarted/inbox.yaml`.
    `powershell -ExecutionPolicy Bypass -File .\scripts\install-inbox-task.ps1`
    (`-Remove` switches it off again).
 
-## Video hosting (decision needed before Instagram)
-Meta only accepts reels from a **public web address** when the account is connected with
-Instagram Login (as Simple Story Mode is): there is no direct upload from a PC for that login
-type (Meta's content-publishing guide, checked 2026-10-27). Options:
-- **A. Facebook Login for Business** for @wellitstarted (needs a Facebook Page linked to the
-  account): the PC uploads the file directly to Meta; nothing public. More Meta setup.
-- **B. This repository's media branch** (how Simple Story Mode's slides go out today, proven
-  live on 2026-10-20): the video is public on GitHub Pages for a few minutes, then deleted, but
-  stays in that branch's history until the weekly clean-up.
-- **C. A private cloud bucket** with a short-lived link (e.g. Cloudflare R2): nothing in the
-  repository; needs a new account and key.
-YouTube needs none of this (the PC uploads directly).
+## How the video reaches Instagram (decided 2026-10-27: A)
+Direct upload: the PC asks Meta for an upload address (`upload_type=resumable`), sends the file
+to `rupload.facebook.com` (resuming from where Meta stopped if the connection drops), waits for
+processing and publishes. The token goes only to Meta's two hosts, only in a header. Meta's
+resumable-upload page (checked 2026-10-27) offers this **only** for Facebook Login for
+Business, which is why Instagram Login (Simple Story Mode's connection) is not used here. Never
+used for these videos: this public repository or any other public hosting. YouTube uploads
+from the PC directly as well.
+
+## YouTube: quota and the private lock (checked 2026-10-27)
+- **Quota: fine.** Since 1 June 2026 uploads (`videos.insert`) have their own daily bucket of
+  100 uploads, 1 unit each (getting-started and `videos.insert` pages; revision history
+  4 Dec 2025 and 1 Jun 2026). Our plan uses 1 Short a day + 2 long videos a week. The other
+  calls (thumbnail 50 units, lists and the privacy check about 1 unit each) come from the
+  separate 10,000-unit bucket. No quota request is needed.
+- **Private lock: unclear, so it is checked on every upload.** Since July 2020, uploads from
+  API projects that have not passed YouTube's audit were locked to private. Google's pages now
+  disagree: the `videos.insert` reference (updated 15 Oct 2026) says "Videos uploaded from
+  unverified API projects are not restricted to private viewing mode", but the revision
+  history announces no such change, and the YouTube Help Center still says such videos are
+  locked private and cannot be appealed. So after each upload we read the video's privacy
+  back. If YouTube shows it as private, the result file says WARNING, you get an e-mail, and
+  the video is not uploaded again.
+  If that happens: switch `youtube-shorts` / `youtube-long` off in `inbox.yaml`, delete the
+  private video in YouTube Studio, and either post YouTube by hand or apply for the free
+  YouTube API Services audit (Google's form; it asks for a privacy policy and how the app uses
+  the API, and takes weeks). Instagram is not affected.
+- The OAuth app must be *In production*: in *Testing* mode Google ends the sign-in after 7 days.
 
 ## Notes
 - The Toshiba video uses BBC News archive footage (credited in its caption). On YouTube this
   can trigger a Content ID claim (ads to the owner, blocking or muting); Instagram may mute or
   remove it. Your call before it is dropped into `postthem\`.
-- YouTube: uploads have their own quota (100 a day per project; checked 2026-10-27) and,
-  according to the current `videos.insert` page, uploads from unaudited projects are no longer
-  forced to private. **Verify on the first real upload** that it shows as Public.
+- YouTube quota and the private lock: see the section above.

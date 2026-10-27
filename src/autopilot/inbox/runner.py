@@ -192,6 +192,18 @@ class InboxRunner:
         ]
         if result.note:
             note.append(f"Note: {result.note}")
+        if result.warning:
+            note.append(f"WARNING: {result.warning}")
+            report.say(f"{dest.label}: WARNING for {video.name}: {result.warning}")
+            report.alerts.add(
+                self._alert(
+                    f"inbox-{self.slug}-warning-{page_slug(dest.name)}-{page_slug(video.name)}"[
+                        :90
+                    ],
+                    f"ACTION NEEDED [{self.cfg.title}]: check a video on {dest.label}",
+                    f"{video.name!r}: {result.warning}",
+                )
+            )
         folder = self._file_copy(
             work.folder, "posted", video.name, f"{dest.label}.txt", "\n".join(note)
         )

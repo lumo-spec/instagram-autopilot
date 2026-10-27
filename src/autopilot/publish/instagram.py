@@ -45,6 +45,8 @@ class InstagramClient(Protocol):
 class GraphClient:
     """Real client for ``graph.instagram.com`` (token sent only in the Authorization header)."""
 
+    auth_scheme = "Bearer"
+
     def __init__(
         self, host: str, version: str, user_id: str, token: str, timeout: float = 30
     ) -> None:
@@ -61,7 +63,7 @@ class GraphClient:
     ) -> dict[str, Any]:
         url = f"{self._base}/{path}"
         body = None
-        headers = {"Authorization": f"Bearer {self._token}"}
+        headers = {"Authorization": f"{self.auth_scheme} {self._token}"}
         if method == "GET" and params:
             url += "?" + urllib.parse.urlencode(params)
         elif params is not None:
@@ -158,7 +160,7 @@ def _endpoint(path: str) -> str:
 
     Paths start with the account id or a container/media id, which never reach the logs.
     """
-    last = path.rsplit("/", 1)[-1]
+    last = path.split("?", 1)[0].rsplit("/", 1)[-1]
     return "object" if last.isdigit() else last
 
 
