@@ -218,15 +218,25 @@ then wait for the owner's "continue" before installing the scheduled task.**
   incomplete folder → failed + alert, pause held, drop folder unchanged, hosted copies removed.
   `--sample` with copies of the owner's 10 finished 40 s reels: real ffmpeg probe + cover JPEG
   conversion pass, 0 problems (after the working-copy clean-up fix).
-- **Blocked on an owner decision: video hosting for Instagram.** Instagram Login (our login
-  type) has no direct upload from a PC (Meta content-publishing guide, 2026-10-27): the video
-  needs a public URL. Options A Facebook Login for Business (resumable upload, nothing public),
-  B the repo's media branch (public for minutes, in branch history until clean-up), C private
-  bucket with short-lived links. `NoHost` refuses until chosen. YouTube is independent.
-- Not verified live: everything. YouTube `videos.insert` page (2026-10-27) says unaudited
-  projects are no longer forced to private and uploads cost 1 unit of a 100/day bucket —
-  check the first upload shows as Public. OAuth app must be *In production* (Testing-mode
-  refresh tokens expire after 7 days). `install-inbox-task.ps1` parse-checked only, not run.
+- **Instagram hosting = A (owner, 2026-10-27): direct upload, nothing public.** Never the
+  public repo (B) for videos not yet posted. `FacebookReelClient` (graph.facebook.com,
+  `upload_type=resumable`, file POSTed to rupload.facebook.com only — address checked —
+  resumes from `video_status.uploading_phase.bytes_transferred`, `Authorization: OAuth`),
+  `InstagramReels(host=None)`. Setup `inbox facebook-login <page>` (app ID, secret + Graph API
+  Explorer user token at hidden prompts → long-lived user token → `me/accounts` → Page token
+  of the Page linked to @<page>; `.env` `<PAGE>_FB_PAGE_TOKEN`, `<PAGE>_FB_IG_USER_ID`; secret
+  not saved; Page token has no expiry → IG renewal skipped). Custom cover impossible without
+  a public URL → Instagram picks a frame; result file notes it. Rehearsal now runs direct
+  upload (`FakeDirectInstagram`); evidence 2026-10-27: 14 days, 24 reels uploaded as local
+  files, 0 problems; tests `tests/test_inbox_direct.py`.
+- **YouTube (checked 2026-10-27):** uploads have their own bucket since 1 Jun 2026 (100/day,
+  1 unit). Private lock for unaudited projects: `videos.insert` reference (updated
+  15 Oct 2026) says no longer applied, but revision history announces nothing and the Help
+  Center still describes the lock → every upload reads `privacyStatus` back; not public →
+  `Posted.warning` (WARNING line + alert), never re-uploaded. OAuth app must be *In
+  production* (Testing-mode refresh tokens expire after 7 days).
+- Not verified live: everything (no Meta or Google call made yet). `install-inbox-task.ps1`
+  parse-checked only, not run.
 
 ### Waiting on the owner
 1. Review the 24 drafts (text, captions, art briefs): `rehearsal-output/queue-preview/index.html`.

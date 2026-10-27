@@ -1,7 +1,8 @@
 """Inbox rehearsal: simulated days of 10-minute runs against fakes, with injected trouble.
 
 It works in a scratch folder (never the owner's folders): sample videos are copied in, or
-small fake ones are made. Nothing is uploaded anywhere (Meta hosts are blocked).
+small fake ones are made. Nothing is uploaded anywhere (Meta hosts are blocked); reels go the
+chosen way, as a local file uploaded straight to Meta (no hosting).
 """
 
 from __future__ import annotations
@@ -17,10 +18,10 @@ from typing import Any
 
 from autopilot.inbox.config import InboxConfig
 from autopilot.inbox.destinations import InstagramReels, Publisher, YouTubeVideos
-from autopilot.inbox.fakes import FakeHost, FakeYouTube, sidecar_probe
+from autopilot.inbox.fakes import FakeDirectInstagram, FakeYouTube, sidecar_probe
 from autopilot.inbox.folders import Probe, ffmpeg_probe
 from autopilot.inbox.runner import InboxRunner
-from autopilot.rehearsal.fakes import FakeInstagram, SimulatedCrashError, no_instagram_network
+from autopilot.rehearsal.fakes import SimulatedCrashError, no_instagram_network
 
 TICK = timedelta(minutes=10)
 
@@ -141,10 +142,10 @@ def rehearse(  # noqa: PLR0915 (one scripted scenario, read top to bottom)
 
     # every destination on, in the rehearsal only
     cfg = replace(cfg, destinations=tuple(replace(d, enabled=True) for d in cfg.destinations))
-    ig, yt_short, yt_long, host = FakeInstagram(), FakeYouTube(), FakeYouTube(), FakeHost()
+    ig, yt_short, yt_long = FakeDirectInstagram(), FakeYouTube(), FakeYouTube()
     publishers: dict[str, Publisher] = {
         "instagram-reels": InstagramReels(
-            cfg.page, ig, host, cfg.ai_generated, [0.0], 3, sleep=lambda _s: None
+            cfg.page, ig, None, cfg.ai_generated, [0.0], 3, sleep=lambda _s: None
         ),
         "youtube-shorts": YouTubeVideos(yt_short, True, cfg.ai_generated),
         "youtube-long": YouTubeVideos(yt_long, False, cfg.ai_generated),
@@ -221,8 +222,11 @@ def rehearse(  # noqa: PLR0915 (one scripted scenario, read top to bottom)
     }
     if after != before:
         problems.append("the drop folder was changed")
-    if host.online:
-        problems.append(f"{len(host.online)} hosted files were not removed")
+    creates = [c for c in ig.calls if c["op"] == "create"]
+    if len(ig.uploaded) != len(creates) or not all(ig.uploaded):
+        problems.append("a reel was not uploaded from its local file")
+    if any(not str(c.get("url", "")).startswith("file:") for c in creates):
+        problems.append("a reel was given a web address (direct upload expected)")
     for dest in cfg.destinations:
         for info in ledger.posted(dest.name).values():
             note = Path(info["folder"]) / f"{dest.label}.txt"

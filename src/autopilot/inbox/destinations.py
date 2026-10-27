@@ -10,8 +10,12 @@ raises ``PublishError`` (the video goes to ``failed``).
 from __future__ import annotations
 
 import io
+import json
 import re
 import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,7 +24,12 @@ from typing import Any, Protocol
 from autopilot.errors import PublishError, TransientPublishError
 from autopilot.inbox.folders import Candidate
 from autopilot.manifest import Manifest
-from autopilot.publish.instagram import GraphClient, InstagramClient, publish_manifest
+from autopilot.publish.instagram import (
+    GraphClient,
+    InstagramClient,
+    _error_code,
+    publish_manifest,
+)
 
 SaveIntent = Callable[[dict[str, Any]], None]
 _HASHTAG = re.compile(r"(?<!\w)#\w+")
@@ -34,6 +43,7 @@ class Posted:
     url: str
     reconciled: bool = False  # found already published by an earlier, interrupted run
     note: str = ""
+    warning: str = ""  # posted, but the owner must look (also raised as an alert)
 
 
 class Publisher(Protocol):
@@ -87,6 +97,106 @@ class ReelClient(GraphClient):
         return str(self._request("POST", f"{self._user}/media", params)["id"])
 
 
+FACEBOOK_GRAPH_HOST = "graph.facebook.com"
+RUPLOAD_HOST = "rupload.facebook.com"
+
+
+class FacebookReelClient(GraphClient):
+    """Instagram API with Facebook Login: the PC uploads the reel file straight to Meta.
+
+    Meta's resumable upload (``upload_type=resumable`` + ``rupload.facebook.com``, checked
+    2026-10-27) exists only for Facebook Login for Business, so the video never needs a public
+    web address. The token is the Facebook Page's token; it goes only to Meta's two hosts.
+    ``videos`` maps a slot to the local file to send for it.
+    """
+
+    auth_scheme = "OAuth"  # the header form in Meta's resumable-upload guide
+
+    def __init__(
+        self,
+        version: str,
+        user_id: str,
+        page_token: str,
+        upload_tries: int = 3,
+        timeout: float = 120,
+        sleep: Callable[[float], None] = time.sleep,
+    ) -> None:
+        super().__init__(FACEBOOK_GRAPH_HOST, version, user_id, page_token, timeout)
+        self.videos: dict[str, Path] = {}
+        self.upload_tries = upload_tries
+        self.sleep = sleep
+
+    def __repr__(self) -> str:  # never show the token or the user id
+        return "FacebookReelClient(<redacted>)"
+
+    def check_token(self) -> bool:
+        return bool(self._request("GET", self._user, {"fields": "id"}))
+
+    def create_container(self, manifest: Manifest) -> str:
+        video = self.videos.get(manifest.slot_key)
+        if video is None:
+            raise PublishError("no local video given for this slot")
+        # Meta lists the parameters a resumable reel accepts; share_to_feed is not one of them.
+        params: dict[str, Any] = {"media_type": "REELS", "caption": manifest.caption}
+        if manifest.ai_generated:
+            params["is_ai_generated"] = True
+        data = self._request("POST", f"{self._user}/media?upload_type=resumable", params)
+        container, uri = str(data.get("id", "")), str(data.get("uri", ""))
+        target = urllib.parse.urlsplit(uri)
+        if not container or target.scheme != "https" or target.hostname != RUPLOAD_HOST:
+            raise PublishError("Instagram did not return a Meta upload address")
+        self._upload(container, uri, video)
+        return container
+
+    def _upload(self, container: str, uri: str, video: Path) -> None:
+        """Send the file, resuming from what Meta already has after a network problem."""
+        size, offset = video.stat().st_size, 0
+        for attempt in range(self.upload_tries):
+            try:
+                self._send(uri, video, offset, size)
+                return
+            except TransientPublishError:
+                if attempt == self.upload_tries - 1:
+                    raise
+                self.sleep(2 ** (attempt + 2))
+                offset = self._bytes_received(container, size)
+
+    def _send(self, uri: str, video: Path, offset: int, size: int) -> None:
+        headers = {
+            "Authorization": f"{self.auth_scheme} {self._token}",
+            "offset": str(offset),
+            "file_size": str(size),
+            "Content-Length": str(size - offset),
+            "Content-Type": "application/octet-stream",
+        }
+        with video.open("rb") as fh:
+            fh.seek(offset)
+            req = urllib.request.Request(uri, data=fh, method="POST", headers=headers)  # noqa: S310
+            try:
+                with urllib.request.urlopen(req, timeout=self._timeout) as resp:  # noqa: S310
+                    answer = json.loads(resp.read().decode() or "{}")
+            except urllib.error.HTTPError as exc:
+                code, _ = _error_code(exc)
+                msg = f"Instagram video upload: HTTP {exc.code} (error code {code})"
+                if exc.code >= 500 or exc.code == 429:
+                    raise TransientPublishError(msg) from None
+                raise PublishError(msg) from None
+            except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+                raise TransientPublishError(
+                    "network error uploading the video to Instagram"
+                ) from None
+        if not (isinstance(answer, dict) and answer.get("success") is True):
+            raise PublishError("Instagram did not accept the video upload")
+
+    def _bytes_received(self, container: str, size: int) -> int:
+        try:
+            data = self._request("GET", container, {"fields": "video_status"})
+            done = int(data["video_status"]["uploading_phase"]["bytes_transferred"])
+        except (KeyError, TypeError, ValueError):
+            return 0
+        return done if 0 <= done < size else 0
+
+
 def cover_jpeg(png: Path) -> bytes:
     """The cover as a JPEG (Meta's cover format), 1080 px wide at most."""
     from PIL import Image
@@ -100,8 +210,18 @@ def cover_jpeg(png: Path) -> bytes:
         return out.getvalue()
 
 
+COVER_NOTE = (
+    "cover: Instagram chose a frame of the video (cover.png can only be sent from a public "
+    "web address); change it in the Instagram app if needed"
+)
+
+
 class InstagramReels:
-    """Publish a video as an Instagram Reel (shared to the feed) with its cover."""
+    """Publish a video as an Instagram Reel with its cover.
+
+    ``host=None`` = direct upload from this PC (``FacebookReelClient``): nothing is put on a
+    public address, and Instagram picks the cover frame itself.
+    """
 
     label = "Instagram Reels"
     MAX_BYTES = 300_000_000  # Meta's reel file limit
@@ -113,7 +233,7 @@ class InstagramReels:
         self,
         page: str,
         client: InstagramClient,
-        host: VideoHost,
+        host: VideoHost | None,
         ai_generated: bool,
         delays: list[float],
         retries: int,
@@ -146,11 +266,19 @@ class InstagramReels:
     ) -> Posted:
         base = f"{self.page}-{video.fingerprint[:12]}"
         names = [f"{base}.mp4", f"{base}-cover.jpg"]
-        urls = self.host.put(
-            {names[0]: video.video.read_bytes(), names[1]: cover_jpeg(video.cover)}
-        )
-        if isinstance(self.client, ReelClient):
-            self.client.cover_urls = {slot_key: urls[names[1]]}
+        if self.host is None:
+            videos = getattr(self.client, "videos", None)
+            if not isinstance(videos, dict):
+                raise PublishError("direct upload needs the Facebook Login connection")
+            videos.clear()
+            videos[slot_key] = video.video
+            urls = {names[0]: video.video.as_uri()}  # a record only; the file is uploaded
+        else:
+            urls = self.host.put(
+                {names[0]: video.video.read_bytes(), names[1]: cover_jpeg(video.cover)}
+            )
+            if isinstance(self.client, ReelClient):
+                self.client.cover_urls = {slot_key: urls[names[1]]}
         manifest = Manifest(
             page=self.page,
             slot_key=slot_key,
@@ -184,6 +312,8 @@ class InstagramReels:
             if "container status" in str(exc) or "did not finish" in str(exc):
                 raise TransientPublishError(str(exc)) from None
             raise
+        if self.host is None:
+            return Posted(out.media_id, out.permalink, out.reconciled, note=COVER_NOTE)
         self.host.remove(names)
         return Posted(out.media_id, out.permalink, out.reconciled)
 
@@ -195,6 +325,15 @@ class YouTubeClient(Protocol):
     def upload(self, video: Path, title: str, description: str, synthetic: bool) -> str: ...
     def recent_uploads(self, limit: int) -> list[dict[str, str]]: ...  # id, title
     def set_thumbnail(self, video_id: str, image: Path) -> None: ...
+    def privacy(self, video_id: str) -> str: ...  # "public", "private", "unlisted" or ""
+
+
+PRIVATE_WARNING = (
+    "YouTube shows this video as {status}, not public. The likely cause is YouTube's lock on "
+    "uploads from API projects that have not passed its audit (Google's pages disagree on "
+    "whether it still applies). Nobody can see the video. Switch YouTube off in inbox.yaml "
+    "and see docs/WELLITSTARTED.md, 'YouTube: quota and the private lock'."
+)
 
 
 def title_and_description(text: str) -> tuple[str, str]:
@@ -254,4 +393,11 @@ class YouTubeVideos:
                 self.client.set_thumbnail(video_id, video.cover)
             except PublishError as exc:  # needs a verified channel; the video is still up
                 note = f"custom thumbnail not set ({exc})"
-        return Posted(video_id, self._url(video_id), note=note)
+        warning = ""
+        try:
+            status = self.client.privacy(video_id)
+        except PublishError:  # TransientPublishError too: the upload itself is done
+            status = ""
+        if status and status != "public":
+            warning = PRIVATE_WARNING.format(status=status.upper())
+        return Posted(video_id, self._url(video_id), note=note, warning=warning)

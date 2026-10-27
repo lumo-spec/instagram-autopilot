@@ -1,4 +1,5 @@
-"""Fakes for rehearsals and tests: a hosting folder and a YouTube channel that only record."""
+"""Fakes for rehearsals and tests: hosting, direct-upload Instagram and a YouTube channel that
+only record."""
 
 from __future__ import annotations
 
@@ -8,7 +9,8 @@ from typing import Any
 
 from autopilot.errors import TransientPublishError
 from autopilot.inbox.folders import VideoInfo
-from autopilot.rehearsal.fakes import SimulatedCrashError
+from autopilot.manifest import Manifest
+from autopilot.rehearsal.fakes import FakeInstagram, SimulatedCrashError
 
 
 @dataclass
@@ -29,6 +31,19 @@ class FakeHost:
             self.online.pop(name, None)
 
 
+class FakeDirectInstagram(FakeInstagram):
+    """``FakeInstagram`` that takes the reel as a local file (like ``FacebookReelClient``)."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.videos: dict[str, Path] = {}
+        self.uploaded: list[int] = []  # bytes of every file 'uploaded'
+
+    def create_container(self, manifest: Manifest) -> str:
+        self.uploaded.append(self.videos[manifest.slot_key].stat().st_size)
+        return super().create_container(manifest)
+
+
 @dataclass
 class FakeYouTube:
     """Records uploads; ``fail_next`` may hold ``upload_transient`` or ``crash_after_upload``."""
@@ -36,6 +51,7 @@ class FakeYouTube:
     uploads: list[dict[str, Any]] = field(default_factory=list)
     thumbnails: list[str] = field(default_factory=list)
     fail_next: set[str] = field(default_factory=set)
+    privacy_status: str = "public"  # "private" = YouTube's lock on unaudited projects
 
     def upload(self, video: Path, title: str, description: str, synthetic: bool) -> str:
         if "upload_transient" in self.fail_next:
@@ -62,6 +78,9 @@ class FakeYouTube:
 
     def set_thumbnail(self, video_id: str, image: Path) -> None:
         self.thumbnails.append(video_id)
+
+    def privacy(self, video_id: str) -> str:
+        return self.privacy_status
 
 
 def sidecar_probe(path: Path) -> VideoInfo:

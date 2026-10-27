@@ -13,10 +13,14 @@ import json
 import sys
 from datetime import date
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from autopilot.config import ROOT, Config, Page, load_config
 from autopilot.content.queue import Post
 from autopilot.errors import AutopilotError
+
+if TYPE_CHECKING:
+    from autopilot.inbox.config import InboxConfig
 
 
 def _pages(cfg: Config, name: str | None) -> tuple[Page, ...]:
@@ -335,6 +339,28 @@ def cmd_rehearse(args: argparse.Namespace) -> int:
     return 0 if data["double_posts"] == 0 and data["posts_reused"] == 0 else 1
 
 
+def _inbox_facebook_login(cfg: InboxConfig) -> int:
+    """Connect Instagram through Facebook Login (direct upload): keys typed at hidden prompts."""
+    import getpass
+
+    from autopilot.inbox import setup
+
+    app_id = input("Meta app ID (App settings > Basic): ").strip()
+    app_secret = getpass.getpass("Meta app secret (hidden): ").strip()
+    user_token = getpass.getpass("Token from Graph API Explorer (hidden): ").strip()
+    if not (app_id and app_secret and user_token):
+        print("something was left empty; nothing changed")
+        return 1
+    conn = setup.facebook_connection(app_id, app_secret, user_token, cfg.page)
+    p = setup.prefix(cfg)
+    setup.set_values({f"{p}_FB_PAGE_TOKEN": conn.page_token, f"{p}_FB_IG_USER_ID": conn.ig_user_id})
+    print(
+        f"Connected: Facebook Page '{conn.page_name}' -> @{conn.username}. The Page token is "
+        "saved in .env (never committed) and has no expiry date; the app secret was not saved."
+    )
+    return 0
+
+
 def cmd_inbox(args: argparse.Namespace) -> int:
     """Video inbox of a page (e.g. wellitstarted): status, run, post-now, rehearse, set-up."""
     import getpass
@@ -371,6 +397,8 @@ def cmd_inbox(args: argparse.Namespace) -> int:
         )
         print(f"Instagram token saved for {cfg.title} (in .env, which is never committed).")
         return 0
+    if args.action == "facebook-login":
+        return _inbox_facebook_login(cfg)
     if args.action == "youtube-login":
         from autopilot.inbox.youtube import YouTubeApi, login
 
@@ -477,7 +505,15 @@ def main(argv: list[str] | None = None) -> int:  # noqa: PLR0915 (one parser per
     p = sub.add_parser("inbox", help="video page posted from a folder on this PC")
     p.add_argument(
         "action",
-        choices=["status", "run", "post-now", "rehearse", "instagram-token", "youtube-login"],
+        choices=[
+            "status",
+            "run",
+            "post-now",
+            "rehearse",
+            "facebook-login",
+            "instagram-token",
+            "youtube-login",
+        ],
     )
     p.add_argument("page", help="e.g. wellitstarted")
     p.add_argument(

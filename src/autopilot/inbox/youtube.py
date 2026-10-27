@@ -173,6 +173,12 @@ class YouTubeApi:
         )
         _open(req, "thumbnail", 60)
 
+    def privacy(self, video_id: str) -> str:
+        """The video's privacy as YouTube reports it now (1 unit of the general quota)."""
+        q = urllib.parse.urlencode({"part": "status", "id": video_id})
+        items = self._json("GET", f"{API}/videos?{q}", None, "video status").get("items") or []
+        return str(items[0].get("status", {}).get("privacyStatus", "")) if items else ""
+
     def channel_title(self) -> str:
         """The signed-in channel's name (for the owner to confirm the right channel)."""
         ch = self._json("GET", f"{API}/channels?part=snippet&mine=true", None, "channel")
